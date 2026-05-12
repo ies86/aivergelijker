@@ -20,7 +20,8 @@
   --color-surface-800: #1e293b;
   --color-surface-900: #0f172a;
 
-  --font-family-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-family-sans: "Nunito Sans", system-ui, -apple-system, sans-serif;
+  --font-family-heading: var(--font-heading), "Roboto Slab", serif;
 }
 
 html {
@@ -30,6 +31,10 @@ html {
 body {
   background-color: #ffffff;
   color: #1e293b;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-family-heading);
 }
 
 /* Independer-stijl kaart met subtiele schaduw */

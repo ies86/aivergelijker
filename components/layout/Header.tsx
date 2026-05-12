@@ -13,13 +13,17 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white border-b border-surface-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-1.5 font-bold text-xl text-surface-900">
-            <svg width="28" height="28" viewBox="0 0 32 32" className="shrink-0">
-              <rect width="32" height="32" rx="8" fill="#6d28d9" />
-              <path d="M8 16l4-6h8l4 6-4 6h-8l-4-6z" fill="white" fillOpacity="0.9" />
-              <circle cx="16" cy="16" r="3" fill="#6d28d9" />
+          <Link href="/" className="flex items-center gap-2 group">
+            <svg width="32" height="32" viewBox="0 0 36 36" className="shrink-0">
+              <rect width="36" height="36" rx="10" fill="#6d28d9" />
+              <path d="M10 13h6v10h-6z" rx="1.5" fill="white" fillOpacity="0.85" />
+              <path d="M20 9h6v14h-6z" rx="1.5" fill="white" />
+              <path d="M10 25h16" stroke="white" strokeWidth="2" strokeLinecap="round" />
             </svg>
-            <span className="text-surface-900">ai<span className="text-brand-500">vergelijker</span></span>
+            <span className="text-[22px] font-bold tracking-tight">
+              <span className="text-brand-500">ai</span>
+              <span className="text-surface-800">vergelijker</span>
+            </span>
           </Link>
 
           <nav className="hidden lg:flex items-center gap-0.5">
