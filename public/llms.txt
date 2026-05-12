@@ -19,8 +19,13 @@ aivergelijker.nl helpt Nederlandse consumenten bij het kiezen van de juiste AI-t
 
 - ChatGPT vs Claude: https://aivergelijker.nl/vergelijk/chatgpt-vs-claude
 - Gemini vs ChatGPT: https://aivergelijker.nl/vergelijk/gemini-vs-chatgpt
+- ChatGPT vs Gemini vs Claude (drieweg): https://aivergelijker.nl/vergelijk/chatgpt-vs-gemini-vs-claude
 - Midjourney vs DALL-E 3: https://aivergelijker.nl/vergelijk/midjourney-vs-dall-e
+- Adobe Firefly vs Midjourney: https://aivergelijker.nl/vergelijk/adobe-firefly-vs-midjourney
 - Cursor vs GitHub Copilot: https://aivergelijker.nl/vergelijk/cursor-vs-github-copilot
+- Perplexity vs ChatGPT: https://aivergelijker.nl/vergelijk/perplexity-vs-chatgpt
+- Microsoft Copilot vs ChatGPT: https://aivergelijker.nl/vergelijk/copilot-vs-chatgpt
+- Notion AI vs ChatGPT: https://aivergelijker.nl/vergelijk/notion-ai-vs-chatgpt
 - Suno vs ElevenLabs: https://aivergelijker.nl/vergelijk/suno-vs-elevenlabs
 - Runway vs Kling AI: https://aivergelijker.nl/vergelijk/runway-vs-kling
 - Notion AI vs Gamma: https://aivergelijker.nl/vergelijk/notion-ai-vs-gamma
@@ -33,6 +38,20 @@ aivergelijker.nl helpt Nederlandse consumenten bij het kiezen van de juiste AI-t
 - Beste AI voor programmeren: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-coderen
 - Beste AI voor video: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-video
 - Beste AI voor designers: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-designers
+- Beste AI voor sollicitatiebrieven: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-sollicitatiebrieven
+- Beste AI voor vertalingen: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-vertalingen
+- AI voor social media: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-social-media
+- AI voor ondernemers: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-ondernemers
+
+## Nieuws
+
+- OpenAI werkt aan GPT-5: https://aivergelijker.nl/nieuws/openai-gpt5-aankondiging
+- EU AI Act treedt in werking: https://aivergelijker.nl/nieuws/eu-ai-act-2026
+- Apple Intelligence 2.0 verwacht: https://aivergelijker.nl/nieuws/apple-ai-wwdc-2026
+- DeepSeek R1 in Europa: https://aivergelijker.nl/nieuws/deepseek-r1-europa
+- Cursor bereikt 100M downloads: https://aivergelijker.nl/nieuws/cursor-ai-100m-gebruikers
+- Claude Code lancering: https://aivergelijker.nl/nieuws/claude-code-lancering
+- Midjourney V7 release: https://aivergelijker.nl/nieuws/midjourney-v7-release
 
 ## Taal
 

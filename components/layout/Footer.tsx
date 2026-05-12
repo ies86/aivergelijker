@@ -43,6 +43,8 @@ export default function Footer() {
               <li><Link href="/vergelijk/gemini-vs-chatgpt" className="text-surface-400 hover:text-white transition-colors">Gemini vs ChatGPT</Link></li>
               <li><Link href="/vergelijk/midjourney-vs-dall-e" className="text-surface-400 hover:text-white transition-colors">Midjourney vs DALL-E</Link></li>
               <li><Link href="/vergelijk/cursor-vs-github-copilot" className="text-surface-400 hover:text-white transition-colors">Cursor vs Copilot</Link></li>
+              <li><Link href="/vergelijk/perplexity-vs-chatgpt" className="text-surface-400 hover:text-white transition-colors">Perplexity vs ChatGPT</Link></li>
+              <li><Link href="/vergelijk/copilot-vs-chatgpt" className="text-surface-400 hover:text-white transition-colors">Copilot vs ChatGPT</Link></li>
               <li><Link href="/nieuws" className="text-surface-400 hover:text-white transition-colors">Nieuws</Link></li>
             </ul>
           </div>

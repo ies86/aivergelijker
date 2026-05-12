@@ -114,7 +114,10 @@ export default async function HomePage() {
               { href: '/vergelijk/midjourney-vs-dall-e', titel: 'Midjourney vs DALL-E 3', sub: 'Beste AI voor afbeeldingen' },
               { href: '/vergelijk/cursor-vs-github-copilot', titel: 'Cursor vs GitHub Copilot', sub: 'Beste AI voor developers' },
               { href: '/vergelijk/suno-vs-elevenlabs', titel: 'Suno vs ElevenLabs', sub: 'Muziek vs stemmen' },
-              { href: '/vergelijk/runway-vs-kling', titel: 'Runway vs Kling AI', sub: 'Beste AI-videogenerator' },
+              { href: '/vergelijk/perplexity-vs-chatgpt', titel: 'Perplexity vs ChatGPT', sub: 'Zoeken vs chatten' },
+              { href: '/vergelijk/copilot-vs-chatgpt', titel: 'Copilot vs ChatGPT', sub: 'Microsoft vs OpenAI' },
+              { href: '/vergelijk/adobe-firefly-vs-midjourney', titel: 'Firefly vs Midjourney', sub: 'Design vs kunst' },
+              { href: '/vergelijk/chatgpt-vs-gemini-vs-claude', titel: 'ChatGPT vs Gemini vs Claude', sub: 'De grote drieweg-strijd' },
             ].map(item => (
               <Link key={item.href} href={item.href} className="card p-5 group flex items-center justify-between">
                 <div>
@@ -142,6 +145,10 @@ export default async function HomePage() {
             { href: '/beste-ai-voor/ai-tools-voor-beginners', titel: 'AI-tools voor beginners', sub: 'Zo begin je met AI in 2026' },
             { href: '/beste-ai-voor/beste-ai-voor-studenten', titel: 'Beste AI voor studenten', sub: 'Gratis tools die echt helpen' },
             { href: '/beste-ai-voor/beste-ai-voor-designers', titel: 'Beste AI voor designers', sub: 'De beste tools voor creatieven' },
+            { href: '/beste-ai-voor/beste-ai-voor-sollicitatiebrieven', titel: 'AI voor sollicitatiebrieven', sub: 'Schrijf de perfecte brief' },
+            { href: '/beste-ai-voor/beste-ai-voor-vertalingen', titel: 'AI voor vertalingen', sub: 'Beter dan Google Translate?' },
+            { href: '/beste-ai-voor/beste-ai-voor-social-media', titel: 'AI voor social media', sub: 'Content maken met AI' },
+            { href: '/beste-ai-voor/beste-ai-voor-ondernemers', titel: 'AI voor ondernemers', sub: 'Bespaar tijd en geld' },
           ].map(item => (
             <Link key={item.href} href={item.href} className="card p-5 group flex items-center justify-between">
               <div>
