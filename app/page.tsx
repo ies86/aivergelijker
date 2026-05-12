@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, ChevronRight, Search } from 'lucide-react'
+import { ArrowRight, ChevronRight } from 'lucide-react'
 import { getUitgelichtTools, getAllTools } from '@/lib/tools'
 import { CATEGORIEEN } from '@/lib/categories'
 import ToolGrid from '@/components/tools/ToolGrid'
@@ -32,48 +32,36 @@ export default async function HomePage() {
         ]}
       />
 
-      {/* Hero — Independer-stijl */}
-      <section className="bg-gradient-to-b from-purple-50 to-white">
+      {/* Hero */}
+      <section className="bg-gradient-to-b from-purple-50 to-[#f0f0f3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
           <div className="max-w-3xl">
-            <p className="text-brand-500 font-semibold text-sm mb-2">Vergelijk direct</p>
+            <p className="text-brand-500 font-semibold text-sm mb-2 tracking-wide uppercase">Vergelijk direct</p>
             <h1 className="text-3xl sm:text-5xl font-extrabold text-surface-900 leading-tight mb-4">
               Vind de beste AI-tool voor jouw doel
             </h1>
-            <p className="text-lg text-surface-500 mb-8 max-w-xl">
+            <p className="text-lg text-surface-500 mb-10 max-w-xl">
               Onafhankelijke vergelijkingen, eerlijke reviews en directe links — in het Nederlands.
             </p>
           </div>
 
-          {/* Categorie-lijst à la Independer */}
-          <div className="bg-white rounded-2xl border border-surface-200 shadow-sm overflow-hidden max-w-xl">
+          {/* Categorie-knoppen */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 max-w-4xl">
             {aantalPerCategorie.map(cat => (
               <Link
                 key={cat.slug}
                 href={`/categorie/${cat.slug}`}
-                className="category-row group"
+                className="bg-white rounded-xl border border-surface-200 px-4 py-4 text-center hover:border-brand-500 hover:shadow-md transition-all group"
               >
-                <span className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center mr-4 shrink-0">
-                  <span className="text-brand-500 text-lg">{
-                    cat.slug === 'chatbot' ? '💬' :
-                    cat.slug === 'afbeelding' ? '🖼️' :
-                    cat.slug === 'video' ? '🎬' :
-                    cat.slug === 'coding' ? '⌨️' :
-                    cat.slug === 'audio' ? '🎧' : '⚡'
-                  }</span>
-                </span>
-                <span className="flex-1 font-semibold text-brand-500 group-hover:text-brand-700 transition-colors">
-                  {cat.label} vergelijken
-                </span>
-                <span className="text-xs text-surface-400 mr-3">{cat.aantal} tools</span>
-                <ChevronRight className="h-5 w-5 text-surface-300 group-hover:text-brand-500 transition-colors" />
+                <p className="font-bold text-surface-800 group-hover:text-brand-500 transition-colors text-sm">{cat.label}</p>
+                <p className="text-xs text-surface-400 mt-1">{cat.aantal} tools</p>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Laatste nieuws — Independer-stijl */}
+      {/* Laatste nieuws */}
       <section className="bg-white border-y border-surface-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="flex items-center justify-between mb-6">
@@ -89,12 +77,11 @@ export default async function HomePage() {
               { href: '/nieuws/midjourney-v7-release', datum: '5 mei 2026', titel: 'Midjourney V7: de beste AI-beelden ooit?', bron: 'Midjourney' },
             ].map(item => (
               <Link key={item.href} href={item.href} className="group">
-                <div className="bg-surface-50 rounded-xl h-36 mb-3 flex items-center justify-center border border-surface-200">
-                  <span className="text-4xl opacity-40">📰</span>
+                <div className="bg-gradient-to-br from-purple-100 to-purple-50 rounded-xl h-32 mb-3 border border-purple-100 flex items-end p-4">
+                  <p className="text-[11px] font-semibold text-brand-500 uppercase tracking-wider">{item.bron}</p>
                 </div>
                 <p className="date-tag mb-1">{item.datum}</p>
-                <h3 className="font-bold text-surface-800 group-hover:text-brand-500 transition-colors leading-snug mb-1">{item.titel}</h3>
-                <p className="text-xs text-surface-400">Bron: {item.bron}</p>
+                <h3 className="font-bold text-surface-800 group-hover:text-brand-500 transition-colors leading-snug">{item.titel}</h3>
               </Link>
             ))}
           </div>
@@ -108,15 +95,15 @@ export default async function HomePage() {
             <h2 className="text-2xl font-bold text-surface-900">Populaire AI-tools</h2>
             <p className="text-surface-500 mt-1">De meest vergeleken tools op aivergelijker.nl</p>
           </div>
-          <Link href="/categorie/chatbot" className="hidden sm:flex text-sm text-brand-500 hover:text-brand-700 font-semibold items-center gap-1">
-            Bekijk alle tools <ArrowRight className="h-4 w-4" />
+          <Link href="/categorie/chatbot" className="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg bg-white border border-surface-200 text-surface-700 hover:border-brand-500 hover:text-brand-500 transition-all">
+            Bekijk alles <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
         <ToolGrid tools={uitgelicht} />
       </section>
 
       {/* Vergelijkingen */}
-      <section className="bg-surface-50 border-y border-surface-200">
+      <section className="bg-white border-y border-surface-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
           <h2 className="text-2xl font-bold text-surface-900 mb-2">Populaire vergelijkingen</h2>
           <p className="text-surface-500 mb-8">Welke AI-tool past het beste bij jou? Bekijk onze uitgebreide vergelijkingen.</p>
@@ -129,11 +116,13 @@ export default async function HomePage() {
               { href: '/vergelijk/suno-vs-elevenlabs', titel: 'Suno vs ElevenLabs', sub: 'Muziek vs stemmen' },
               { href: '/vergelijk/runway-vs-kling', titel: 'Runway vs Kling AI', sub: 'Beste AI-videogenerator' },
             ].map(item => (
-              <Link key={item.href} href={item.href} className="card p-5 group">
-                <p className="font-bold text-surface-800 group-hover:text-brand-500 transition-colors">{item.titel}</p>
-                <p className="text-sm text-surface-500 mt-1">{item.sub}</p>
-                <span className="text-brand-500 text-sm font-semibold mt-3 inline-flex items-center gap-1">
-                  Vergelijk <ChevronRight className="h-3.5 w-3.5" />
+              <Link key={item.href} href={item.href} className="card p-5 group flex items-center justify-between">
+                <div>
+                  <p className="font-bold text-surface-800 group-hover:text-brand-500 transition-colors">{item.titel}</p>
+                  <p className="text-sm text-surface-500 mt-1">{item.sub}</p>
+                </div>
+                <span className="shrink-0 w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center group-hover:bg-brand-500 transition-colors">
+                  <ChevronRight className="h-4 w-4 text-brand-500 group-hover:text-white transition-colors" />
                 </span>
               </Link>
             ))}
@@ -154,11 +143,13 @@ export default async function HomePage() {
             { href: '/beste-ai-voor/beste-ai-voor-studenten', titel: 'Beste AI voor studenten', sub: 'Gratis tools die echt helpen' },
             { href: '/beste-ai-voor/beste-ai-voor-designers', titel: 'Beste AI voor designers', sub: 'De beste tools voor creatieven' },
           ].map(item => (
-            <Link key={item.href} href={item.href} className="card p-5 group">
-              <p className="font-bold text-surface-800 group-hover:text-brand-500 transition-colors">{item.titel}</p>
-              <p className="text-sm text-surface-500 mt-1">{item.sub}</p>
-              <span className="text-brand-500 text-sm font-semibold mt-3 inline-flex items-center gap-1">
-                Lees meer <ChevronRight className="h-3.5 w-3.5" />
+            <Link key={item.href} href={item.href} className="card p-5 group flex items-center justify-between">
+              <div>
+                <p className="font-bold text-surface-800 group-hover:text-brand-500 transition-colors">{item.titel}</p>
+                <p className="text-sm text-surface-500 mt-1">{item.sub}</p>
+              </div>
+              <span className="shrink-0 w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center group-hover:bg-brand-500 transition-colors">
+                <ArrowRight className="h-4 w-4 text-brand-500 group-hover:text-white transition-colors" />
               </span>
             </Link>
           ))}
@@ -167,15 +158,15 @@ export default async function HomePage() {
 
       {/* Newsletter */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="bg-brand-500 rounded-2xl p-8 sm:p-12 text-center">
+        <div className="bg-surface-900 rounded-2xl p-8 sm:p-12 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">Blijf op de hoogte</h2>
-          <p className="text-purple-200 mb-6 max-w-md mx-auto">
+          <p className="text-surface-400 mb-6 max-w-md mx-auto">
             Nieuwe AI-tools, vergelijkingen en deals — elke week in je inbox.
           </p>
           <div className="max-w-md mx-auto">
             <NewsletterForm />
           </div>
-          <p className="text-purple-300 text-xs mt-3">Geen spam. Uitschrijven kan altijd.</p>
+          <p className="text-surface-500 text-xs mt-3">Geen spam. Uitschrijven kan altijd.</p>
         </div>
       </section>
     </>
