@@ -66,33 +66,33 @@ export default async function GuidePagina({ params }: { params: Promise<{ slug: 
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <nav className="text-sm text-surface-400 mb-6">
-        <Link href="/" className="hover:text-white transition-colors">Home</Link>
+      <nav className="text-sm text-surface-500 mb-6">
+        <Link href="/" className="hover:text-brand-500 transition-colors">Home</Link>
         <span className="mx-2 text-surface-300">/</span>
-        <span className="text-white font-medium">{frontmatter.titel}</span>
+        <span className="text-surface-900 font-medium">{frontmatter.titel}</span>
       </nav>
 
       <JsonLd type="article" titel={frontmatter.titel} beschrijving={frontmatter.beschrijving} slug={`beste-ai-voor/${slug}`} />
-      <h1 className="text-3xl font-bold text-white mb-2">{frontmatter.titel}</h1>
+      <h1 className="text-3xl font-bold text-surface-900 mb-2">{frontmatter.titel}</h1>
       <p className="text-surface-500 mb-10">{frontmatter.beschrijving}</p>
 
-      <article className="prose prose-invert prose-p:text-surface-500 prose-headings:text-white prose-strong:text-white prose-a:text-brand-400 max-w-none mb-12">
+      <article className="prose prose-p:text-surface-600 prose-headings:text-surface-900 prose-strong:text-surface-900 prose-a:text-brand-500 max-w-none mb-12">
         {content}
       </article>
 
       {tools.length > 0 && (
         <div className="mt-10">
-          <h2 className="text-xl font-bold text-white mb-5">Aanbevolen tools</h2>
+          <h2 className="text-xl font-bold text-surface-900 mb-5">Aanbevolen tools</h2>
           <ToolGrid tools={tools} />
         </div>
       )}
 
-      <p className="text-xs text-surface-400 border-t border-white/5 pt-5 mt-10">
+      <p className="text-xs text-surface-400 border-t border-surface-200 pt-5 mt-10">
         * aivergelijker.nl kan een affiliate commissie ontvangen via onze links.
       </p>
 
       <div className="mt-8">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm text-surface-500 hover:text-white transition-colors">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm text-surface-500 hover:text-brand-500 transition-colors">
           <ArrowLeft className="h-4 w-4" /> Terug naar overzicht
         </Link>
       </div>

@@ -2,64 +2,94 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-brand-400: #a78bfa;
-  --color-brand-500: #8b5cf6;
-  --color-brand-600: #7c3aed;
-  --color-brand-700: #6d28d9;
+  --color-brand-500: #6d28d9;
+  --color-brand-600: #5b21b6;
+  --color-brand-700: #4c1d95;
 
-  --color-accent-400: #22d3ee;
-  --color-accent-500: #06b6d4;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
 
-  --color-surface-50: #18181b;
-  --color-surface-100: #1e1e24;
-  --color-surface-200: #27272e;
-  --color-surface-300: #333340;
-  --color-surface-400: #52525b;
-  --color-surface-500: #71717a;
-  --color-surface-600: #a1a1aa;
-  --color-surface-700: #d4d4d8;
-  --color-surface-800: #e4e4e7;
-  --color-surface-900: #fafafa;
+  --color-surface-50: #f8fafc;
+  --color-surface-100: #f1f5f9;
+  --color-surface-200: #e2e8f0;
+  --color-surface-300: #cbd5e1;
+  --color-surface-400: #94a3b8;
+  --color-surface-500: #64748b;
+  --color-surface-600: #475569;
+  --color-surface-700: #334155;
+  --color-surface-800: #1e293b;
+  --color-surface-900: #0f172a;
 
-  --font-family-sans: "Inter", system-ui, sans-serif;
+  --font-family-sans: "Inter", system-ui, -apple-system, sans-serif;
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
-  background-color: #0c0c10;
-  color: #e4e4e7;
+  background-color: #ffffff;
+  color: #1e293b;
 }
 
-.glass {
-  background: rgba(30, 30, 36, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+/* Independer-stijl kaart met subtiele schaduw */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card:hover {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e1;
 }
 
-.gradient-text {
-  background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 50%, #a78bfa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Categorie-rij item */
+.category-row {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.15s ease;
+}
+.category-row:last-child {
+  border-bottom: none;
+}
+.category-row:hover {
+  background-color: #f8fafc;
 }
 
-.gradient-border {
-  position: relative;
-  border: 1px solid rgba(167,139,250,0.15);
+/* Badge */
+.badge-green {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+.badge-purple {
+  background-color: #f3e8ff;
+  color: #7c3aed;
+}
+.badge-amber {
+  background-color: #fffbeb;
+  color: #d97706;
 }
 
-.card-hover {
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+/* Prose aanpassingen */
+.prose h2 {
+  color: #1e293b;
+  font-weight: 700;
 }
-.card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.12);
-  border-color: rgba(167,139,250,0.3);
+.prose p {
+  color: #475569;
+}
+.prose a {
+  color: #6d28d9;
 }
 
-.glow {
-  box-shadow: 0 0 80px rgba(139, 92, 246, 0.12), 0 0 160px rgba(34, 211, 238, 0.06);
+/* Nieuws-kaart datum-tag */
+.date-tag {
+  font-size: 0.75rem;
+  color: #6d28d9;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }

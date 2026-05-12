@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { CATEGORIEEN } from '@/lib/categories'
 import type { Categorie } from '@/lib/types'
-import CategoryIcon from '@/components/shared/CategoryIcon'
 
 interface Props {
   actief?: Categorie
@@ -12,10 +11,10 @@ export default function CategoryNav({ actief }: Props) {
     <nav className="flex gap-2 flex-wrap">
       <Link
         href="/"
-        className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+        className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
           !actief
-            ? 'bg-brand-600 text-white shadow-lg shadow-brand-500/20'
-            : 'bg-surface-200 text-surface-600 hover:text-white hover:bg-surface-300'
+            ? 'bg-brand-500 text-white'
+            : 'bg-surface-100 text-surface-600 hover:text-brand-500 hover:bg-purple-50'
         }`}
       >
         Alle tools
@@ -24,13 +23,12 @@ export default function CategoryNav({ actief }: Props) {
         <Link
           key={cat.slug}
           href={`/categorie/${cat.slug}`}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
+          className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
             actief === cat.slug
-              ? 'bg-brand-600 text-white shadow-lg shadow-brand-500/20'
-              : 'bg-surface-200 text-surface-600 hover:text-white hover:bg-surface-300'
+              ? 'bg-brand-500 text-white'
+              : 'bg-surface-100 text-surface-600 hover:text-brand-500 hover:bg-purple-50'
           }`}
         >
-          <CategoryIcon name={cat.icon} size="sm" className="w-6 h-6 rounded-md bg-transparent border-0" />
           {cat.label}
         </Link>
       ))}

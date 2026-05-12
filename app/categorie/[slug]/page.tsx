@@ -5,7 +5,6 @@ import { CATEGORIEEN, getCategorieInfo } from '@/lib/categories'
 import type { Categorie } from '@/lib/types'
 import ToolGrid from '@/components/tools/ToolGrid'
 import CategoryNav from '@/components/layout/CategoryNav'
-import CategoryIcon from '@/components/shared/CategoryIcon'
 
 export async function generateStaticParams() {
   return CATEGORIEEN.map(cat => ({ slug: cat.slug }))
@@ -40,24 +39,21 @@ export default async function CategoriePagina({ params }: { params: Promise<{ sl
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <nav className="text-sm text-surface-400 mb-6">
+      <nav className="text-sm text-surface-500 mb-6">
         <span>Home</span> <span className="mx-2 text-surface-300">/</span>
-        <span className="text-white font-medium">{cat.label}</span>
+        <span className="text-surface-900 font-medium">{cat.label}</span>
       </nav>
 
-      <div className="mb-10 flex items-start gap-4">
-        <CategoryIcon name={cat.icon} size="lg" />
-        <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Beste {cat.label} AI-tools</h1>
-          <p className="text-surface-500 max-w-2xl">{cat.langeBeschrijving}</p>
-        </div>
+      <div className="mb-10">
+        <h1 className="text-3xl font-bold text-surface-900 mb-2">Beste {cat.label} AI-tools</h1>
+        <p className="text-surface-500 max-w-2xl">{cat.langeBeschrijving}</p>
       </div>
 
       <div className="mb-8">
         <CategoryNav actief={slug as Categorie} />
       </div>
 
-      <p className="text-sm text-surface-400 mb-5">{tools.length} tools gevonden</p>
+      <p className="text-sm text-surface-500 mb-5">{tools.length} tools gevonden</p>
       <ToolGrid tools={tools} />
     </div>
   )

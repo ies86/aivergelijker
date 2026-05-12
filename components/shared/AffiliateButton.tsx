@@ -16,10 +16,10 @@ export default function AffiliateButton({ toolSlug, label = 'Bezoek website', va
       target="_blank"
       rel="noopener noreferrer sponsored"
       className={cn(
-        'inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all',
+        'inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-colors',
         variant === 'primary'
-          ? 'bg-gradient-to-r from-brand-600 to-brand-500 text-white hover:from-brand-500 hover:to-brand-400 shadow-lg shadow-brand-500/20'
-          : 'border border-white/10 text-surface-700 hover:border-brand-500/50 hover:text-brand-400 hover:bg-brand-500/5',
+          ? 'bg-brand-500 text-white hover:bg-brand-600'
+          : 'border border-surface-200 text-surface-700 hover:border-brand-500 hover:text-brand-500',
         className
       )}
     >
