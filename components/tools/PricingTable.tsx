@@ -17,29 +17,29 @@ export default function PricingTable({ plannen, toolSlug }: Props) {
         <div
           key={plan.naam}
           className={cn(
-            'rounded-xl border p-5 flex flex-col gap-4',
+            'rounded-2xl border p-5 flex flex-col gap-4',
             plan.aanbevolen
-              ? 'border-brand-500 ring-2 ring-brand-500 relative'
-              : 'border-gray-200'
+              ? 'border-brand-500/50 bg-brand-500/5 ring-1 ring-brand-500/30 relative'
+              : 'border-white/5 bg-surface-100'
           )}
         >
           {plan.aanbevolen && (
-            <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-500 text-white text-xs font-semibold px-3 py-0.5 rounded-full">
+            <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-600 to-brand-400 text-white text-[11px] font-semibold px-3 py-0.5 rounded-full uppercase tracking-wide">
               Aanbevolen
             </span>
           )}
 
           <div>
-            <h3 className="font-semibold text-gray-900">{plan.naam}</h3>
+            <h3 className="font-semibold text-white">{plan.naam}</h3>
             <div className="mt-1">
               {plan.prijs_mnd === 0 ? (
-                <span className="text-2xl font-bold text-gray-900">Gratis</span>
+                <span className="text-2xl font-bold text-emerald-400">Gratis</span>
               ) : (
                 <div>
-                  <span className="text-2xl font-bold text-gray-900">€{plan.prijs_mnd}</span>
-                  <span className="text-sm text-gray-500">/mnd</span>
+                  <span className="text-2xl font-bold text-white">&euro;{plan.prijs_mnd}</span>
+                  <span className="text-sm text-surface-500">/mnd</span>
                   {plan.prijs_jaar > 0 && (
-                    <p className="text-xs text-gray-400 mt-0.5">€{plan.prijs_jaar}/jaar bij jaarlijks betalen</p>
+                    <p className="text-xs text-surface-400 mt-0.5">&euro;{plan.prijs_jaar}/jaar bij jaarlijks</p>
                   )}
                 </div>
               )}
@@ -48,8 +48,8 @@ export default function PricingTable({ plannen, toolSlug }: Props) {
 
           <ul className="space-y-2 flex-1">
             {plan.functies.map(f => (
-              <li key={f} className="flex items-start gap-2 text-sm text-gray-600">
-                <Check className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
+              <li key={f} className="flex items-start gap-2 text-sm text-surface-600">
+                <Check className="h-4 w-4 text-brand-400 mt-0.5 shrink-0" />
                 {f}
               </li>
             ))}

@@ -8,11 +8,11 @@ interface Props {
 
 export default function ToolGrid({ tools, emptyMessage = 'Geen tools gevonden.' }: Props) {
   if (tools.length === 0) {
-    return <p className="text-gray-500 text-sm">{emptyMessage}</p>
+    return <p className="text-surface-500 text-sm">{emptyMessage}</p>
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {tools.map(tool => (
         <ToolCard key={tool.id} tool={tool} />
       ))}

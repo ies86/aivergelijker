@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail } from 'lucide-react'
+import { Mail, ArrowRight } from 'lucide-react'
 
 export default function NewsletterForm() {
   const [email, setEmail] = useState('')
@@ -22,8 +22,8 @@ export default function NewsletterForm() {
 
   if (status === 'done') {
     return (
-      <p className="text-green-700 font-medium text-sm">
-        ✓ Gelukt! Je ontvangt de nieuwste AI-updates in je inbox.
+      <p className="text-emerald-400 font-medium text-sm">
+        Gelukt! Je ontvangt de nieuwste AI-updates in je inbox.
       </p>
     )
   }
@@ -31,25 +31,26 @@ export default function NewsletterForm() {
   return (
     <form onSubmit={submit} className="flex gap-2 flex-col sm:flex-row">
       <div className="relative flex-1">
-        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-surface-500" />
         <input
           type="email"
           required
           value={email}
           onChange={e => setEmail(e.target.value)}
           placeholder="jouw@email.nl"
-          className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+          className="w-full pl-10 pr-4 py-2.5 bg-white/10 border border-white/10 rounded-xl text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-brand-500/50"
         />
       </div>
       <button
         type="submit"
         disabled={status === 'loading'}
-        className="px-5 py-2.5 bg-brand-500 text-white text-sm font-semibold rounded-lg hover:bg-brand-600 transition-colors disabled:opacity-60 whitespace-nowrap"
+        className="px-6 py-2.5 bg-white text-surface-50 text-sm font-semibold rounded-xl hover:bg-white/90 transition-colors disabled:opacity-60 whitespace-nowrap inline-flex items-center gap-2"
       >
         {status === 'loading' ? 'Bezig...' : 'Aanmelden'}
+        <ArrowRight className="h-4 w-4" />
       </button>
       {status === 'error' && (
-        <p className="text-red-600 text-xs mt-1">Er ging iets mis. Probeer het opnieuw.</p>
+        <p className="text-red-400 text-xs mt-1">Er ging iets mis. Probeer het opnieuw.</p>
       )}
     </form>
   )

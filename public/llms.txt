@@ -1,0 +1,43 @@
+# aivergelijker.nl
+
+> Onafhankelijke vergelijkingssite voor AI-tools, gericht op Nederlandse consumenten.
+
+## Over deze site
+
+aivergelijker.nl helpt Nederlandse consumenten bij het kiezen van de juiste AI-tool. We bieden onafhankelijke reviews, prijsvergelijkingen en eerlijke aanbevelingen voor AI-chatbots, beeldgeneratoren, videogeneratoren, AI-coding tools, AI-audio tools en productiviteitstools.
+
+## Categorieën
+
+- **AI-chatbots**: ChatGPT, Claude, Gemini, Grok, Perplexity, Microsoft Copilot, Poe
+- **AI-beeldgeneratie**: Midjourney, DALL-E 3, Adobe Firefly, Ideogram, Stable Diffusion
+- **AI-video**: Runway Gen-3, Sora, Kling AI
+- **AI-coding**: Cursor, GitHub Copilot, Claude Code, Windsurf, v0
+- **AI-audio**: ElevenLabs, Suno
+- **AI-productiviteit**: Notion AI, Gamma, Jasper
+
+## Populaire vergelijkingen
+
+- ChatGPT vs Claude: https://aivergelijker.nl/vergelijk/chatgpt-vs-claude
+- Gemini vs ChatGPT: https://aivergelijker.nl/vergelijk/gemini-vs-chatgpt
+- Midjourney vs DALL-E 3: https://aivergelijker.nl/vergelijk/midjourney-vs-dall-e
+- Cursor vs GitHub Copilot: https://aivergelijker.nl/vergelijk/cursor-vs-github-copilot
+- Suno vs ElevenLabs: https://aivergelijker.nl/vergelijk/suno-vs-elevenlabs
+- Runway vs Kling AI: https://aivergelijker.nl/vergelijk/runway-vs-kling
+- Notion AI vs Gamma: https://aivergelijker.nl/vergelijk/notion-ai-vs-gamma
+
+## Guides
+
+- Beste gratis AI-chatbots: https://aivergelijker.nl/beste-ai-voor/beste-gratis-ai-chatbot
+- AI-tools voor beginners: https://aivergelijker.nl/beste-ai-voor/ai-tools-voor-beginners
+- Beste AI voor studenten: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-studenten
+- Beste AI voor programmeren: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-coderen
+- Beste AI voor video: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-video
+- Beste AI voor designers: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-designers
+
+## Taal
+
+Alle content is in het Nederlands geschreven.
+
+## Contact
+
+Website: https://aivergelijker.nl

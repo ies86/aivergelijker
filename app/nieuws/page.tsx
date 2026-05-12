@@ -39,25 +39,25 @@ export default async function NieuwsOverzicht() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <h1 className="text-3xl font-bold text-gray-900 mb-2">AI Nieuws</h1>
-      <p className="text-gray-500 mb-10">Het laatste nieuws over AI-tools voor consumenten.</p>
+      <h1 className="text-3xl font-bold text-white mb-2">AI Nieuws</h1>
+      <p className="text-surface-500 mb-10">Het laatste nieuws over AI-tools voor consumenten.</p>
 
       {artikelen.length === 0 ? (
-        <p className="text-gray-400">Binnenkort verschijnen hier de eerste artikelen.</p>
+        <p className="text-surface-400">Binnenkort verschijnen hier de eerste artikelen.</p>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-4">
           {artikelen.map(artikel => (
             <Link
               key={artikel.slug}
               href={`/nieuws/${artikel.slug}`}
-              className="block bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow group"
+              className="block bg-surface-100 border border-white/5 rounded-2xl p-6 hover:border-brand-500/20 transition-all group card-hover"
             >
-              <p className="text-xs text-gray-400 mb-2">{artikel.datum}</p>
-              <h2 className="text-lg font-semibold text-gray-900 group-hover:text-brand-600 transition-colors mb-1">
+              <p className="text-xs text-surface-400 mb-2">{artikel.datum}</p>
+              <h2 className="text-lg font-semibold text-white group-hover:text-brand-400 transition-colors mb-1">
                 {artikel.titel}
               </h2>
-              <p className="text-gray-500 text-sm mb-3">{artikel.beschrijving}</p>
-              <span className="inline-flex items-center gap-1 text-brand-500 text-sm font-medium">
+              <p className="text-surface-500 text-sm mb-3">{artikel.beschrijving}</p>
+              <span className="inline-flex items-center gap-1 text-brand-400 text-sm font-medium">
                 Lees meer <ArrowRight className="h-3.5 w-3.5" />
               </span>
             </Link>
