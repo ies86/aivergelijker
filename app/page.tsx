@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { ArrowRight, ChevronRight } from 'lucide-react'
-import { getUitgelichtTools, getAllTools } from '@/lib/tools'
+import { getUitgelichtTools, getAllTools, getHiddenGems } from '@/lib/tools'
 import { CATEGORIEEN } from '@/lib/categories'
 import ToolGrid from '@/components/tools/ToolGrid'
 import NewsletterForm from '@/components/shared/NewsletterForm'
@@ -9,9 +9,10 @@ import JsonLd from '@/components/seo/JsonLd'
 export const revalidate = 3600
 
 export default async function HomePage() {
-  const [uitgelicht, alleTools] = await Promise.all([
+  const [uitgelicht, alleTools, hiddenGems] = await Promise.all([
     getUitgelichtTools().catch(() => []),
     getAllTools().catch(() => []),
+    getHiddenGems().catch(() => []),
   ])
 
   const aantalPerCategorie = CATEGORIEEN.map(cat => ({
@@ -101,6 +102,43 @@ export default async function HomePage() {
         </div>
         <ToolGrid tools={uitgelicht} />
       </section>
+
+      {/* Slimme alternatieven — hidden gems */}
+      {hiddenGems.length > 0 && (
+        <section className="bg-white border-y border-surface-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+            <div className="flex items-center gap-3 mb-2">
+              <h2 className="text-2xl font-bold text-surface-900">Slimme alternatieven</h2>
+              <span className="text-[11px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">Tip</span>
+            </div>
+            <p className="text-surface-500 mb-8">Minder bekend, maar minstens zo goed. Deze gespecialiseerde tools blinken uit in hun niche.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {hiddenGems.map(tool => (
+                <Link key={tool.slug} href={`/tools/${tool.slug}`} className="card p-5 group flex flex-col">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center text-white font-bold text-sm shrink-0">
+                      {tool.naam[0]}
+                    </div>
+                    <div>
+                      <p className="font-bold text-surface-800 group-hover:text-brand-500 transition-colors text-sm">{tool.naam}</p>
+                      <p className="text-xs text-surface-400">{tool.categorie}</p>
+                    </div>
+                  </div>
+                  <p className="text-sm text-surface-500 leading-relaxed flex-1">{tool.tagline}</p>
+                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-surface-100">
+                    <span className="text-xs text-surface-400">
+                      {tool.plannen[0]?.prijs_mnd === 0 ? 'Gratis plan' : `Vanaf €${tool.plannen[0]?.prijs_mnd}/mnd`}
+                    </span>
+                    <span className="text-xs font-semibold text-brand-500 group-hover:text-brand-700 transition-colors flex items-center gap-1">
+                      Bekijk <ChevronRight className="h-3 w-3" />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Vergelijkingen */}
       <section className="bg-white border-y border-surface-200">

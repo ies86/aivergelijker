@@ -76,6 +76,10 @@ export async function getToolsBySlugs(slugs: string[]): Promise<Tool[]> {
   }
 }
 
+export async function getHiddenGems(): Promise<Tool[]> {
+  return TOOLS.filter(t => t.badge === 'Tip').sort((a, b) => (b.beoordeling ?? 0) - (a.beoordeling ?? 0))
+}
+
 export async function logKlik(toolSlug: string, referer: string | null, userAgent: string | null) {
   try {
     await supabase.from('klik_tracking').insert({
