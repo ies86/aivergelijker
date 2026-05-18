@@ -5,11 +5,13 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { compileMDX } from 'next-mdx-remote/rsc'
 import { ArrowLeft } from 'lucide-react'
+import JsonLd from '@/components/seo/JsonLd'
 
 interface Frontmatter {
   titel: string
   beschrijving: string
   datum: string
+  bron?: string
 }
 
 async function getArtikel(slug: string) {
@@ -39,6 +41,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: data.frontmatter.titel,
     description: data.frontmatter.beschrijving,
+    openGraph: {
+      title: data.frontmatter.titel,
+      description: data.frontmatter.beschrijving,
+      url: `https://aivergelijker.nl/nieuws/${slug}`,
+      type: 'article',
+    },
+    alternates: {
+      canonical: `https://aivergelijker.nl/nieuws/${slug}`,
+    },
   }
 }
 
@@ -51,24 +62,40 @@ export default async function NieuwsArtikel({ params }: { params: Promise<{ slug
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <nav className="text-sm text-surface-400 mb-6">
-        <Link href="/" className="hover:text-white transition-colors">Home</Link>
+      <JsonLd type="article" titel={frontmatter.titel} beschrijving={frontmatter.beschrijving} slug={`nieuws/${slug}`} />
+
+      <nav className="text-sm text-surface-500 mb-6">
+        <Link href="/" className="hover:text-brand-500 transition-colors">Home</Link>
         <span className="mx-2 text-surface-300">/</span>
-        <Link href="/nieuws" className="hover:text-white transition-colors">Nieuws</Link>
+        <Link href="/nieuws" className="hover:text-brand-500 transition-colors">Nieuws</Link>
         <span className="mx-2 text-surface-300">/</span>
-        <span className="text-white font-medium">{frontmatter.titel}</span>
+        <span className="text-surface-900 font-medium">{frontmatter.titel}</span>
       </nav>
 
-      <p className="text-xs text-surface-400 mb-3">{frontmatter.datum}</p>
-      <h1 className="text-3xl font-bold text-white mb-2">{frontmatter.titel}</h1>
-      <p className="text-surface-500 mb-10">{frontmatter.beschrijving}</p>
+      <article className="card p-6 sm:p-10">
+        <div className="flex items-center gap-3 mb-4 flex-wrap">
+          <span className="date-tag">{frontmatter.datum}</span>
+          {frontmatter.bron && (
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-surface-600 bg-surface-100 px-2.5 py-1 rounded-full">
+              {frontmatter.bron}
+            </span>
+          )}
+        </div>
 
-      <article className="prose prose-invert prose-p:text-surface-500 prose-headings:text-white prose-strong:text-white prose-a:text-brand-400 max-w-none">
-        {content}
+        <h1 className="text-3xl sm:text-4xl font-bold text-surface-900 mb-3 leading-tight">
+          {frontmatter.titel}
+        </h1>
+        <p className="text-lg text-surface-600 mb-8 leading-relaxed">
+          {frontmatter.beschrijving}
+        </p>
+
+        <div className="prose prose-p:text-surface-700 prose-headings:text-surface-900 prose-strong:text-surface-900 prose-a:text-brand-500 prose-li:text-surface-700 max-w-none border-t border-surface-200 pt-8">
+          {content}
+        </div>
       </article>
 
-      <div className="mt-10">
-        <Link href="/nieuws" className="inline-flex items-center gap-2 text-sm text-surface-500 hover:text-white transition-colors">
+      <div className="mt-8">
+        <Link href="/nieuws" className="inline-flex items-center gap-2 text-sm text-surface-600 hover:text-brand-500 transition-colors">
           <ArrowLeft className="h-4 w-4" /> Terug naar nieuws
         </Link>
       </div>
