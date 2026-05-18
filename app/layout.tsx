@@ -65,12 +65,13 @@ export const metadata: Metadata = {
 }
 
 // Initial theme-script: voorkomt FOUC door theme te zetten vóór render
+// Default: licht. Alleen wisselen naar dark als de gebruiker dat zelf
+// expliciet heeft ingesteld via de toggle (opgeslagen in localStorage).
 const themeInitScript = `
 (function () {
   try {
     var saved = localStorage.getItem('theme');
-    var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var theme = saved || (systemDark ? 'dark' : 'light');
+    var theme = saved === 'dark' ? 'dark' : 'light';
     document.documentElement.dataset.theme = theme;
   } catch (e) {
     document.documentElement.dataset.theme = 'light';
