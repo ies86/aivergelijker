@@ -13,16 +13,36 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white border-b border-surface-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2 group">
-            <svg width="32" height="32" viewBox="0 0 36 36" className="shrink-0">
-              <rect width="36" height="36" rx="10" fill="#0f172a" />
-              <path d="M10 13h6v10h-6z" rx="1.5" fill="white" fillOpacity="0.85" />
-              <path d="M20 9h6v14h-6z" rx="1.5" fill="white" />
-              <path d="M10 25h16" stroke="white" strokeWidth="2" strokeLinecap="round" />
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <svg width="34" height="34" viewBox="0 0 36 36" className="shrink-0">
+              <defs>
+                <linearGradient id="logoBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#0f172a" />
+                  <stop offset="100%" stopColor="#1e293b" />
+                </linearGradient>
+                <linearGradient id="sparkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#c4b5fd" />
+                  <stop offset="50%" stopColor="#a78bfa" />
+                  <stop offset="100%" stopColor="#22d3ee" />
+                </linearGradient>
+              </defs>
+              {/* Donker afgerond vierkant met subtiele gradient */}
+              <rect width="36" height="36" rx="9" fill="url(#logoBgGrad)" />
+              {/* Hoofd-sparkle: 4-puntig met curved/concave kanten */}
+              <path
+                d="M16 6 C 16.5 13, 17 14.5, 18 15 C 19.5 16, 22 16.5, 26 17 C 22 17.5, 19.5 18, 18 19 C 17 19.5, 16.5 21, 16 28 C 15.5 21, 15 19.5, 14 19 C 12.5 18, 10 17.5, 6 17 C 10 16.5, 12.5 16, 14 15 C 15 14.5, 15.5 13, 16 6 Z"
+                fill="url(#sparkGrad)"
+              />
+              {/* Kleine accent-sparkle rechtsboven (shimmer) */}
+              <path
+                d="M27 22 C 27.2 24, 27.4 24.5, 27.8 24.7 C 28.4 25, 29.2 25.2, 30.5 25.4 C 29.2 25.6, 28.4 25.8, 27.8 26.1 C 27.4 26.3, 27.2 26.8, 27 28.8 C 26.8 26.8, 26.6 26.3, 26.2 26.1 C 25.6 25.8, 24.8 25.6, 23.5 25.4 C 24.8 25.2, 25.6 25, 26.2 24.7 C 26.6 24.5, 26.8 24, 27 22 Z"
+                fill="white"
+                fillOpacity="0.75"
+              />
             </svg>
             <span className="text-[22px] font-bold tracking-tight">
-              <span className="text-surface-900">ai</span>
-              <span className="text-surface-500">vergelijker</span>
+              <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">ai</span>
+              <span className="text-surface-900">vergelijker</span>
             </span>
           </Link>
 
