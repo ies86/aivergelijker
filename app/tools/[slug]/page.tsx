@@ -1,12 +1,13 @@
 import { notFound } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { Star, Globe, ArrowLeft, ExternalLink } from 'lucide-react'
-import { getAllTools, getToolBySlug } from '@/lib/tools'
+import { getAllTools, getToolBySlug, getToolsByCategorie } from '@/lib/tools'
 import { getCategorieInfo } from '@/lib/categories'
 import type { Categorie } from '@/lib/types'
 import PricingTable from '@/components/tools/PricingTable'
+import ToolLogo from '@/components/tools/ToolLogo'
+import StickyToolBar from '@/components/tools/StickyToolBar'
 import AffiliateButton from '@/components/shared/AffiliateButton'
 import JsonLd from '@/components/seo/JsonLd'
 import { prijsmodelLabel } from '@/lib/utils'
@@ -49,8 +50,12 @@ export default async function ToolPagina({ params }: { params: Promise<{ slug: s
   const cat = getCategorieInfo(tool.categorie as Categorie)
   const goedkoopsteBetaald = tool.plannen.find(p => p.prijs_mnd > 0)
 
+  // Haal tools uit dezelfde categorie op voor "Vergelijk met..." dropdown
+  const categorieTools = await getToolsByCategorie(tool.categorie as Categorie).catch(() => [])
+  const vergelijkbareTools = categorieTools.filter(t => t.slug !== tool.slug).slice(0, 6)
+
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-32">
       <JsonLd type="tool" tool={tool} />
       <nav className="text-sm text-surface-500 mb-6 flex items-center gap-2">
         <Link href="/" className="hover:text-brand-500 transition-colors">Home</Link>
@@ -60,19 +65,13 @@ export default async function ToolPagina({ params }: { params: Promise<{ slug: s
         <span className="text-surface-900 font-medium">{tool.naam}</span>
       </nav>
 
-      <div className="card p-7 mb-8">
+      <div className="card p-6 sm:p-8 mb-8">
         <div className="flex flex-col sm:flex-row gap-5">
-          {tool.logo_url ? (
-            <Image src={tool.logo_url} alt={tool.naam} width={72} height={72} className="rounded-2xl object-contain bg-surface-100 p-2 shrink-0" />
-          ) : (
-            <div className="w-[72px] h-[72px] rounded-2xl bg-brand-500 flex items-center justify-center text-white font-bold text-3xl shrink-0">
-              {tool.naam[0]}
-            </div>
-          )}
+          <ToolLogo src={tool.logo_url} naam={tool.naam} size={72} />
 
           <div className="flex-1">
             <div className="flex flex-wrap items-start gap-2 mb-1">
-              <h1 className="text-2xl font-bold text-surface-900">{tool.naam}</h1>
+              <h1 className="text-3xl font-bold text-surface-900" style={{ letterSpacing: '-0.025em' }}>{tool.naam}</h1>
               <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
                 tool.prijsmodel === 'gratis' ? 'badge-green' :
                 tool.prijsmodel === 'freemium' ? 'badge-purple' : 'badge-amber'
@@ -85,14 +84,14 @@ export default async function ToolPagina({ params }: { params: Promise<{ slug: s
                 </span>
               )}
             </div>
-            <p className="text-surface-500 mb-3">{tool.tagline}</p>
+            <p className="text-surface-600 mb-3">{tool.tagline}</p>
 
             <div className="flex flex-wrap items-center gap-4 text-sm">
               {tool.beoordeling && (
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 tabular-nums">
                   <Star className="h-4 w-4 text-amber-400 fill-amber-400" />
                   <span className="font-bold text-surface-900">{tool.beoordeling}</span>
-                  <span className="text-surface-400">/5</span>
+                  <span className="text-surface-400">/ 5</span>
                 </div>
               )}
               {cat && (
@@ -101,7 +100,7 @@ export default async function ToolPagina({ params }: { params: Promise<{ slug: s
                 </Link>
               )}
               {goedkoopsteBetaald && (
-                <span className="text-surface-500">Vanaf &euro;{goedkoopsteBetaald.prijs_mnd}/mnd</span>
+                <span className="text-surface-500 tabular-nums">Vanaf €{goedkoopsteBetaald.prijs_mnd}/mnd</span>
               )}
             </div>
           </div>
@@ -118,14 +117,44 @@ export default async function ToolPagina({ params }: { params: Promise<{ slug: s
       </div>
 
       <section className="mb-10">
-        <h2 className="text-xl font-bold text-surface-900 mb-3">Over {tool.naam}</h2>
+        <h2 className="text-xl font-bold text-surface-900 mb-3" style={{ letterSpacing: '-0.02em' }}>Over {tool.naam}</h2>
         <p className="text-surface-600 leading-relaxed">{tool.beschrijving}</p>
       </section>
 
       {tool.plannen.length > 0 && (
         <section className="mb-10">
-          <h2 className="text-xl font-bold text-surface-900 mb-5">Prijzen & plannen</h2>
+          <h2 className="text-xl font-bold text-surface-900 mb-5" style={{ letterSpacing: '-0.02em' }}>Prijzen & plannen</h2>
           <PricingTable plannen={tool.plannen} toolSlug={tool.slug} />
+        </section>
+      )}
+
+      {vergelijkbareTools.length > 0 && (
+        <section className="mb-10">
+          <h2 className="text-xl font-bold text-surface-900 mb-5" style={{ letterSpacing: '-0.02em' }}>
+            Vergelijk {tool.naam} met andere {cat?.label.toLowerCase()}
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {vergelijkbareTools.slice(0, 6).map(t => (
+              <Link
+                key={t.slug}
+                href={`/vergelijk/${tool.slug}-vs-${t.slug}`}
+                className="card p-3 group flex items-center gap-3"
+              >
+                <ToolLogo src={t.logo_url} naam={t.naam} size={36} />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-bold text-surface-900 group-hover:text-brand-500 transition-colors truncate">
+                    vs {t.naam}
+                  </p>
+                  {t.beoordeling && (
+                    <p className="text-xs text-surface-500 inline-flex items-center gap-1 tabular-nums">
+                      <Star className="h-3 w-3 text-amber-400 fill-amber-400" />
+                      {t.beoordeling}
+                    </p>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
         </section>
       )}
 
@@ -139,6 +168,8 @@ export default async function ToolPagina({ params }: { params: Promise<{ slug: s
           Terug naar {cat?.label ?? 'overzicht'}
         </Link>
       </div>
+
+      <StickyToolBar tool={tool} vergelijkbareTools={vergelijkbareTools} />
     </div>
   )
 }

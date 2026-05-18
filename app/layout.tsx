@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Nunito_Sans, Roboto_Slab } from 'next/font/google'
+import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -8,8 +8,18 @@ import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 
-const nunitoSans = Nunito_Sans({ subsets: ['latin'], weight: ['400', '600', '700'], variable: '--font-body' })
-const robotoSlab = Roboto_Slab({ subsets: ['latin'], weight: ['700'], variable: '--font-heading' })
+// Variable fonts van Vercel — optical sizing en alle weights beschikbaar
+const geist = Geist({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+})
+
+const geistMono = Geist_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aivergelijker.nl'),
@@ -54,8 +64,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="nl">
-      <body className={`${nunitoSans.className} ${robotoSlab.variable} antialiased`}>
+    <html lang="nl" className={`${geist.variable} ${geistMono.variable}`}>
+      <body className="font-sans antialiased">
         <GoogleAnalytics />
         <JsonLd type="website" />
         <Header />

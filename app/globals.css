@@ -20,21 +20,66 @@
   --color-surface-800: #1e293b;
   --color-surface-900: #0f172a;
 
-  --font-family-sans: "Nunito Sans", system-ui, -apple-system, sans-serif;
-  --font-family-heading: var(--font-heading), "Roboto Slab", serif;
+  /* Geist variable font — system fallbacks voor zekerheid */
+  --font-family-sans: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-family-mono: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
 }
 
 html {
   color-scheme: light;
+  /* Vloeiende fontweergave op alle browsers */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   background-color: #d8dbe0;
   color: #1e293b;
+  font-family: var(--font-family-sans);
+  /* Tabular numbers + contextual alternates — moderne defaults */
+  font-feature-settings: "ss01", "cv11", "calt";
+  /* Body weight 400-500 voor optimale leesbaarheid */
+  font-weight: 450;
 }
 
-h1, h2, h3 {
-  font-family: var(--font-family-heading);
+/* Display headings — gewicht 600/700, strakkere kerning */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-sans);
+  font-weight: 700;
+  /* Optical sizing — display krijgt subtieler kerning bij grote groottes */
+  font-optical-sizing: auto;
+  /* Letter-spacing tighten op headings (vooral grote koppen) */
+  letter-spacing: -0.02em;
+  /* Iets strakker line-height op headings */
+  line-height: 1.15;
+}
+
+/* Extra strak op de grootste H1 */
+h1 {
+  letter-spacing: -0.035em;
+  font-weight: 700;
+}
+
+h2 {
+  letter-spacing: -0.025em;
+}
+
+/* Cijfers (prijzen, ratings, statistieken) — tabular numerals
+   zodat ze altijd dezelfde breedte hebben en netjes uitlijnen */
+.tabular-nums,
+.price,
+.rating,
+.stat-number,
+time {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum", "cv11";
+}
+
+/* Monospace klasse voor codeblokken */
+.font-mono {
+  font-family: var(--font-family-mono);
+  font-feature-settings: "tnum", "calt";
 }
 
 /* Schone witte kaart met subtiele schaduw */
@@ -42,7 +87,7 @@ h1, h2, h3 {
   background: #fff;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
-  transition: box-shadow 0.18s ease, border-color 0.18s ease;
+  transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
 }
 .card:hover {
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
@@ -67,6 +112,7 @@ h1, h2, h3 {
   font-size: 0.78rem;
   font-weight: 600;
   color: #374151;
+  letter-spacing: -0.005em;
 }
 .swatch {
   display: inline-block;
@@ -117,16 +163,28 @@ h1, h2, h3 {
   color: #d97706;
 }
 
-/* Prose aanpassingen */
+/* Prose aanpassingen — Geist heading-feel binnen articles */
+.prose {
+  font-family: var(--font-family-sans);
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  font-family: var(--font-family-sans);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
 .prose h2 {
   color: #1e293b;
-  font-weight: 700;
+  letter-spacing: -0.025em;
 }
 .prose p {
   color: #475569;
 }
 .prose a {
   color: #6d28d9;
+}
+.prose code {
+  font-family: var(--font-family-mono);
+  font-feature-settings: "tnum";
 }
 
 /* Nieuws-kaart datum-tag */
@@ -136,4 +194,5 @@ h1, h2, h3 {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
 }

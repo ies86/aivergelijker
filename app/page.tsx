@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, ChevronRight } from 'lucide-react'
+import { ArrowRight, ChevronRight, Sparkles, Star } from 'lucide-react'
 import { getUitgelichtTools, getAllTools, getHiddenGems } from '@/lib/tools'
 import { CATEGORIEEN } from '@/lib/categories'
 import ToolGrid from '@/components/tools/ToolGrid'
@@ -7,6 +7,8 @@ import ToolLogo from '@/components/tools/ToolLogo'
 import NewsletterForm from '@/components/shared/NewsletterForm'
 import HeroSearch from '@/components/shared/HeroSearch'
 import JsonLd from '@/components/seo/JsonLd'
+
+const MAANDEN = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december']
 
 export const revalidate = 3600
 
@@ -69,68 +71,105 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Highlights — artificialanalysis-stijl */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6">
-        <h2 className="text-2xl font-bold text-surface-900 mb-1">Highlights</h2>
-        <p className="text-surface-500 text-sm mb-6">Onze belangrijkste bevindingen na het vergelijken van 33+ AI-tools.</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-          {[
-            {
-              label: 'Slimste AI',
-              kleur: '#1e293b',
-              body: (
-                <>
-                  <strong className="text-surface-900">Claude Opus 4.7</strong> en <strong className="text-surface-900">GPT-5</strong> zijn momenteel de slimste AI-modellen, gevolgd door Gemini 3.1 Pro.
-                </>
-              ),
-            },
-            {
-              label: 'Snelste antwoord',
-              kleur: '#f59e0b',
-              body: (
-                <>
-                  <strong className="text-surface-900">Grok 4</strong> en <strong className="text-surface-900">Gemini 2.5 Flash</strong> reageren binnen 0,3 sec — ideaal voor live gesprekken.
-                </>
-              ),
-            },
-            {
-              label: 'Beste afbeeldingen',
-              kleur: '#db2777',
-              body: (
-                <>
-                  <strong className="text-surface-900">Midjourney V7</strong> levert de mooiste artistieke beelden, gevolgd door <strong className="text-surface-900">DALL-E 3</strong> en Adobe Firefly.
-                </>
-              ),
-            },
-            {
-              label: 'Goedkoopste',
-              kleur: '#059669',
-              body: (
-                <>
-                  <strong className="text-surface-900">DeepSeek R1</strong> en <strong className="text-surface-900">Gemini Flash</strong> bieden de laagste prijs per miljoen tokens.
-                </>
-              ),
-            },
-            {
-              label: 'Beste gratis',
-              kleur: '#7c3aed',
-              body: (
-                <>
-                  <strong className="text-surface-900">ChatGPT</strong>, <strong className="text-surface-900">Claude</strong> en <strong className="text-surface-900">Gemini</strong> bieden alle drie een sterke gratis versie zonder limiet op berichten.
-                </>
-              ),
-            },
-          ].map(item => (
-            <div key={item.label} className="card p-4">
-              <div className="cat-pill mb-3">
-                <span className="swatch" style={{ background: item.kleur }} />
-                {item.label}
+      {/* Highlights — Bento grid met Tool van de maand + 4 highlights */}
+      {(() => {
+        const toolVanDeMaand = uitgelicht[0]
+        const huidigeMaand = MAANDEN[new Date().getMonth()]
+        const goedkoopsteVdM = toolVanDeMaand?.plannen.find(p => p.prijs_mnd === 0) ?? toolVanDeMaand?.plannen[0]
+        const highlights = [
+          { label: 'Slimste AI', kleur: '#1e293b', body: (<><strong className="text-surface-900">Claude Opus 4.7</strong> en <strong className="text-surface-900">GPT-5</strong> zijn momenteel de slimste AI-modellen.</>) },
+          { label: 'Snelste antwoord', kleur: '#f59e0b', body: (<><strong className="text-surface-900">Grok 4</strong> en <strong className="text-surface-900">Gemini 2.5 Flash</strong> reageren binnen 0,3 seconden.</>) },
+          { label: 'Beste afbeeldingen', kleur: '#db2777', body: (<><strong className="text-surface-900">Midjourney V7</strong> levert de mooiste artistieke beelden.</>) },
+          { label: 'Beste gratis', kleur: '#7c3aed', body: (<><strong className="text-surface-900">ChatGPT</strong>, <strong className="text-surface-900">Claude</strong> en <strong className="text-surface-900">Gemini</strong> bieden alle drie sterke gratis versies.</>) },
+        ]
+
+        return (
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6">
+            <div className="flex items-end justify-between mb-6">
+              <div>
+                <h2 className="text-2xl font-bold text-surface-900 mb-1">Highlights</h2>
+                <p className="text-surface-500 text-sm">Onze belangrijkste bevindingen na het vergelijken van 33+ AI-tools.</p>
               </div>
-              <p className="text-sm text-surface-600 leading-relaxed">{item.body}</p>
             </div>
-          ))}
-        </div>
-      </section>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+              {/* Tool van de maand — grote feature card */}
+              {toolVanDeMaand && (
+                <Link
+                  href={`/tools/${toolVanDeMaand.slug}`}
+                  className="lg:col-span-7 card p-6 sm:p-8 group relative overflow-hidden flex flex-col"
+                >
+                  {/* Subtiele gradient accent */}
+                  <div
+                    aria-hidden
+                    className="absolute -top-24 -right-24 w-64 h-64 rounded-full opacity-30 blur-3xl"
+                    style={{ background: 'radial-gradient(circle, #a78bfa 0%, transparent 60%)' }}
+                  />
+                  <div className="relative flex flex-col h-full">
+                    <div className="flex items-center gap-2 mb-5">
+                      <span className="cat-pill" style={{ background: '#fef3c7', color: '#b45309' }}>
+                        <Sparkles className="h-3 w-3" />
+                        Tool van {huidigeMaand}
+                      </span>
+                    </div>
+
+                    <div className="flex items-start gap-4 mb-4">
+                      <ToolLogo src={toolVanDeMaand.logo_url} naam={toolVanDeMaand.naam} size={64} />
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-2xl sm:text-3xl font-bold text-surface-900 group-hover:text-brand-500 transition-colors leading-tight" style={{ letterSpacing: '-0.025em' }}>
+                          {toolVanDeMaand.naam}
+                        </h3>
+                        <p className="text-sm text-surface-500 mt-1 capitalize">{toolVanDeMaand.categorie}</p>
+                      </div>
+                    </div>
+
+                    <p className="text-base text-surface-600 leading-relaxed mb-5 line-clamp-3">
+                      {toolVanDeMaand.beschrijving}
+                    </p>
+
+                    <div className="flex items-center gap-4 mb-5 flex-wrap">
+                      {toolVanDeMaand.beoordeling && (
+                        <span className="inline-flex items-center gap-1.5 text-sm">
+                          <Star className="h-4 w-4 text-amber-400 fill-amber-400" />
+                          <strong className="text-surface-900 tabular-nums">{toolVanDeMaand.beoordeling}</strong>
+                          <span className="text-surface-400 text-xs">/ 5</span>
+                        </span>
+                      )}
+                      {goedkoopsteVdM && (
+                        <span className="text-sm text-surface-600">
+                          {goedkoopsteVdM.prijs_mnd === 0
+                            ? <span className="text-emerald-600 font-semibold">Gratis plan beschikbaar</span>
+                            : <>Vanaf <strong className="text-surface-900 tabular-nums">€{goedkoopsteVdM.prijs_mnd}/mnd</strong></>}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="mt-auto flex items-center justify-between pt-4 border-t border-surface-100">
+                      <span className="text-sm font-bold text-brand-500 group-hover:text-brand-700 transition-colors inline-flex items-center gap-1.5">
+                        Bekijk volledige review <ArrowRight className="h-4 w-4" />
+                      </span>
+                      <span className="text-xs text-surface-400">Onafhankelijk getest</span>
+                    </div>
+                  </div>
+                </Link>
+              )}
+
+              {/* 4 kleinere highlight-kaarten in 2x2 grid */}
+              <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {highlights.map(item => (
+                  <div key={item.label} className="card p-4 flex flex-col">
+                    <div className="cat-pill mb-3 self-start">
+                      <span className="swatch" style={{ background: item.kleur }} />
+                      {item.label}
+                    </div>
+                    <p className="text-sm text-surface-600 leading-relaxed">{item.body}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )
+      })()}
 
       {/* Categorieën — schone rij met kleur-swatch zoals artificialanalysis */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
