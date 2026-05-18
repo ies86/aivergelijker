@@ -4,13 +4,14 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { Menu, X, Search, ChevronDown } from 'lucide-react'
 import { CATEGORIEEN } from '@/lib/categories'
+import ThemeToggle from '@/components/shared/ThemeToggle'
 
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-surface-200">
+    <header className="sticky top-0 z-50 bg-[var(--bg-elevated)] border-b border-[var(--border-default)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2.5 group">
@@ -42,7 +43,7 @@ export default function Header() {
             </svg>
             <span className="text-[22px] font-bold tracking-tight">
               <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">ai</span>
-              <span className="text-surface-900">vergelijker</span>
+              <span className="text-[var(--text-primary)]">vergelijker</span>
             </span>
           </Link>
 
@@ -64,16 +65,18 @@ export default function Header() {
             </Link>
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <button
               onClick={() => setSearchOpen(!searchOpen)}
               className="p-2 rounded-lg text-surface-500 hover:text-brand-500 hover:bg-surface-50 transition-colors"
+              aria-label="Zoeken"
             >
               <Search className="h-5 w-5" />
             </button>
+            <ThemeToggle />
             <Link
               href="/vergelijk/chatgpt-vs-claude"
-              className="hidden md:inline-flex items-center gap-1.5 text-sm font-bold px-5 py-2.5 rounded-full bg-surface-900 text-white hover:bg-surface-700 transition-colors"
+              className="hidden md:inline-flex items-center gap-1.5 text-sm font-bold px-5 py-2.5 rounded-full bg-[var(--text-primary)] text-[var(--bg-elevated)] hover:opacity-90 transition-opacity"
             >
               Vergelijk
             </Link>

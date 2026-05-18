@@ -7,6 +7,8 @@ import JsonLd from '@/components/seo/JsonLd'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
+import CompareBar from '@/components/tools/CompareBar'
+import { getAllTools } from '@/lib/tools'
 
 // Variable fonts van Vercel — optical sizing en alle weights beschikbaar
 const geist = Geist({
@@ -62,15 +64,36 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+// Initial theme-script: voorkomt FOUC door theme te zetten vóór render
+const themeInitScript = `
+(function () {
+  try {
+    var saved = localStorage.getItem('theme');
+    var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var theme = saved || (systemDark ? 'dark' : 'light');
+    document.documentElement.dataset.theme = theme;
+  } catch (e) {
+    document.documentElement.dataset.theme = 'light';
+  }
+})();
+`
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const tools = await getAllTools().catch(() => [])
+  const minimaleTools = tools.map(t => ({ slug: t.slug, naam: t.naam, logo_url: t.logo_url }))
+
   return (
     <html lang="nl" className={`${geist.variable} ${geistMono.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="font-sans antialiased">
         <GoogleAnalytics />
         <JsonLd type="website" />
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />
+        <CompareBar alleTools={minimaleTools} />
         <Analytics />
         <SpeedInsights />
       </body>

@@ -1,11 +1,15 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* Dark mode detection: prefereert systeem, override via [data-theme] */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
   --color-brand-500: #6d28d9;
   --color-brand-600: #5b21b6;
   --color-brand-700: #4c1d95;
 
+  /* Accent kleur voor variatie (warm oranje, complementair aan paars) */
   --color-accent-500: #f59e0b;
   --color-accent-600: #d97706;
 
@@ -25,48 +29,61 @@
   --font-family-mono: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
 }
 
+:root {
+  /* Lichte modus tokens (default) */
+  --bg-base: #d8dbe0;
+  --bg-elevated: #ffffff;
+  --bg-subtle: #f3f4f6;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --border-default: #e5e7eb;
+  --border-strong: #d1d5db;
+}
+
+[data-theme="dark"] {
+  /* Donkere modus tokens */
+  --bg-base: #0a0a0d;
+  --bg-elevated: #16161c;
+  --bg-subtle: #1f1f28;
+  --text-primary: #f5f5f7;
+  --text-secondary: #a8a8b3;
+  --text-tertiary: #71717a;
+  --border-default: #27272f;
+  --border-strong: #3a3a44;
+}
+
 html {
   color-scheme: light;
-  /* Vloeiende fontweergave op alle browsers */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
-body {
-  background-color: #d8dbe0;
-  color: #1e293b;
-  font-family: var(--font-family-sans);
-  /* Tabular numbers + contextual alternates — moderne defaults */
-  font-feature-settings: "ss01", "cv11", "calt";
-  /* Body weight 400-500 voor optimale leesbaarheid */
-  font-weight: 450;
+html[data-theme="dark"] {
+  color-scheme: dark;
 }
 
-/* Display headings — gewicht 600/700, strakkere kerning */
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-family-sans);
+  font-feature-settings: "ss01", "cv11", "calt";
+  font-weight: 450;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family-sans);
   font-weight: 700;
-  /* Optical sizing — display krijgt subtieler kerning bij grote groottes */
   font-optical-sizing: auto;
-  /* Letter-spacing tighten op headings (vooral grote koppen) */
   letter-spacing: -0.02em;
-  /* Iets strakker line-height op headings */
   line-height: 1.15;
 }
 
-/* Extra strak op de grootste H1 */
-h1 {
-  letter-spacing: -0.035em;
-  font-weight: 700;
-}
+h1 { letter-spacing: -0.035em; font-weight: 700; }
+h2 { letter-spacing: -0.025em; }
 
-h2 {
-  letter-spacing: -0.025em;
-}
-
-/* Cijfers (prijzen, ratings, statistieken) — tabular numerals
-   zodat ze altijd dezelfde breedte hebben en netjes uitlijnen */
 .tabular-nums,
 .price,
 .rating,
@@ -76,22 +93,26 @@ time {
   font-feature-settings: "tnum", "cv11";
 }
 
-/* Monospace klasse voor codeblokken */
 .font-mono {
   font-family: var(--font-family-mono);
   font-feature-settings: "tnum", "calt";
 }
 
-/* Schone witte kaart met subtiele schaduw */
+/* Schone kaart met soft schaduw — werkt zowel light als dark */
 .card {
-  background: #fff;
+  background: var(--bg-elevated);
   border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  border: 1px solid var(--border-default);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 .card:hover {
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
-  border-color: #d1d5db;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+[data-theme="dark"] .card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  border-color: rgba(167, 139, 250, 0.3);
 }
 
 /* Hero-zoekbalk */
@@ -100,18 +121,22 @@ time {
   border-radius: 999px;
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
 }
+[data-theme="dark"] .hero-search {
+  background: var(--bg-elevated);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+}
 
-/* Categorie-pill — klein gekleurd vierkant + label, à la artificialanalysis */
+/* Categorie-pill — klein gekleurd vierkant + label */
 .cat-pill {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
-  background: #f3f4f6;
+  background: var(--bg-subtle);
   border-radius: 999px;
   font-size: 0.78rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-secondary);
   letter-spacing: -0.005em;
 }
 .swatch {
@@ -126,27 +151,29 @@ time {
   height: 9px;
 }
 
-/* Kleur-swatches per categorie — bewust ingetogen */
+/* Kleur-swatches per categorie */
 .swatch-chatbot { background: #1e293b; }
+[data-theme="dark"] .swatch-chatbot { background: #94a3b8; }
 .swatch-afbeelding { background: #db2777; }
 .swatch-video { background: #ea580c; }
 .swatch-coding { background: #059669; }
 .swatch-audio { background: #0891b2; }
 .swatch-productiviteit { background: #6d28d9; }
+[data-theme="dark"] .swatch-productiviteit { background: #a78bfa; }
 
 /* Categorie-rij item */
 .category-row {
   display: flex;
   align-items: center;
   padding: 16px 20px;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--border-default);
   transition: background-color 0.15s ease;
 }
 .category-row:last-child {
   border-bottom: none;
 }
 .category-row:hover {
-  background-color: #f8fafc;
+  background-color: var(--bg-subtle);
 }
 
 /* Badges - ingetogen */
@@ -162,8 +189,20 @@ time {
   background-color: #fffbeb;
   color: #d97706;
 }
+[data-theme="dark"] .badge-green {
+  background-color: rgba(5, 150, 105, 0.15);
+  color: #34d399;
+}
+[data-theme="dark"] .badge-purple {
+  background-color: rgba(124, 58, 237, 0.2);
+  color: #c4b5fd;
+}
+[data-theme="dark"] .badge-amber {
+  background-color: rgba(217, 119, 6, 0.15);
+  color: #fbbf24;
+}
 
-/* Prose aanpassingen — Geist heading-feel binnen articles */
+/* Prose aanpassingen */
 .prose {
   font-family: var(--font-family-sans);
 }
@@ -173,14 +212,17 @@ time {
   letter-spacing: -0.02em;
 }
 .prose h2 {
-  color: #1e293b;
+  color: var(--text-primary);
   letter-spacing: -0.025em;
 }
 .prose p {
-  color: #475569;
+  color: var(--text-secondary);
 }
 .prose a {
   color: #6d28d9;
+}
+[data-theme="dark"] .prose a {
+  color: #a78bfa;
 }
 .prose code {
   font-family: var(--font-family-mono);
@@ -190,9 +232,73 @@ time {
 /* Nieuws-kaart datum-tag */
 .date-tag {
   font-size: 0.72rem;
-  color: #6b7280;
+  color: var(--text-tertiary);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-variant-numeric: tabular-nums;
+}
+
+/* Microinteractie — subtiele fade-up bij scroll */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fadeUp 0.5s ease both;
+}
+
+/* Counter animatie pulse subtiel */
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+.animate-subtle-pulse {
+  animation: subtle-pulse 2s ease-in-out infinite;
+}
+
+/* Smooth scroll bij anchor navigatie */
+html { scroll-behavior: smooth; }
+
+/* === Dark mode kleur-overrides ===
+   Veel componenten gebruiken hardcoded text-surface-{N}; in dark mode
+   keren we deze om zodat alles automatisch leesbaar blijft.
+   !important nodig om Tailwind v4 atomic class te beats. */
+[data-theme="dark"] .text-surface-900 { color: #f5f5f7 !important; }
+[data-theme="dark"] .text-surface-800 { color: #e4e4e7 !important; }
+[data-theme="dark"] .text-surface-700 { color: #d4d4d8 !important; }
+[data-theme="dark"] .text-surface-600 { color: #a8a8b3 !important; }
+[data-theme="dark"] .text-surface-500 { color: #8e8e9a !important; }
+[data-theme="dark"] .text-surface-400 { color: #6b6b75 !important; }
+[data-theme="dark"] .text-surface-300 { color: #52525b !important; }
+
+[data-theme="dark"] .bg-white { background-color: var(--bg-elevated) !important; }
+[data-theme="dark"] .bg-surface-50 { background-color: var(--bg-subtle) !important; }
+[data-theme="dark"] .bg-surface-100 { background-color: var(--bg-subtle) !important; }
+[data-theme="dark"] .bg-surface-900 { background-color: #050507 !important; }
+
+[data-theme="dark"] .border-surface-100 { border-color: var(--border-default) !important; }
+[data-theme="dark"] .border-surface-200 { border-color: var(--border-default) !important; }
+[data-theme="dark"] .border-surface-300 { border-color: var(--border-strong) !important; }
+
+/* Paarse accenten in dark mode wat lichter zodat leesbaar */
+[data-theme="dark"] .bg-purple-50 { background-color: rgba(124, 58, 237, 0.12) !important; }
+[data-theme="dark"] .text-brand-500 { color: #a78bfa !important; }
+[data-theme="dark"] .text-brand-700 { color: #c4b5fd !important; }
+
+/* Emerald / amber blijven herkenbaar maar wat zachter */
+[data-theme="dark"] .text-emerald-600 { color: #34d399 !important; }
+[data-theme="dark"] .text-emerald-700 { color: #34d399 !important; }
+[data-theme="dark"] .text-amber-400 { color: #fbbf24 !important; }
+[data-theme="dark"] .text-amber-500 { color: #fbbf24 !important; }
+[data-theme="dark"] .text-amber-700 { color: #fde68a !important; }
+[data-theme="dark"] .bg-amber-50 { background-color: rgba(217, 119, 6, 0.15) !important; }
+[data-theme="dark"] .bg-amber-100 { background-color: rgba(217, 119, 6, 0.2) !important; }
+[data-theme="dark"] .bg-emerald-50 { background-color: rgba(5, 150, 105, 0.15) !important; }
+
+/* Focus ring — toegankelijkheid en design */
+:focus-visible {
+  outline: 2px solid #7c3aed;
+  outline-offset: 2px;
+  border-radius: 4px;
 }

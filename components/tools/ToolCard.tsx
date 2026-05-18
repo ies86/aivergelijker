@@ -3,6 +3,7 @@ import { Star, ArrowUpRight } from 'lucide-react'
 import type { Tool } from '@/lib/types'
 import { prijsmodelLabel } from '@/lib/utils'
 import ToolLogo from './ToolLogo'
+import CompareToggleButton from './CompareToggleButton'
 
 interface Props {
   tool: Tool
@@ -47,23 +48,26 @@ export default function ToolCard({ tool }: Props) {
 
       <p className="text-sm text-surface-500 leading-relaxed">{tool.tagline}</p>
 
-      <div className="flex items-center justify-between mt-auto pt-3 border-t border-surface-100">
-        <div className="text-sm text-surface-500">
+      <div className="flex items-center justify-between mt-auto pt-3 border-t border-surface-100 gap-2">
+        <div className="text-sm text-surface-500 tabular-nums">
           {goedkoopstePlan
             ? goedkoopstePlan.prijs_mnd === 0
               ? <span className="text-emerald-600 font-semibold">Gratis</span>
-              : <span>Vanaf <strong className="text-surface-900">&euro;{goedkoopstePlan.prijs_mnd}/mnd</strong></span>
+              : <span>Vanaf <strong className="text-surface-900">€{goedkoopstePlan.prijs_mnd}/mnd</strong></span>
             : null}
         </div>
-        <Link
-          href={`/api/go/${tool.slug}`}
-          target="_blank"
-          rel="noopener noreferrer sponsored"
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-surface-900 hover:bg-surface-700 px-4 py-2 rounded-full transition-colors"
-        >
-          Probeer nu
-          <ArrowUpRight className="h-3.5 w-3.5" />
-        </Link>
+        <div className="flex items-center gap-1.5">
+          <CompareToggleButton slug={tool.slug} variant="icon" />
+          <Link
+            href={`/api/go/${tool.slug}`}
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[var(--text-primary)] hover:opacity-90 px-4 py-2 rounded-full transition-opacity"
+          >
+            Probeer nu
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
       </div>
     </div>
   )

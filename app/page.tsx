@@ -6,6 +6,8 @@ import ToolGrid from '@/components/tools/ToolGrid'
 import ToolLogo from '@/components/tools/ToolLogo'
 import NewsletterForm from '@/components/shared/NewsletterForm'
 import HeroSearch from '@/components/shared/HeroSearch'
+import SocialProof from '@/components/shared/SocialProof'
+import FadeUp from '@/components/shared/FadeUp'
 import JsonLd from '@/components/seo/JsonLd'
 
 const MAANDEN = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december']
@@ -85,6 +87,8 @@ export default async function HomePage() {
 
         return (
           <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6">
+            <SocialProof />
+
             <div className="flex items-end justify-between mb-6">
               <div>
                 <h2 className="text-2xl font-bold text-surface-900 mb-1">Highlights</h2>
