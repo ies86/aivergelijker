@@ -2,6 +2,70 @@ import { supabase } from './supabase'
 import { TOOLS } from './data'
 import type { Tool, Categorie } from './types'
 
+/**
+ * Per-tool domein-overrides voor gevallen waar het tool-product
+ * onder een andere merkdomein zit dan website_url suggereert.
+ */
+const DOMEIN_OVERRIDES: Record<string, string> = {
+  'chatgpt': 'openai.com',
+  'dall-e': 'openai.com',
+  'sora': 'openai.com',
+  'claude': 'anthropic.com',
+  'claude-code': 'anthropic.com',
+  'gemini': 'google.com',
+  'copilot': 'microsoft.com',
+  'github-copilot': 'github.com',
+  'cursor': 'cursor.com',
+  'windsurf': 'codeium.com',
+  'v0': 'vercel.com',
+  'grok': 'x.ai',
+  'midjourney': 'midjourney.com',
+  'stable-diffusion': 'stability.ai',
+  'runway': 'runwayml.com',
+  'kling': 'klingai.com',
+  'elevenlabs': 'elevenlabs.io',
+  'suno': 'suno.com',
+  'murf-ai': 'murf.ai',
+  'notion-ai': 'notion.so',
+  'gamma': 'gamma.app',
+  'jasper': 'jasper.ai',
+  'perplexity': 'perplexity.ai',
+  'poe': 'poe.com',
+  'adobe-firefly': 'adobe.com',
+  'ideogram': 'ideogram.ai',
+  'synthesia': 'synthesia.io',
+  'descript': 'descript.com',
+  'pictory': 'pictory.ai',
+  'copy-ai': 'copy.ai',
+  'writesonic': 'writesonic.com',
+  'fireflies-ai': 'fireflies.ai',
+  'surfer-seo': 'surferseo.com',
+}
+
+function domeinVoor(tool: Tool): string | null {
+  if (DOMEIN_OVERRIDES[tool.slug]) return DOMEIN_OVERRIDES[tool.slug]
+  if (tool.website_url) {
+    try {
+      return new URL(tool.website_url).hostname.replace(/^www\./, '')
+    } catch {
+      return null
+    }
+  }
+  return null
+}
+
+function logoVoor(tool: Tool): string | null {
+  if (tool.logo_url) return tool.logo_url
+  const domein = domeinVoor(tool)
+  if (!domein) return null
+  // Google's favicon-service levert betrouwbare 128px logos voor vrijwel elk domein.
+  return `https://www.google.com/s2/favicons?domain=${domein}&sz=128`
+}
+
+function metLogos(tools: Tool[]): Tool[] {
+  return tools.map(t => ({ ...t, logo_url: logoVoor(t) }))
+}
+
 // Probeert Supabase, valt terug op lokale data
 export async function getAllTools(): Promise<Tool[]> {
   try {
@@ -10,10 +74,10 @@ export async function getAllTools(): Promise<Tool[]> {
       .select('*')
       .order('beoordeling', { ascending: false })
 
-    if (error || !data?.length) return TOOLS.sort((a, b) => (b.beoordeling ?? 0) - (a.beoordeling ?? 0))
-    return data as Tool[]
+    if (error || !data?.length) return metLogos(TOOLS.sort((a, b) => (b.beoordeling ?? 0) - (a.beoordeling ?? 0)))
+    return metLogos(data as Tool[])
   } catch {
-    return TOOLS.sort((a, b) => (b.beoordeling ?? 0) - (a.beoordeling ?? 0))
+    return metLogos(TOOLS.sort((a, b) => (b.beoordeling ?? 0) - (a.beoordeling ?? 0)))
   }
 }
 
@@ -25,10 +89,11 @@ export async function getToolBySlug(slug: string): Promise<Tool | null> {
       .eq('slug', slug)
       .single()
 
-    if (error || !data) return TOOLS.find(t => t.slug === slug) ?? null
-    return data as Tool
+    const tool = (error || !data) ? (TOOLS.find(t => t.slug === slug) ?? null) : (data as Tool)
+    return tool ? metLogos([tool])[0] : null
   } catch {
-    return TOOLS.find(t => t.slug === slug) ?? null
+    const tool = TOOLS.find(t => t.slug === slug) ?? null
+    return tool ? metLogos([tool])[0] : null
   }
 }
 
@@ -40,10 +105,10 @@ export async function getToolsByCategorie(categorie: Categorie): Promise<Tool[]>
       .eq('categorie', categorie)
       .order('beoordeling', { ascending: false })
 
-    if (error || !data?.length) return TOOLS.filter(t => t.categorie === categorie).sort((a, b) => (b.beoordeling ?? 0) - (a.beoordeling ?? 0))
-    return data as Tool[]
+    if (error || !data?.length) return metLogos(TOOLS.filter(t => t.categorie === categorie).sort((a, b) => (b.beoordeling ?? 0) - (a.beoordeling ?? 0)))
+    return metLogos(data as Tool[])
   } catch {
-    return TOOLS.filter(t => t.categorie === categorie).sort((a, b) => (b.beoordeling ?? 0) - (a.beoordeling ?? 0))
+    return metLogos(TOOLS.filter(t => t.categorie === categorie).sort((a, b) => (b.beoordeling ?? 0) - (a.beoordeling ?? 0)))
   }
 }
 
@@ -55,10 +120,10 @@ export async function getUitgelichtTools(): Promise<Tool[]> {
       .eq('uitgelicht', true)
       .order('beoordeling', { ascending: false })
 
-    if (error || !data?.length) return TOOLS.filter(t => t.uitgelicht).sort((a, b) => (b.beoordeling ?? 0) - (a.beoordeling ?? 0))
-    return data as Tool[]
+    if (error || !data?.length) return metLogos(TOOLS.filter(t => t.uitgelicht).sort((a, b) => (b.beoordeling ?? 0) - (a.beoordeling ?? 0)))
+    return metLogos(data as Tool[])
   } catch {
-    return TOOLS.filter(t => t.uitgelicht).sort((a, b) => (b.beoordeling ?? 0) - (a.beoordeling ?? 0))
+    return metLogos(TOOLS.filter(t => t.uitgelicht).sort((a, b) => (b.beoordeling ?? 0) - (a.beoordeling ?? 0)))
   }
 }
 
@@ -69,15 +134,15 @@ export async function getToolsBySlugs(slugs: string[]): Promise<Tool[]> {
       .select('*')
       .in('slug', slugs)
 
-    if (error || !data?.length) return TOOLS.filter(t => slugs.includes(t.slug))
-    return data as Tool[]
+    if (error || !data?.length) return metLogos(TOOLS.filter(t => slugs.includes(t.slug)))
+    return metLogos(data as Tool[])
   } catch {
-    return TOOLS.filter(t => slugs.includes(t.slug))
+    return metLogos(TOOLS.filter(t => slugs.includes(t.slug)))
   }
 }
 
 export async function getHiddenGems(): Promise<Tool[]> {
-  return TOOLS.filter(t => t.badge === 'Tip').sort((a, b) => (b.beoordeling ?? 0) - (a.beoordeling ?? 0))
+  return metLogos(TOOLS.filter(t => t.badge === 'Tip').sort((a, b) => (b.beoordeling ?? 0) - (a.beoordeling ?? 0)))
 }
 
 export async function logKlik(toolSlug: string, referer: string | null, userAgent: string | null) {

@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { Star, ArrowUpRight } from 'lucide-react'
 import type { Tool } from '@/lib/types'
 import { prijsmodelLabel } from '@/lib/utils'
+import ToolLogo from './ToolLogo'
 
 interface Props {
   tool: Tool
@@ -15,13 +15,7 @@ export default function ToolCard({ tool }: Props) {
     <div className="card p-5 flex flex-col gap-3">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
-          {tool.logo_url ? (
-            <Image src={tool.logo_url} alt={tool.naam} width={44} height={44} className="rounded-xl object-contain bg-surface-100 p-1.5" />
-          ) : (
-            <div className="w-11 h-11 rounded-xl bg-surface-900 flex items-center justify-center text-white font-bold text-lg">
-              {tool.naam[0]}
-            </div>
-          )}
+          <ToolLogo src={tool.logo_url} naam={tool.naam} size={44} />
           <div>
             <Link href={`/tools/${tool.slug}`} className="font-bold text-surface-900 hover:text-brand-500 transition-colors">
               {tool.naam}

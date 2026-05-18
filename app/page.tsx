@@ -3,6 +3,7 @@ import { ArrowRight, ChevronRight } from 'lucide-react'
 import { getUitgelichtTools, getAllTools, getHiddenGems } from '@/lib/tools'
 import { CATEGORIEEN } from '@/lib/categories'
 import ToolGrid from '@/components/tools/ToolGrid'
+import ToolLogo from '@/components/tools/ToolLogo'
 import NewsletterForm from '@/components/shared/NewsletterForm'
 import HeroSearch from '@/components/shared/HeroSearch'
 import JsonLd from '@/components/seo/JsonLd'
@@ -203,9 +204,7 @@ export default async function HomePage() {
             {hiddenGems.map(tool => (
               <Link key={tool.slug} href={`/tools/${tool.slug}`} className="card p-5 group flex flex-col">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-surface-900 flex items-center justify-center text-white font-bold text-sm shrink-0">
-                    {tool.naam[0]}
-                  </div>
+                  <ToolLogo src={tool.logo_url} naam={tool.naam} size={40} />
                   <div>
                     <p className="font-bold text-surface-900 group-hover:text-brand-500 transition-colors text-sm">{tool.naam}</p>
                     <p className="text-xs text-surface-500 capitalize">{tool.categorie}</p>
