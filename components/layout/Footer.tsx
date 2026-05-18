@@ -45,6 +45,8 @@ export default function Footer() {
               <li><Link href="/vergelijk/cursor-vs-github-copilot" className="text-surface-400 hover:text-white transition-colors">Cursor vs Copilot</Link></li>
               <li><Link href="/vergelijk/perplexity-vs-chatgpt" className="text-surface-400 hover:text-white transition-colors">Perplexity vs ChatGPT</Link></li>
               <li><Link href="/vergelijk/copilot-vs-chatgpt" className="text-surface-400 hover:text-white transition-colors">Copilot vs ChatGPT</Link></li>
+              <li><Link href="/vergelijk/synthesia-vs-descript" className="text-surface-400 hover:text-white transition-colors">Synthesia vs Descript</Link></li>
+              <li><Link href="/vergelijk/murf-vs-elevenlabs" className="text-surface-400 hover:text-white transition-colors">Murf AI vs ElevenLabs</Link></li>
               <li><Link href="/nieuws" className="text-surface-400 hover:text-white transition-colors">Nieuws</Link></li>
             </ul>
           </div>
@@ -56,6 +58,9 @@ export default function Footer() {
               <li><Link href="/beste-ai-voor/beste-ai-voor-coderen" className="text-surface-400 hover:text-white transition-colors">AI voor programmeren</Link></li>
               <li><Link href="/beste-ai-voor/ai-tools-voor-beginners" className="text-surface-400 hover:text-white transition-colors">AI voor beginners</Link></li>
               <li><Link href="/beste-ai-voor/beste-ai-voor-studenten" className="text-surface-400 hover:text-white transition-colors">AI voor studenten</Link></li>
+              <li><Link href="/beste-ai-voor/beste-ai-voor-video-maken" className="text-surface-400 hover:text-white transition-colors">AI voor video maken</Link></li>
+              <li><Link href="/beste-ai-voor/beste-ai-voor-seo" className="text-surface-400 hover:text-white transition-colors">AI voor SEO</Link></li>
+              <li><Link href="/beste-ai-voor/beste-ai-voor-meetings" className="text-surface-400 hover:text-white transition-colors">AI voor meetings</Link></li>
             </ul>
           </div>
         </div>

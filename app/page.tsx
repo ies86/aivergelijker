@@ -156,6 +156,10 @@ export default async function HomePage() {
               { href: '/vergelijk/copilot-vs-chatgpt', titel: 'Copilot vs ChatGPT', sub: 'Microsoft vs OpenAI' },
               { href: '/vergelijk/adobe-firefly-vs-midjourney', titel: 'Firefly vs Midjourney', sub: 'Design vs kunst' },
               { href: '/vergelijk/chatgpt-vs-gemini-vs-claude', titel: 'ChatGPT vs Gemini vs Claude', sub: 'De grote drieweg-strijd' },
+              { href: '/vergelijk/synthesia-vs-descript', titel: 'Synthesia vs Descript', sub: 'AI-video tools vergeleken' },
+              { href: '/vergelijk/copy-ai-vs-jasper', titel: 'Copy.ai vs Jasper', sub: 'Beste AI-copywriter' },
+              { href: '/vergelijk/murf-vs-elevenlabs', titel: 'Murf AI vs ElevenLabs', sub: 'Beste AI-stemgenerator' },
+              { href: '/vergelijk/surfer-seo-vs-writesonic', titel: 'Surfer SEO vs Writesonic', sub: 'SEO-content die rankt' },
             ].map(item => (
               <Link key={item.href} href={item.href} className="card p-5 group flex items-center justify-between">
                 <div>
@@ -187,6 +191,9 @@ export default async function HomePage() {
             { href: '/beste-ai-voor/beste-ai-voor-vertalingen', titel: 'AI voor vertalingen', sub: 'Beter dan Google Translate?' },
             { href: '/beste-ai-voor/beste-ai-voor-social-media', titel: 'AI voor social media', sub: 'Content maken met AI' },
             { href: '/beste-ai-voor/beste-ai-voor-ondernemers', titel: 'AI voor ondernemers', sub: 'Bespaar tijd en geld' },
+            { href: '/beste-ai-voor/beste-ai-voor-video-maken', titel: 'AI voor video maken', sub: 'Zonder camera of studio' },
+            { href: '/beste-ai-voor/beste-ai-voor-seo', titel: 'AI voor SEO', sub: 'Rank hoger in Google' },
+            { href: '/beste-ai-voor/beste-ai-voor-meetings', titel: 'AI voor meetings', sub: 'Nooit meer notulen maken' },
           ].map(item => (
             <Link key={item.href} href={item.href} className="card p-5 group flex items-center justify-between">
               <div>

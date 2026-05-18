@@ -14,6 +14,11 @@ aivergelijker.nl helpt Nederlandse consumenten bij het kiezen van de juiste AI-t
 - **AI-coding**: Cursor, GitHub Copilot, Claude Code, Windsurf, v0
 - **AI-audio**: ElevenLabs, Suno
 - **AI-productiviteit**: Notion AI, Gamma, Jasper
+- **AI-video creatie**: Synthesia, Descript, Pictory
+- **AI-voice**: Murf AI, ElevenLabs
+- **AI-copywriting**: Copy.ai, Writesonic
+- **AI-SEO**: Surfer SEO
+- **AI-meetings**: Fireflies.ai
 
 ## Populaire vergelijkingen
 
@@ -29,6 +34,10 @@ aivergelijker.nl helpt Nederlandse consumenten bij het kiezen van de juiste AI-t
 - Suno vs ElevenLabs: https://aivergelijker.nl/vergelijk/suno-vs-elevenlabs
 - Runway vs Kling AI: https://aivergelijker.nl/vergelijk/runway-vs-kling
 - Notion AI vs Gamma: https://aivergelijker.nl/vergelijk/notion-ai-vs-gamma
+- Synthesia vs Descript: https://aivergelijker.nl/vergelijk/synthesia-vs-descript
+- Copy.ai vs Jasper: https://aivergelijker.nl/vergelijk/copy-ai-vs-jasper
+- Murf AI vs ElevenLabs: https://aivergelijker.nl/vergelijk/murf-vs-elevenlabs
+- Surfer SEO vs Writesonic: https://aivergelijker.nl/vergelijk/surfer-seo-vs-writesonic
 
 ## Guides
 
@@ -42,6 +51,9 @@ aivergelijker.nl helpt Nederlandse consumenten bij het kiezen van de juiste AI-t
 - Beste AI voor vertalingen: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-vertalingen
 - AI voor social media: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-social-media
 - AI voor ondernemers: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-ondernemers
+- Beste AI voor video's maken: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-video-maken
+- Beste AI voor SEO: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-seo
+- Beste AI voor meetings: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-meetings
 
 ## Nieuws
 
@@ -52,6 +64,15 @@ aivergelijker.nl helpt Nederlandse consumenten bij het kiezen van de juiste AI-t
 - Cursor bereikt 100M downloads: https://aivergelijker.nl/nieuws/cursor-ai-100m-gebruikers
 - Claude Code lancering: https://aivergelijker.nl/nieuws/claude-code-lancering
 - Midjourney V7 release: https://aivergelijker.nl/nieuws/midjourney-v7-release
+- ChatGPT gratis GPT-4o: https://aivergelijker.nl/nieuws/chatgpt-gratis-gpt4o
+- Google Gemini update: https://aivergelijker.nl/nieuws/google-gemini-gratis-update
+- Runway Gen-3 Alpha update: https://aivergelijker.nl/nieuws/runway-gen3-alpha-update
+- Synthesia haalt $180M op: https://aivergelijker.nl/nieuws/synthesia-serie-d-funding
+- Fireflies.ai bereikt 300K teams: https://aivergelijker.nl/nieuws/fireflies-ai-groei-2026
+- Surfer SEO AI-update: https://aivergelijker.nl/nieuws/surfer-seo-ai-update
+- ElevenLabs Voice Marketplace: https://aivergelijker.nl/nieuws/elevenlabs-voice-marketplace
+- Copy.ai Workflows lancering: https://aivergelijker.nl/nieuws/copy-ai-workflows-lancering
+- Descript AI Underlord 2.0: https://aivergelijker.nl/nieuws/descript-ai-editing-update
 
 ## Taal
 
