@@ -35,12 +35,12 @@ export default function NewsletterForm() {
         value={email}
         onChange={e => setEmail(e.target.value)}
         placeholder="jouw@email.nl"
-        className="flex-1 px-4 py-3 bg-white/10 border border-white/15 rounded-full text-sm text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500"
+        className="flex-1 px-4 py-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full text-sm text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white"
       />
       <button
         type="submit"
         disabled={status === 'loading'}
-        className="px-6 py-3 bg-brand-500 text-white text-sm font-bold rounded-full hover:bg-brand-600 transition-colors disabled:opacity-60 shrink-0"
+        className="px-6 py-3 bg-white text-violet-700 text-sm font-bold rounded-full hover:bg-white/95 hover:shadow-lg transition-all disabled:opacity-60 shrink-0"
       >
         {status === 'loading' ? 'Bezig...' : 'Aanmelden'}
       </button>

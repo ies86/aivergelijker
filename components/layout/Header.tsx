@@ -10,18 +10,24 @@ export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-surface-200">
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-surface-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2 group">
             <svg width="32" height="32" viewBox="0 0 36 36" className="shrink-0">
-              <rect width="36" height="36" rx="10" fill="#6d28d9" />
+              <defs>
+                <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#7c3aed" />
+                  <stop offset="100%" stopColor="#ec4899" />
+                </linearGradient>
+              </defs>
+              <rect width="36" height="36" rx="10" fill="url(#logoGrad)" />
               <path d="M10 13h6v10h-6z" rx="1.5" fill="white" fillOpacity="0.85" />
               <path d="M20 9h6v14h-6z" rx="1.5" fill="white" />
               <path d="M10 25h16" stroke="white" strokeWidth="2" strokeLinecap="round" />
             </svg>
             <span className="text-[22px] font-bold tracking-tight">
-              <span className="text-brand-500">ai</span>
+              <span className="bg-gradient-to-r from-violet-600 to-pink-500 bg-clip-text text-transparent">ai</span>
               <span className="text-surface-800">vergelijker</span>
             </span>
           </Link>
@@ -53,7 +59,7 @@ export default function Header() {
             </button>
             <Link
               href="/vergelijk/chatgpt-vs-claude"
-              className="hidden md:inline-flex items-center gap-1.5 text-sm font-semibold px-5 py-2.5 rounded-full bg-brand-500 text-white hover:bg-brand-600 transition-colors"
+              className="hidden md:inline-flex items-center gap-1.5 text-sm font-bold px-5 py-2.5 rounded-full bg-gradient-to-r from-violet-600 to-pink-500 text-white hover:shadow-lg hover:scale-105 transition-all"
             >
               Vergelijk
             </Link>
