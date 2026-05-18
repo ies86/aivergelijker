@@ -9,13 +9,13 @@ export default function Footer() {
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-3 inline-flex">
               <svg width="28" height="28" viewBox="0 0 36 36" className="shrink-0">
-                <rect width="36" height="36" rx="10" fill="#7c3aed" />
-                <path d="M10 13h6v10h-6z" rx="1.5" fill="white" fillOpacity="0.85" />
-                <path d="M20 9h6v14h-6z" rx="1.5" fill="white" />
-                <path d="M10 25h16" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                <rect width="36" height="36" rx="10" fill="white" />
+                <path d="M10 13h6v10h-6z" rx="1.5" fill="#0f172a" fillOpacity="0.85" />
+                <path d="M20 9h6v14h-6z" rx="1.5" fill="#0f172a" />
+                <path d="M10 25h16" stroke="#0f172a" strokeWidth="2" strokeLinecap="round" />
               </svg>
               <span className="font-bold text-lg text-white">
-                <span className="text-purple-400">ai</span>vergelijker
+                aivergelijker
               </span>
             </Link>
             <p className="text-sm text-surface-400 leading-relaxed mt-2">
