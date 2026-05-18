@@ -49,21 +49,74 @@ export default async function HomePage() {
         ]}
       />
 
-      {/* Hero — Sneakerjagers-stijl: donker, gecentreerd met zoekbalk */}
-      <section className="relative bg-surface-900 overflow-hidden">
-        {/* Subtiel patroon-effect met radial gradients */}
+      {/* Hero — Donker met tech/AI vibe: dot grid + mesh gradient + glow */}
+      <section className="relative overflow-hidden" style={{ background: '#06060a' }}>
+        {/* Laag 1: dot grid pattern (AI/data-feel) */}
         <div
-          className="absolute inset-0 opacity-30"
+          aria-hidden
+          className="absolute inset-0 opacity-[0.18]"
           style={{
             backgroundImage:
-              'radial-gradient(circle at 20% 30%, rgba(109, 40, 217, 0.25) 0px, transparent 40%), radial-gradient(circle at 80% 70%, rgba(15, 118, 110, 0.20) 0px, transparent 40%)',
+              'radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+            maskImage:
+              'radial-gradient(ellipse 90% 70% at 50% 40%, black 30%, transparent 80%)',
+            WebkitMaskImage:
+              'radial-gradient(ellipse 90% 70% at 50% 40%, black 30%, transparent 80%)',
           }}
         />
+
+        {/* Laag 2: mesh gradient blobs (paars + cyaan + roze) */}
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            backgroundImage: [
+              'radial-gradient(ellipse 50% 40% at 15% 20%, rgba(124, 58, 237, 0.45), transparent 60%)',
+              'radial-gradient(ellipse 45% 35% at 85% 30%, rgba(6, 182, 212, 0.30), transparent 65%)',
+              'radial-gradient(ellipse 60% 40% at 50% 100%, rgba(236, 72, 153, 0.18), transparent 70%)',
+              'radial-gradient(ellipse 40% 30% at 70% 75%, rgba(167, 139, 250, 0.22), transparent 65%)',
+            ].join(', '),
+            filter: 'blur(40px)',
+          }}
+        />
+
+        {/* Laag 3: horizontale lichtstreep bovenaan (subtiele "scan line") */}
+        <div
+          aria-hidden
+          className="absolute top-0 left-0 right-0 h-px"
+          style={{
+            background: 'linear-gradient(90deg, transparent 0%, rgba(167, 139, 250, 0.5) 50%, transparent 100%)',
+          }}
+        />
+
+        {/* Laag 4: subtiele vignette aan onderkant voor zachte overgang */}
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to bottom, transparent, rgba(6, 6, 10, 0.4))',
+          }}
+        />
+
+        {/* Content */}
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 lg:pt-20 lg:pb-28 text-center">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-3">
-            Jouw AI vergelijker
+          {/* Klein pill-badge boven titel */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 mb-5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-400"></span>
+            </span>
+            <span className="text-xs font-medium text-white/80">33+ AI-tools onafhankelijk vergeleken</span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-3" style={{ letterSpacing: '-0.04em' }}>
+            Jouw{' '}
+            <span className="bg-gradient-to-r from-violet-300 via-violet-200 to-cyan-200 bg-clip-text text-transparent">
+              AI vergelijker
+            </span>
           </h1>
-          <p className="text-base sm:text-lg text-surface-300 mb-10 max-w-xl mx-auto">
+          <p className="text-base sm:text-lg text-white/60 mb-10 max-w-xl mx-auto">
             Vind jouw nieuwe AI-tool bij meer dan 33 onafhankelijk vergeleken aanbieders.
           </p>
         </div>
