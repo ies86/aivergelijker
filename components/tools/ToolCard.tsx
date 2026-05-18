@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { Star, ArrowUpRight } from 'lucide-react'
 import type { Tool } from '@/lib/types'
-import { prijsmodelLabel } from '@/lib/utils'
 import ToolLogo from './ToolLogo'
 import CompareToggleButton from './CompareToggleButton'
+import PrijsmodelBadge from '@/components/shared/PrijsmodelBadge'
 
 interface Props {
   tool: Tool
@@ -32,12 +32,7 @@ export default function ToolCard({ tool }: Props) {
           </div>
         </div>
         <div className="flex flex-col items-end gap-1 shrink-0">
-          <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-            tool.prijsmodel === 'gratis' ? 'badge-green' :
-            tool.prijsmodel === 'freemium' ? 'badge-purple' : 'badge-amber'
-          }`}>
-            {prijsmodelLabel(tool.prijsmodel)}
-          </span>
+          <PrijsmodelBadge model={tool.prijsmodel} />
           {tool.badge && (
             <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700">
               {tool.badge}

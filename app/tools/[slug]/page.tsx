@@ -9,8 +9,8 @@ import PricingTable from '@/components/tools/PricingTable'
 import ToolLogo from '@/components/tools/ToolLogo'
 import StickyToolBar from '@/components/tools/StickyToolBar'
 import AffiliateButton from '@/components/shared/AffiliateButton'
+import PrijsmodelBadge from '@/components/shared/PrijsmodelBadge'
 import JsonLd from '@/components/seo/JsonLd'
-import { prijsmodelLabel } from '@/lib/utils'
 
 export async function generateStaticParams() {
   try {
@@ -72,12 +72,7 @@ export default async function ToolPagina({ params }: { params: Promise<{ slug: s
           <div className="flex-1">
             <div className="flex flex-wrap items-start gap-2 mb-1">
               <h1 className="text-3xl font-bold text-surface-900" style={{ letterSpacing: '-0.025em' }}>{tool.naam}</h1>
-              <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-                tool.prijsmodel === 'gratis' ? 'badge-green' :
-                tool.prijsmodel === 'freemium' ? 'badge-purple' : 'badge-amber'
-              }`}>
-                {prijsmodelLabel(tool.prijsmodel)}
-              </span>
+              <PrijsmodelBadge model={tool.prijsmodel} />
               {tool.badge && (
                 <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700">
                   {tool.badge}
