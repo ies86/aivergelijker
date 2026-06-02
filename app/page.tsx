@@ -1,14 +1,16 @@
 import Link from 'next/link'
-import { ArrowRight, ChevronRight, Sparkles, Newspaper } from 'lucide-react'
+import { ArrowRight, ChevronRight, Sparkles } from 'lucide-react'
 import { getAllTools } from '@/lib/tools'
 import { CATEGORIEEN } from '@/lib/categories'
 import ToolLogo from '@/components/tools/ToolLogo'
 import NewsletterForm from '@/components/shared/NewsletterForm'
 import HeroSearch from '@/components/shared/HeroSearch'
 import CategoryBanner from '@/components/shared/CategoryBanner'
+import NewsSection from '@/components/shared/NewsSection'
 import JsonLd from '@/components/seo/JsonLd'
 
-export const revalidate = 3600
+// Sneller cache-verversen zodat content-updates binnen 5 min zichtbaar zijn
+export const revalidate = 300
 
 // RTINGS-stijl: alle categorie-labels in dezelfde warme kleur
 const LABEL_KLEUR = 'text-orange-700'
@@ -264,36 +266,8 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* Nieuws kolom (1/3 breedte) — preview cards van wat er komt */}
-          <div>
-            <div className="flex items-end justify-between mb-4 pb-2 border-b border-[var(--border-default)]">
-              <div className="flex items-center gap-2.5">
-                <Newspaper className={`h-4 w-4 ${LABEL_KLEUR}`} />
-                <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Wat we volgen</h2>
-              </div>
-            </div>
-            <p className="text-xs text-surface-500 leading-relaxed mb-4">
-              Wanneer er belangrijk nieuws is over een AI-tool — een nieuwe versie,
-              prijswijziging of overname — vatten we het hier op één plek samen.
-              Geen ruis, alleen wat ertoe doet.
-            </p>
-            <div className="space-y-3">
-              {[
-                { titel: 'Nieuwe modellen & versies', beschrijving: 'GPT, Claude, Gemini, Grok — we volgen elke release.' },
-                { titel: 'Prijswijzigingen', beschrijving: 'Wordt een gratis plan beperkt? Stijgt het Pro-tarief?' },
-                { titel: 'Acquisities & deals', beschrijving: 'Welk AI-bedrijf koopt welk ander bedrijf.' },
-              ].map(item => (
-                <div key={item.titel} className="border-l-2 border-surface-200 pl-3 py-1">
-                  <p className="text-sm font-bold text-surface-900">{item.titel}</p>
-                  <p className="text-xs text-surface-500 leading-relaxed">{item.beschrijving}</p>
-                </div>
-              ))}
-            </div>
-            <Link href="/" className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-500 hover:text-brand-700 transition-colors">
-              Schrijf je in voor updates
-              <ArrowRight className="h-3 w-3" />
-            </Link>
-          </div>
+          {/* Nieuws kolom (1/3 breedte) — live AI-nieuws van Hacker News */}
+          <NewsSection limit={5} labelKleur={LABEL_KLEUR} dotKleur={DOT_KLEUR} />
         </div>
       </section>
 
