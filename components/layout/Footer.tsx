@@ -8,27 +8,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-3 inline-flex">
-              <svg width="30" height="30" viewBox="0 0 36 36" className="shrink-0">
-                <defs>
-                  <linearGradient id="footerSparkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#c4b5fd" />
-                    <stop offset="50%" stopColor="#a78bfa" />
-                    <stop offset="100%" stopColor="#22d3ee" />
-                  </linearGradient>
-                </defs>
-                <rect width="36" height="36" rx="9" fill="white" fillOpacity="0.08" stroke="white" strokeOpacity="0.15" />
-                <path
-                  d="M16 6 C 16.5 13, 17 14.5, 18 15 C 19.5 16, 22 16.5, 26 17 C 22 17.5, 19.5 18, 18 19 C 17 19.5, 16.5 21, 16 28 C 15.5 21, 15 19.5, 14 19 C 12.5 18, 10 17.5, 6 17 C 10 16.5, 12.5 16, 14 15 C 15 14.5, 15.5 13, 16 6 Z"
-                  fill="url(#footerSparkGrad)"
-                />
-                <path
-                  d="M27 22 C 27.2 24, 27.4 24.5, 27.8 24.7 C 28.4 25, 29.2 25.2, 30.5 25.4 C 29.2 25.6, 28.4 25.8, 27.8 26.1 C 27.4 26.3, 27.2 26.8, 27 28.8 C 26.8 26.8, 26.6 26.3, 26.2 26.1 C 25.6 25.8, 24.8 25.6, 23.5 25.4 C 24.8 25.2, 25.6 25, 26.2 24.7 C 26.6 24.5, 26.8 24, 27 22 Z"
-                  fill="white"
-                  fillOpacity="0.75"
-                />
+              <svg width="24" height="24" viewBox="0 0 26 26" className="shrink-0">
+                <rect x="2" y="14" width="5" height="10" rx="1" fill="#a78bfa" />
+                <rect x="10" y="9" width="5" height="15" rx="1" fill="#c4b5fd" />
+                <rect x="18" y="3" width="5" height="21" rx="1" fill="#67e8f9" />
               </svg>
-              <span className="font-bold text-lg text-white">
-                <span className="bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">ai</span>vergelijker
+              <span className="font-extrabold text-lg text-white tracking-tight" style={{ letterSpacing: '-0.025em' }}>
+                aivergelijker<span className="text-white/40 font-bold">.nl</span>
               </span>
             </Link>
             <p className="text-sm text-surface-400 leading-relaxed mt-2">

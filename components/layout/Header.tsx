@@ -14,36 +14,15 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-[var(--bg-elevated)] border-b border-[var(--border-default)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <svg width="34" height="34" viewBox="0 0 36 36" className="shrink-0">
-              <defs>
-                <linearGradient id="logoBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#0f172a" />
-                  <stop offset="100%" stopColor="#1e293b" />
-                </linearGradient>
-                <linearGradient id="sparkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#c4b5fd" />
-                  <stop offset="50%" stopColor="#a78bfa" />
-                  <stop offset="100%" stopColor="#22d3ee" />
-                </linearGradient>
-              </defs>
-              {/* Donker afgerond vierkant met subtiele gradient */}
-              <rect width="36" height="36" rx="9" fill="url(#logoBgGrad)" />
-              {/* Hoofd-sparkle: 4-puntig met curved/concave kanten */}
-              <path
-                d="M16 6 C 16.5 13, 17 14.5, 18 15 C 19.5 16, 22 16.5, 26 17 C 22 17.5, 19.5 18, 18 19 C 17 19.5, 16.5 21, 16 28 C 15.5 21, 15 19.5, 14 19 C 12.5 18, 10 17.5, 6 17 C 10 16.5, 12.5 16, 14 15 C 15 14.5, 15.5 13, 16 6 Z"
-                fill="url(#sparkGrad)"
-              />
-              {/* Kleine accent-sparkle rechtsboven (shimmer) */}
-              <path
-                d="M27 22 C 27.2 24, 27.4 24.5, 27.8 24.7 C 28.4 25, 29.2 25.2, 30.5 25.4 C 29.2 25.6, 28.4 25.8, 27.8 26.1 C 27.4 26.3, 27.2 26.8, 27 28.8 C 26.8 26.8, 26.6 26.3, 26.2 26.1 C 25.6 25.8, 24.8 25.6, 23.5 25.4 C 24.8 25.2, 25.6 25, 26.2 24.7 C 26.6 24.5, 26.8 24, 27 22 Z"
-                fill="white"
-                fillOpacity="0.75"
-              />
+          <Link href="/" className="flex items-center gap-2 group">
+            {/* Minimaal data-bar icoon — drie oplopende balkjes = ranking */}
+            <svg width="26" height="26" viewBox="0 0 26 26" className="shrink-0">
+              <rect x="2" y="14" width="5" height="10" rx="1" className="fill-violet-500" />
+              <rect x="10" y="9" width="5" height="15" rx="1" className="fill-violet-600" />
+              <rect x="18" y="3" width="5" height="21" rx="1" className="fill-cyan-500" />
             </svg>
-            <span className="text-[22px] font-bold tracking-tight">
-              <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">ai</span>
-              <span className="text-[var(--text-primary)]">vergelijker</span>
+            <span className="text-[20px] font-extrabold tracking-tight text-[var(--text-primary)]" style={{ letterSpacing: '-0.025em' }}>
+              aivergelijker<span className="text-surface-400 font-bold">.nl</span>
             </span>
           </Link>
 
