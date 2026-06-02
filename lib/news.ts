@@ -32,28 +32,40 @@ interface AlgoliaHit {
  * Cache 1 uur.
  */
 export async function getAiNews(limit: number = 6): Promise<NewsItem[]> {
+  // Strategie: pak meerdere queries (een per AI keyword), combineer + dedupe
+  const queries = ['AI', 'ChatGPT', 'Claude', 'OpenAI', 'LLM']
+  const veertienDagenGeleden = Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 14
+
   try {
-    // Algolia HN search: stories met 'AI' of 'LLM' in titel, gesorteerd op recente populariteit
-    const params = new URLSearchParams({
-      query: 'AI OR LLM OR ChatGPT OR Claude OR Gemini',
-      tags: 'story',
-      numericFilters: `created_at_i>${Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 14}`, // laatste 14 dagen
-      hitsPerPage: String(limit * 3), // meer ophalen, filteren op kwaliteit
-    })
+    const responses = await Promise.all(
+      queries.map(q => {
+        const params = new URLSearchParams({
+          query: q,
+          tags: 'story',
+          numericFilters: `created_at_i>${veertienDagenGeleden},points>20`,
+          hitsPerPage: '10',
+        })
+        return fetch(`https://hn.algolia.com/api/v1/search?${params}`, {
+          next: { revalidate: 60 * 60 }, // 1 uur cache
+        }).then(r => r.ok ? r.json() as Promise<{ hits: AlgoliaHit[] }> : { hits: [] as AlgoliaHit[] })
+      })
+    )
 
-    const res = await fetch(`https://hn.algolia.com/api/v1/search?${params}`, {
-      next: { revalidate: 60 * 60 }, // 1 uur cache
-    })
-    if (!res.ok) return []
+    // Combineer alle hits, dedupliceer op objectID, filter op URL, sorteer op points
+    const seen = new Set<string>()
+    const allHits: AlgoliaHit[] = []
+    for (const resp of responses) {
+      for (const hit of resp.hits) {
+        if (!seen.has(hit.objectID) && hit.url && hit.title) {
+          seen.add(hit.objectID)
+          allHits.push(hit)
+        }
+      }
+    }
 
-    const data = (await res.json()) as { hits: AlgoliaHit[] }
+    const top = allHits.sort((a, b) => b.points - a.points).slice(0, limit)
 
-    // Filter: minimaal 20 points (kwaliteit), heeft URL (geen self-posts), titel niet leeg
-    const gefilterd = data.hits
-      .filter(h => h.url && h.title && h.points >= 20)
-      .slice(0, limit)
-
-    return gefilterd.map(h => ({
+    return top.map(h => ({
       id: h.objectID,
       title: h.title,
       url: h.url,
