@@ -10,12 +10,22 @@ import JsonLd from '@/components/seo/JsonLd'
 
 export const revalidate = 3600
 
-const CAT_KLEUR: Record<string, string> = {
-  chatbot: '#1e293b',
-  afbeelding: '#db2777',
-  video: '#ea580c',
-  coding: '#059669',
-  audio: '#0891b2',
+// Per categorie: gekleurde label-pill kleur (RTINGS-style: subtiel maar herkenbaar)
+const CAT_LABEL_KLEUR: Record<string, string> = {
+  chatbot: 'text-indigo-700',
+  afbeelding: 'text-pink-700',
+  video: 'text-orange-700',
+  coding: 'text-emerald-700',
+  audio: 'text-cyan-700',
+  productiviteit: 'text-violet-700',
+}
+
+const CAT_DOT_KLEUR: Record<string, string> = {
+  chatbot: '#4338ca',
+  afbeelding: '#be185d',
+  video: '#c2410c',
+  coding: '#047857',
+  audio: '#0e7490',
   productiviteit: '#6d28d9',
 }
 
@@ -39,7 +49,7 @@ export default async function HomePage() {
     .filter((p): p is number => p != null)
   const goedkoopsteBetaald = betaaldePrijzen.length ? Math.min(...betaaldePrijzen) : null
 
-  // Per categorie: filter uit reeds-opgehaalde alleTools (geen extra fetches)
+  // Per categorie: filter uit alleTools
   const categorieData = CATEGORIEEN.map(cat => {
     const tools = alleTools.filter(t => t.categorie === cat.slug)
     return { ...cat, tools, aantal: tools.length }
@@ -56,7 +66,7 @@ export default async function HomePage() {
         ]}
       />
 
-      {/* Hero — RTINGS-stijl: strakke statement-titel + zoekbalk */}
+      {/* Hero met search overlay */}
       <section className="relative overflow-hidden border-b border-[var(--border-default)]" style={{ background: '#06060a' }}>
         <div aria-hidden className="absolute inset-0 opacity-[0.15]" style={{
           backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px)',
@@ -92,9 +102,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Stats-strip — RTINGS "4,630 Bought & Tested" stijl */}
+      {/* Stats-strip (RTINGS "4,630 Bought & Tested" stijl) */}
       <section className="border-b border-[var(--border-default)]" style={{ background: 'var(--bg-elevated)' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center sm:text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
           <div>
             <p className="text-3xl font-extrabold text-surface-900 tabular-nums" style={{ letterSpacing: '-0.025em' }}>{totaalTools}</p>
             <p className="text-xs text-surface-500 mt-1 uppercase tracking-wider font-semibold">Tools in database</p>
@@ -116,94 +126,151 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Categorie-secties — RTINGS alternating image/text stijl */}
-      {categorieData.filter(c => c.aantal > 0).map((cat, i) => {
-        const imageOnLeft = i % 2 === 0
-        const topTools = cat.tools.slice(0, 4)
+      {/* Categorie-blokken — RTINGS "What's New" asymmetrische stijl:
+          Grote feature card links + 3 kleinere thumbnails-stack rechts */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-14">
+        {categorieData.filter(c => c.aantal > 0).map(cat => {
+          const featured = cat.tools[0]
+          const overige = cat.tools.slice(1, 4)
+          const labelKleur = CAT_LABEL_KLEUR[cat.slug] ?? 'text-violet-700'
+          const dotKleur = CAT_DOT_KLEUR[cat.slug] ?? '#6d28d9'
+          const gradient = CAT_GRADIENT[cat.slug] ?? 'from-violet-500 to-cyan-500'
+          const featGoedkoopste = featured?.plannen.find(p => p.prijs_mnd === 0) ?? featured?.plannen[0]
 
-        return (
-          <section key={cat.slug} className="border-b border-[var(--border-default)]">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-              <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center ${imageOnLeft ? '' : 'lg:[&>div:first-child]:order-2'}`}>
-                {/* Beeld-kolom */}
-                <div className="lg:col-span-5">
-                  <CategoryBanner
-                    query={cat.slug}
-                    aspect="4/3"
-                    fallbackGradient={CAT_GRADIENT[cat.slug] ?? 'from-violet-500 to-cyan-500'}
-                  />
-                </div>
-
-                {/* Tekst + tools-kolom */}
-                <div className="lg:col-span-7">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ background: CAT_KLEUR[cat.slug] }} />
-                    <p className="text-xs uppercase tracking-[0.2em] font-semibold text-surface-500">{cat.label}</p>
-                  </div>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-surface-900 mb-3" style={{ letterSpacing: '-0.025em' }}>
-                    Beste {cat.label.toLowerCase()} tools
+          return (
+            <section key={cat.slug} aria-labelledby={`cat-${cat.slug}`}>
+              {/* Categorie-label header (RTINGS: kleine gekleurde categorie-pill bovenaan) */}
+              <div className="flex items-end justify-between mb-5 pb-3 border-b border-[var(--border-default)]">
+                <div className="flex items-center gap-2.5">
+                  <span className="inline-block w-3 h-3 rounded-sm" style={{ background: dotKleur }} />
+                  <h2 id={`cat-${cat.slug}`} className={`text-sm font-extrabold uppercase tracking-[0.12em] ${labelKleur}`}>
+                    {cat.label}
                   </h2>
-                  <p className="text-surface-600 mb-6 max-w-lg">{cat.beschrijving}</p>
+                </div>
+                <Link href={`/categorie/${cat.slug}`} className="text-xs font-semibold text-surface-600 hover:text-brand-500 inline-flex items-center gap-1 transition-colors">
+                  Alle {cat.aantal} bekijken
+                  <ArrowRight className="h-3 w-3" />
+                </Link>
+              </div>
 
-                  {/* Top-4 tools mini-grid */}
-                  <div className="grid grid-cols-2 gap-3 mb-5">
-                    {topTools.map(tool => {
-                      const goedkoopste = tool.plannen.find(p => p.prijs_mnd === 0) ?? tool.plannen[0]
-                      return (
-                        <Link key={tool.slug} href={`/tools/${tool.slug}`} className="card p-3 flex items-center gap-3 group">
-                          <ToolLogo src={tool.logo_url} naam={tool.naam} size={36} />
-                          <div className="flex-1 min-w-0">
-                            <p className="font-bold text-sm text-surface-900 group-hover:text-brand-500 transition-colors truncate">{tool.naam}</p>
-                            <p className="text-xs text-surface-500 tabular-nums truncate">
-                              {goedkoopste?.prijs_mnd === 0 ? 'Gratis plan' : `Vanaf €${goedkoopste?.prijs_mnd}/mnd`}
-                            </p>
-                          </div>
-                        </Link>
-                      )
-                    })}
-                  </div>
-
+              {/* Asymmetric grid: featured (groot, 8 col) + lijst (4 col) */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                {/* Featured tool — groot beeld + info onder */}
+                {featured && (
                   <Link
-                    href={`/categorie/${cat.slug}`}
-                    className="inline-flex items-center gap-1.5 text-sm font-bold text-surface-900 hover:text-brand-500 transition-colors"
+                    href={`/tools/${featured.slug}`}
+                    className="lg:col-span-8 group block"
                   >
-                    Alle {cat.aantal} {cat.label.toLowerCase()} bekijken
-                    <ArrowRight className="h-4 w-4" />
+                    <div className="relative w-full overflow-hidden rounded-xl mb-4 ring-1 ring-[var(--border-default)] transition-shadow group-hover:shadow-lg">
+                      <CategoryBanner
+                        query={cat.slug}
+                        aspect="16/9"
+                        fallbackGradient={gradient}
+                      />
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <ToolLogo src={featured.logo_url} naam={featured.naam} size={44} />
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-extrabold text-xl text-surface-900 group-hover:text-brand-500 transition-colors leading-tight" style={{ letterSpacing: '-0.02em' }}>
+                          {featured.naam}
+                        </h3>
+                        <p className="text-sm text-surface-600 mt-0.5 line-clamp-1">{featured.tagline}</p>
+                        <p className="text-xs text-surface-500 mt-1 tabular-nums">
+                          {featGoedkoopste?.prijs_mnd === 0
+                            ? <span className="text-emerald-600 font-semibold">Gratis plan beschikbaar</span>
+                            : featGoedkoopste
+                              ? <>Vanaf <strong className="text-surface-900">€{featGoedkoopste.prijs_mnd}/mnd</strong></>
+                              : null}
+                        </p>
+                      </div>
+                    </div>
                   </Link>
+                )}
+
+                {/* Overige tools — verticale stack met kleine thumbnails (RTINGS rechter-kolom stijl) */}
+                <div className="lg:col-span-4 flex flex-col divide-y divide-[var(--border-default)]">
+                  {overige.map(tool => {
+                    const goedkoopste = tool.plannen.find(p => p.prijs_mnd === 0) ?? tool.plannen[0]
+                    return (
+                      <Link
+                        key={tool.slug}
+                        href={`/tools/${tool.slug}`}
+                        className="flex items-center gap-3 py-3 first:pt-0 last:pb-0 group"
+                      >
+                        <ToolLogo src={tool.logo_url} naam={tool.naam} size={56} />
+                        <div className="flex-1 min-w-0">
+                          <p className="font-bold text-sm text-surface-900 group-hover:text-brand-500 transition-colors line-clamp-1">{tool.naam}</p>
+                          <p className="text-xs text-surface-500 mt-0.5 line-clamp-1">{tool.tagline}</p>
+                          <p className="text-xs text-surface-600 mt-0.5 tabular-nums">
+                            {goedkoopste?.prijs_mnd === 0 ? <span className="text-emerald-600 font-semibold">Gratis</span> : `€${goedkoopste?.prijs_mnd}/mnd`}
+                          </p>
+                        </div>
+                      </Link>
+                    )
+                  })}
+
+                  {/* "Alles bekijken" link onderaan stack */}
+                  {cat.aantal > 4 && (
+                    <Link
+                      href={`/categorie/${cat.slug}`}
+                      className="flex items-center justify-between py-3 text-xs font-semibold text-surface-600 hover:text-brand-500 transition-colors"
+                    >
+                      Bekijk alle {cat.aantal} {cat.label.toLowerCase()}
+                      <ArrowRight className="h-3 w-3" />
+                    </Link>
+                  )}
                 </div>
               </div>
-            </div>
-          </section>
-        )
-      })}
+            </section>
+          )
+        })}
+      </div>
 
-      {/* Vergelijkingen */}
-      <section className="border-b border-[var(--border-default)]" style={{ background: 'var(--bg-elevated)' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="mb-6">
-            <p className="text-xs uppercase tracking-[0.2em] font-semibold text-surface-500 mb-2">Side-by-side</p>
-            <h2 className="text-2xl font-extrabold text-surface-900" style={{ letterSpacing: '-0.025em' }}>Vergelijkingen</h2>
+      {/* Vergelijkingen — RTINGS-stijl 2-koloms layout: main grid + side list */}
+      <section className="border-t border-[var(--border-default)]" style={{ background: 'var(--bg-elevated)' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2">
+            <div className="mb-5 pb-3 border-b border-[var(--border-default)]">
+              <p className="text-xs uppercase tracking-[0.12em] font-extrabold text-violet-700 mb-1">Side-by-side</p>
+              <h2 className="text-xl font-extrabold text-surface-900" style={{ letterSpacing: '-0.025em' }}>Populaire vergelijkingen</h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {[
+                { href: '/vergelijk/chatgpt-vs-claude', titel: 'ChatGPT vs Claude' },
+                { href: '/vergelijk/gemini-vs-chatgpt', titel: 'Gemini vs ChatGPT' },
+                { href: '/vergelijk/midjourney-vs-dall-e', titel: 'Midjourney vs DALL-E 3' },
+                { href: '/vergelijk/cursor-vs-github-copilot', titel: 'Cursor vs GitHub Copilot' },
+                { href: '/vergelijk/suno-vs-elevenlabs', titel: 'Suno vs ElevenLabs' },
+                { href: '/vergelijk/perplexity-vs-chatgpt', titel: 'Perplexity vs ChatGPT' },
+                { href: '/vergelijk/copilot-vs-chatgpt', titel: 'Copilot vs ChatGPT' },
+                { href: '/vergelijk/adobe-firefly-vs-midjourney', titel: 'Firefly vs Midjourney' },
+              ].map(item => (
+                <Link key={item.href} href={item.href} className="group flex items-center justify-between px-3 py-2.5 hover:bg-surface-50 rounded-md transition-colors">
+                  <p className="font-semibold text-sm text-surface-800 group-hover:text-brand-500 transition-colors">{item.titel}</p>
+                  <ChevronRight className="h-4 w-4 text-surface-300 group-hover:text-brand-500 transition-colors" />
+                </Link>
+              ))}
+            </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {[
-              { href: '/vergelijk/chatgpt-vs-claude', titel: 'ChatGPT vs Claude' },
-              { href: '/vergelijk/gemini-vs-chatgpt', titel: 'Gemini vs ChatGPT' },
-              { href: '/vergelijk/midjourney-vs-dall-e', titel: 'Midjourney vs DALL-E 3' },
-              { href: '/vergelijk/cursor-vs-github-copilot', titel: 'Cursor vs GitHub Copilot' },
-              { href: '/vergelijk/suno-vs-elevenlabs', titel: 'Suno vs ElevenLabs' },
-              { href: '/vergelijk/perplexity-vs-chatgpt', titel: 'Perplexity vs ChatGPT' },
-              { href: '/vergelijk/copilot-vs-chatgpt', titel: 'Copilot vs ChatGPT' },
-              { href: '/vergelijk/adobe-firefly-vs-midjourney', titel: 'Firefly vs Midjourney' },
-              { href: '/vergelijk/synthesia-vs-descript', titel: 'Synthesia vs Descript' },
-              { href: '/vergelijk/copy-ai-vs-jasper', titel: 'Copy.ai vs Jasper' },
-              { href: '/vergelijk/murf-vs-elevenlabs', titel: 'Murf AI vs ElevenLabs' },
-              { href: '/vergelijk/surfer-seo-vs-writesonic', titel: 'Surfer SEO vs Writesonic' },
-            ].map(item => (
-              <Link key={item.href} href={item.href} className="group flex items-center justify-between px-4 py-3 border border-[var(--border-default)] rounded-lg hover:border-brand-500 hover:bg-surface-50 transition-colors">
-                <p className="font-semibold text-sm text-surface-900 group-hover:text-brand-500 transition-colors">{item.titel}</p>
-                <ChevronRight className="h-4 w-4 text-surface-400 group-hover:text-brand-500 transition-colors" />
-              </Link>
-            ))}
+
+          <div>
+            <div className="mb-5 pb-3 border-b border-[var(--border-default)]">
+              <p className="text-xs uppercase tracking-[0.12em] font-extrabold text-cyan-700 mb-1">Specialistisch</p>
+              <h2 className="text-xl font-extrabold text-surface-900" style={{ letterSpacing: '-0.025em' }}>Niche tools</h2>
+            </div>
+            <div className="flex flex-col divide-y divide-[var(--border-default)]">
+              {[
+                { href: '/vergelijk/synthesia-vs-descript', titel: 'Synthesia vs Descript', sub: 'AI-video tools' },
+                { href: '/vergelijk/copy-ai-vs-jasper', titel: 'Copy.ai vs Jasper', sub: 'AI-copywriting' },
+                { href: '/vergelijk/murf-vs-elevenlabs', titel: 'Murf AI vs ElevenLabs', sub: 'Voice generation' },
+                { href: '/vergelijk/surfer-seo-vs-writesonic', titel: 'Surfer SEO vs Writesonic', sub: 'AI voor SEO' },
+              ].map(item => (
+                <Link key={item.href} href={item.href} className="py-2.5 first:pt-0 group">
+                  <p className="font-bold text-sm text-surface-900 group-hover:text-brand-500 transition-colors">{item.titel}</p>
+                  <p className="text-xs text-surface-500 mt-0.5">{item.sub}</p>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -222,7 +289,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Affiliate-disclosure */}
       <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 text-center">
         <p className="text-xs text-surface-500">
           Sommige links op deze site zijn affiliate-links. Wanneer je via deze links een abonnement afsluit, ontvangen wij soms een commissie. Dat heeft geen invloed op welke tools we tonen.
