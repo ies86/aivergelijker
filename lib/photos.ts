@@ -38,6 +38,10 @@ interface PexelsApiResponse {
  * Haalt 1 foto op die past bij de zoekterm. Cache 7 dagen via Next.js fetch.
  * Returnt null als geen key, geen resultaat, of API error.
  */
+// Cache-bust versie: bump dit getal om de fetch-cache te invalideren
+// (handig wanneer eerdere render een null cachte door ontbrekende env-var)
+const CACHE_VERSION = 'v2'
+
 export async function getPexelsPhoto(query: string, orientation: 'landscape' | 'portrait' | 'square' = 'landscape'): Promise<PexelsPhoto | null> {
   const key = process.env.PEXELS_API_KEY
   if (!key) return null
@@ -47,10 +51,11 @@ export async function getPexelsPhoto(query: string, orientation: 'landscape' | '
       query,
       per_page: '1',
       orientation,
+      _v: CACHE_VERSION,
     })
     const res = await fetch(`https://api.pexels.com/v1/search?${params}`, {
       headers: { Authorization: key },
-      next: { revalidate: 60 * 60 * 24 * 7 }, // 7 dagen cache
+      next: { revalidate: 60 * 60 * 6 }, // 6 uur cache (sneller verversen)
     })
     if (!res.ok) return null
 
