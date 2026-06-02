@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, ChevronRight } from 'lucide-react'
+import { ArrowRight, ChevronRight, Sparkles, Newspaper } from 'lucide-react'
 import { getAllTools } from '@/lib/tools'
 import { CATEGORIEEN } from '@/lib/categories'
 import ToolLogo from '@/components/tools/ToolLogo'
@@ -10,24 +10,9 @@ import JsonLd from '@/components/seo/JsonLd'
 
 export const revalidate = 3600
 
-// Per categorie: gekleurde label-pill kleur (RTINGS-style: subtiel maar herkenbaar)
-const CAT_LABEL_KLEUR: Record<string, string> = {
-  chatbot: 'text-indigo-700',
-  afbeelding: 'text-pink-700',
-  video: 'text-orange-700',
-  coding: 'text-emerald-700',
-  audio: 'text-cyan-700',
-  productiviteit: 'text-violet-700',
-}
-
-const CAT_DOT_KLEUR: Record<string, string> = {
-  chatbot: '#4338ca',
-  afbeelding: '#be185d',
-  video: '#c2410c',
-  coding: '#047857',
-  audio: '#0e7490',
-  productiviteit: '#6d28d9',
-}
+// RTINGS-stijl: alle categorie-labels in dezelfde warme kleur
+const LABEL_KLEUR = 'text-orange-700'
+const DOT_KLEUR = '#c2410c'
 
 const CAT_GRADIENT: Record<string, string> = {
   chatbot: 'from-slate-700 to-slate-900',
@@ -41,7 +26,7 @@ const CAT_GRADIENT: Record<string, string> = {
 export default async function HomePage() {
   const alleTools = await getAllTools().catch(() => [])
 
-  // Data-afgeleide stats
+  // Data-afgeleide stats (geen verzonnen claims)
   const totaalTools = alleTools.length
   const aantalGratis = alleTools.filter(t => t.plannen.some(p => p.prijs_mnd === 0)).length
   const betaaldePrijzen = alleTools
@@ -49,7 +34,15 @@ export default async function HomePage() {
     .filter((p): p is number => p != null)
   const goedkoopsteBetaald = betaaldePrijzen.length ? Math.min(...betaaldePrijzen) : null
 
-  // Per categorie: filter uit alleTools
+  // Topkeuzes: prominente tools (gebaseerd op uitgelicht flag = bewust gemaakte keuze in data.ts)
+  const topkeuzes = alleTools.filter(t => t.uitgelicht).slice(0, 6)
+
+  // Recent bijgewerkte tools — voor 'reviews' sectie
+  const recent = [...alleTools]
+    .sort((a, b) => (b.bijgewerkt ?? '').localeCompare(a.bijgewerkt ?? ''))
+    .slice(0, 4)
+
+  // Per categorie groepen
   const categorieData = CATEGORIEEN.map(cat => {
     const tools = alleTools.filter(t => t.categorie === cat.slug)
     return { ...cat, tools, aantal: tools.length }
@@ -66,7 +59,7 @@ export default async function HomePage() {
         ]}
       />
 
-      {/* Hero met search overlay */}
+      {/* Hero */}
       <section className="relative overflow-hidden border-b border-[var(--border-default)]" style={{ background: '#06060a' }}>
         <div aria-hidden className="absolute inset-0 opacity-[0.15]" style={{
           backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px)',
@@ -102,7 +95,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Stats-strip (RTINGS "4,630 Bought & Tested" stijl) */}
+      {/* Stats-strip */}
       <section className="border-b border-[var(--border-default)]" style={{ background: 'var(--bg-elevated)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
           <div>
@@ -126,24 +119,48 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Categorie-blokken — RTINGS "What's New" asymmetrische stijl:
-          Grote feature card links + 3 kleinere thumbnails-stack rechts */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-14">
+      {/* Topkeuzes — prominente affiliate-rij bovenaan (RTINGS featured-products stijl) */}
+      {topkeuzes.length > 0 && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+          <div className="flex items-end justify-between mb-5 pb-3 border-b border-[var(--border-default)]">
+            <div className="flex items-center gap-2.5">
+              <Sparkles className={`h-4 w-4 ${LABEL_KLEUR}`} />
+              <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Topkeuzes</h2>
+            </div>
+            <p className="text-xs text-surface-500">Onze meest aanbevolen tools</p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {topkeuzes.map(tool => {
+              const goedkoopste = tool.plannen.find(p => p.prijs_mnd === 0) ?? tool.plannen[0]
+              return (
+                <Link key={tool.slug} href={`/tools/${tool.slug}`} className="card p-4 group flex flex-col items-center text-center">
+                  <ToolLogo src={tool.logo_url} naam={tool.naam} size={56} />
+                  <p className="font-bold text-sm text-surface-900 group-hover:text-brand-500 transition-colors mt-3 line-clamp-1">{tool.naam}</p>
+                  <p className="text-xs text-surface-500 tabular-nums mt-1">
+                    {goedkoopste?.prijs_mnd === 0 ? <span className="text-emerald-600 font-semibold">Gratis</span> : `€${goedkoopste?.prijs_mnd}/mnd`}
+                  </p>
+                </Link>
+              )
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* Categorie-blokken — RTINGS asymmetric stijl, kleinere foto's, eenzelfde warme labelkleur */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
         {categorieData.filter(c => c.aantal > 0).map(cat => {
           const featured = cat.tools[0]
           const overige = cat.tools.slice(1, 4)
-          const labelKleur = CAT_LABEL_KLEUR[cat.slug] ?? 'text-violet-700'
-          const dotKleur = CAT_DOT_KLEUR[cat.slug] ?? '#6d28d9'
           const gradient = CAT_GRADIENT[cat.slug] ?? 'from-violet-500 to-cyan-500'
           const featGoedkoopste = featured?.plannen.find(p => p.prijs_mnd === 0) ?? featured?.plannen[0]
 
           return (
             <section key={cat.slug} aria-labelledby={`cat-${cat.slug}`}>
-              {/* Categorie-label header (RTINGS: kleine gekleurde categorie-pill bovenaan) */}
-              <div className="flex items-end justify-between mb-5 pb-3 border-b border-[var(--border-default)]">
+              <div className="flex items-end justify-between mb-4 pb-2 border-b border-[var(--border-default)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-block w-3 h-3 rounded-sm" style={{ background: dotKleur }} />
-                  <h2 id={`cat-${cat.slug}`} className={`text-sm font-extrabold uppercase tracking-[0.12em] ${labelKleur}`}>
+                  <span className="inline-block w-2 h-2 rounded-sm" style={{ background: DOT_KLEUR }} />
+                  <h2 id={`cat-${cat.slug}`} className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>
                     {cat.label}
                   </h2>
                 </div>
@@ -153,31 +170,23 @@ export default async function HomePage() {
                 </Link>
               </div>
 
-              {/* Asymmetric grid: featured (groot, 8 col) + lijst (4 col) */}
+              {/* Asymmetric: featured (groot) + lijst (rechts). Beeld is nu kleiner (max h-48) */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                {/* Featured tool — groot beeld + info onder */}
                 {featured && (
-                  <Link
-                    href={`/tools/${featured.slug}`}
-                    className="lg:col-span-8 group block"
-                  >
-                    <div className="relative w-full overflow-hidden rounded-xl mb-4 ring-1 ring-[var(--border-default)] transition-shadow group-hover:shadow-lg">
-                      <CategoryBanner
-                        query={cat.slug}
-                        aspect="16/9"
-                        fallbackGradient={gradient}
-                      />
+                  <Link href={`/tools/${featured.slug}`} className="lg:col-span-7 group block">
+                    <div className="relative w-full overflow-hidden rounded-xl mb-3 ring-1 ring-[var(--border-default)] transition-shadow group-hover:shadow-lg h-44 sm:h-48">
+                      <CategoryBanner query={cat.slug} aspect="16/9" fallbackGradient={gradient} className="!h-full" />
                     </div>
                     <div className="flex items-start gap-3">
-                      <ToolLogo src={featured.logo_url} naam={featured.naam} size={44} />
+                      <ToolLogo src={featured.logo_url} naam={featured.naam} size={40} />
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-extrabold text-xl text-surface-900 group-hover:text-brand-500 transition-colors leading-tight" style={{ letterSpacing: '-0.02em' }}>
+                        <h3 className="font-extrabold text-lg text-surface-900 group-hover:text-brand-500 transition-colors leading-tight" style={{ letterSpacing: '-0.02em' }}>
                           {featured.naam}
                         </h3>
                         <p className="text-sm text-surface-600 mt-0.5 line-clamp-1">{featured.tagline}</p>
                         <p className="text-xs text-surface-500 mt-1 tabular-nums">
                           {featGoedkoopste?.prijs_mnd === 0
-                            ? <span className="text-emerald-600 font-semibold">Gratis plan beschikbaar</span>
+                            ? <span className="text-emerald-600 font-semibold">Gratis plan</span>
                             : featGoedkoopste
                               ? <>Vanaf <strong className="text-surface-900">€{featGoedkoopste.prijs_mnd}/mnd</strong></>
                               : null}
@@ -187,17 +196,12 @@ export default async function HomePage() {
                   </Link>
                 )}
 
-                {/* Overige tools — verticale stack met kleine thumbnails (RTINGS rechter-kolom stijl) */}
-                <div className="lg:col-span-4 flex flex-col divide-y divide-[var(--border-default)]">
+                <div className="lg:col-span-5 flex flex-col divide-y divide-[var(--border-default)]">
                   {overige.map(tool => {
                     const goedkoopste = tool.plannen.find(p => p.prijs_mnd === 0) ?? tool.plannen[0]
                     return (
-                      <Link
-                        key={tool.slug}
-                        href={`/tools/${tool.slug}`}
-                        className="flex items-center gap-3 py-3 first:pt-0 last:pb-0 group"
-                      >
-                        <ToolLogo src={tool.logo_url} naam={tool.naam} size={56} />
+                      <Link key={tool.slug} href={`/tools/${tool.slug}`} className="flex items-center gap-3 py-2.5 first:pt-0 last:pb-0 group">
+                        <ToolLogo src={tool.logo_url} naam={tool.naam} size={48} />
                         <div className="flex-1 min-w-0">
                           <p className="font-bold text-sm text-surface-900 group-hover:text-brand-500 transition-colors line-clamp-1">{tool.naam}</p>
                           <p className="text-xs text-surface-500 mt-0.5 line-clamp-1">{tool.tagline}</p>
@@ -208,13 +212,8 @@ export default async function HomePage() {
                       </Link>
                     )
                   })}
-
-                  {/* "Alles bekijken" link onderaan stack */}
                   {cat.aantal > 4 && (
-                    <Link
-                      href={`/categorie/${cat.slug}`}
-                      className="flex items-center justify-between py-3 text-xs font-semibold text-surface-600 hover:text-brand-500 transition-colors"
-                    >
+                    <Link href={`/categorie/${cat.slug}`} className="flex items-center justify-between py-2.5 text-xs font-semibold text-surface-600 hover:text-brand-500 transition-colors">
                       Bekijk alle {cat.aantal} {cat.label.toLowerCase()}
                       <ArrowRight className="h-3 w-3" />
                     </Link>
@@ -226,13 +225,67 @@ export default async function HomePage() {
         })}
       </div>
 
-      {/* Vergelijkingen — RTINGS-stijl 2-koloms layout: main grid + side list */}
+      {/* Reviews + Nieuws sectie (RTINGS 'What's New' + 'R&D In The Lab' stijl) */}
       <section className="border-t border-[var(--border-default)]" style={{ background: 'var(--bg-elevated)' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
+          {/* Reviews kolom (2/3 breedte) */}
           <div className="lg:col-span-2">
-            <div className="mb-5 pb-3 border-b border-[var(--border-default)]">
-              <p className="text-xs uppercase tracking-[0.12em] font-extrabold text-violet-700 mb-1">Side-by-side</p>
-              <h2 className="text-xl font-extrabold text-surface-900" style={{ letterSpacing: '-0.025em' }}>Populaire vergelijkingen</h2>
+            <div className="flex items-end justify-between mb-4 pb-2 border-b border-[var(--border-default)]">
+              <div className="flex items-center gap-2.5">
+                <span className="inline-block w-2 h-2 rounded-sm" style={{ background: DOT_KLEUR }} />
+                <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Recente reviews</h2>
+              </div>
+              <Link href="/categorie/chatbot" className="text-xs font-semibold text-surface-600 hover:text-brand-500 inline-flex items-center gap-1 transition-colors">
+                Alle reviews
+                <ArrowRight className="h-3 w-3" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {recent.map(tool => {
+                const goedkoopste = tool.plannen.find(p => p.prijs_mnd === 0) ?? tool.plannen[0]
+                return (
+                  <Link key={tool.slug} href={`/tools/${tool.slug}`} className="group flex items-center gap-3 p-3 rounded-lg hover:bg-surface-50 transition-colors">
+                    <ToolLogo src={tool.logo_url} naam={tool.naam} size={56} />
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-sm text-surface-900 group-hover:text-brand-500 transition-colors line-clamp-1">{tool.naam}</p>
+                      <p className="text-xs text-surface-500 mt-0.5 line-clamp-1">{tool.tagline}</p>
+                      <p className="text-xs text-surface-600 mt-0.5 tabular-nums">
+                        {goedkoopste?.prijs_mnd === 0 ? <span className="text-emerald-600 font-semibold">Gratis</span> : `Vanaf €${goedkoopste?.prijs_mnd}/mnd`}
+                      </p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-surface-300 group-hover:text-brand-500 transition-colors shrink-0" />
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Nieuws kolom (1/3 breedte) — empty state */}
+          <div>
+            <div className="flex items-end justify-between mb-4 pb-2 border-b border-[var(--border-default)]">
+              <div className="flex items-center gap-2.5">
+                <Newspaper className={`h-4 w-4 ${LABEL_KLEUR}`} />
+                <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Laatste nieuws</h2>
+              </div>
+            </div>
+            <div className="text-center py-8 text-sm text-surface-500">
+              <Newspaper className="h-7 w-7 text-surface-300 mx-auto mb-2" />
+              <p className="font-semibold text-surface-700">Binnenkort eerste artikelen</p>
+              <p className="text-xs mt-1 max-w-[14rem] mx-auto">We plaatsen alleen nieuws over AI-tools wanneer er iets relevants te melden valt.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Vergelijkingen — 2-kolom (RTINGS-stijl) */}
+      <section className="border-t border-[var(--border-default)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
+          <div className="lg:col-span-2">
+            <div className="mb-4 pb-2 border-b border-[var(--border-default)]">
+              <div className="flex items-center gap-2.5">
+                <span className="inline-block w-2 h-2 rounded-sm" style={{ background: DOT_KLEUR }} />
+                <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Side-by-side vergelijkingen</h2>
+              </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {[
@@ -254,9 +307,11 @@ export default async function HomePage() {
           </div>
 
           <div>
-            <div className="mb-5 pb-3 border-b border-[var(--border-default)]">
-              <p className="text-xs uppercase tracking-[0.12em] font-extrabold text-cyan-700 mb-1">Specialistisch</p>
-              <h2 className="text-xl font-extrabold text-surface-900" style={{ letterSpacing: '-0.025em' }}>Niche tools</h2>
+            <div className="mb-4 pb-2 border-b border-[var(--border-default)]">
+              <div className="flex items-center gap-2.5">
+                <span className="inline-block w-2 h-2 rounded-sm" style={{ background: DOT_KLEUR }} />
+                <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Niche tools</h2>
+              </div>
             </div>
             <div className="flex flex-col divide-y divide-[var(--border-default)]">
               {[

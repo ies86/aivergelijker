@@ -40,7 +40,7 @@ export async function GET() {
         key: keyInfo,
         api_response: text.substring(0, 500),
         diagnose: res.status === 401
-          ? 'API key wordt door Pexels geweigerd. Klopt de key wel? Test 'm op pexels.com.'
+          ? 'API key wordt door Pexels geweigerd. Klopt de key wel? Test de key op pexels.com.'
           : `Onverwachte status ${res.status} van Pexels API.`,
       })
     }
