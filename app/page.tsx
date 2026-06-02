@@ -228,7 +228,7 @@ export default async function HomePage() {
       {/* Reviews + Nieuws sectie (RTINGS 'What's New' + 'R&D In The Lab' stijl) */}
       <section className="border-t border-[var(--border-default)]" style={{ background: 'var(--bg-elevated)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Reviews kolom (2/3 breedte) */}
+          {/* Reviews kolom (2/3 breedte) — met grotere teaser cards */}
           <div className="lg:col-span-2">
             <div className="flex items-end justify-between mb-4 pb-2 border-b border-[var(--border-default)]">
               <div className="flex items-center gap-2.5">
@@ -243,36 +243,56 @@ export default async function HomePage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {recent.map(tool => {
                 const goedkoopste = tool.plannen.find(p => p.prijs_mnd === 0) ?? tool.plannen[0]
+                // Eerste zin van beschrijving als "waarvoor dient het"
+                const eersteZin = tool.beschrijving.split(/(?<=[.!?])\s+/)[0] ?? tool.tagline
                 return (
-                  <Link key={tool.slug} href={`/tools/${tool.slug}`} className="group flex items-center gap-3 p-3 rounded-lg hover:bg-surface-50 transition-colors">
-                    <ToolLogo src={tool.logo_url} naam={tool.naam} size={56} />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-bold text-sm text-surface-900 group-hover:text-brand-500 transition-colors line-clamp-1">{tool.naam}</p>
-                      <p className="text-xs text-surface-500 mt-0.5 line-clamp-1">{tool.tagline}</p>
-                      <p className="text-xs text-surface-600 mt-0.5 tabular-nums">
-                        {goedkoopste?.prijs_mnd === 0 ? <span className="text-emerald-600 font-semibold">Gratis</span> : `Vanaf €${goedkoopste?.prijs_mnd}/mnd`}
-                      </p>
+                  <Link key={tool.slug} href={`/tools/${tool.slug}`} className="card group flex flex-col p-4 hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-3 mb-3">
+                      <ToolLogo src={tool.logo_url} naam={tool.naam} size={48} />
+                      <div className="flex-1 min-w-0">
+                        <p className="font-extrabold text-base text-surface-900 group-hover:text-brand-500 transition-colors line-clamp-1" style={{ letterSpacing: '-0.02em' }}>{tool.naam}</p>
+                        <p className="text-xs text-surface-500 line-clamp-1 capitalize">{tool.categorie} · {goedkoopste?.prijs_mnd === 0 ? <span className="text-emerald-600 font-semibold">Gratis</span> : <>Vanaf €{goedkoopste?.prijs_mnd}/mnd</>}</p>
+                      </div>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-surface-300 group-hover:text-brand-500 transition-colors shrink-0" />
+                    <p className="text-sm text-surface-600 leading-relaxed line-clamp-2 mb-3">{eersteZin}</p>
+                    <span className="text-xs font-semibold text-brand-500 group-hover:text-brand-700 transition-colors inline-flex items-center gap-1 mt-auto">
+                      Lees verder <ArrowRight className="h-3 w-3" />
+                    </span>
                   </Link>
                 )
               })}
             </div>
           </div>
 
-          {/* Nieuws kolom (1/3 breedte) — empty state */}
+          {/* Nieuws kolom (1/3 breedte) — preview cards van wat er komt */}
           <div>
             <div className="flex items-end justify-between mb-4 pb-2 border-b border-[var(--border-default)]">
               <div className="flex items-center gap-2.5">
                 <Newspaper className={`h-4 w-4 ${LABEL_KLEUR}`} />
-                <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Laatste nieuws</h2>
+                <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Wat we volgen</h2>
               </div>
             </div>
-            <div className="text-center py-8 text-sm text-surface-500">
-              <Newspaper className="h-7 w-7 text-surface-300 mx-auto mb-2" />
-              <p className="font-semibold text-surface-700">Binnenkort eerste artikelen</p>
-              <p className="text-xs mt-1 max-w-[14rem] mx-auto">We plaatsen alleen nieuws over AI-tools wanneer er iets relevants te melden valt.</p>
+            <p className="text-xs text-surface-500 leading-relaxed mb-4">
+              Wanneer er belangrijk nieuws is over een AI-tool — een nieuwe versie,
+              prijswijziging of overname — vatten we het hier op één plek samen.
+              Geen ruis, alleen wat ertoe doet.
+            </p>
+            <div className="space-y-3">
+              {[
+                { titel: 'Nieuwe modellen & versies', beschrijving: 'GPT, Claude, Gemini, Grok — we volgen elke release.' },
+                { titel: 'Prijswijzigingen', beschrijving: 'Wordt een gratis plan beperkt? Stijgt het Pro-tarief?' },
+                { titel: 'Acquisities & deals', beschrijving: 'Welk AI-bedrijf koopt welk ander bedrijf.' },
+              ].map(item => (
+                <div key={item.titel} className="border-l-2 border-surface-200 pl-3 py-1">
+                  <p className="text-sm font-bold text-surface-900">{item.titel}</p>
+                  <p className="text-xs text-surface-500 leading-relaxed">{item.beschrijving}</p>
+                </div>
+              ))}
             </div>
+            <Link href="/" className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-500 hover:text-brand-700 transition-colors">
+              Schrijf je in voor updates
+              <ArrowRight className="h-3 w-3" />
+            </Link>
           </div>
         </div>
       </section>
