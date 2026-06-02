@@ -1,11 +1,11 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useRef, useState } from 'react'
 
 interface Props {
   value: number
   duration?: number
-  /** Optionele formatter — bv. (n) => `€${n}` */
+  /** Optionele formatter, bv. (n) => `€${n}` */
   format?: (n: number) => string
   className?: string
   /** Starts pas met animeren wanneer in viewport */

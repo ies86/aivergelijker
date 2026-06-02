@@ -78,7 +78,7 @@ export async function getPexelsPhoto(query: string, orientation: 'landscape' | '
 
 /** Vooraf-bepaalde zoektermen per categorie voor consistente vibe per sectie. */
 export const CATEGORIE_PHOTO_QUERY: Record<string, string> = {
-  chatbot: 'futuristic conversation interface technology',
+  chatbot: 'person typing smartphone messaging',
   afbeelding: 'digital art creative design abstract',
   video: 'film studio camera production',
   coding: 'code laptop developer workspace',

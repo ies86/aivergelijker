@@ -1,4 +1,4 @@
-import { getPexelsPhoto, CATEGORIE_PHOTO_QUERY } from '@/lib/photos'
+﻿import { getPexelsPhoto, CATEGORIE_PHOTO_QUERY } from '@/lib/photos'
 
 interface Props {
   /** Slug van de categorie (chatbot, video, etc.) of een eigen query-tekst */
@@ -44,7 +44,7 @@ export default async function CategoryBanner({
           {label && (
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
           )}
-          {/* Attribution Pexels — vereist door hun voorwaarden */}
+          {/* Attribution Pexels, vereist door hun voorwaarden */}
           <a
             href={photo.photographerUrl}
             target="_blank"

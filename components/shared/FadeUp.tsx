@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useRef, useState } from 'react'
 
@@ -10,7 +10,7 @@ interface Props {
 
 /**
  * Wrapper die kinderen 8px omhoog laat fade-in zodra ze in viewport komen.
- * Gebruikt IntersectionObserver — zonder JS-frame-by-frame animaties.
+ * Gebruikt IntersectionObserver, zonder JS-frame-by-frame animaties.
  */
 export default function FadeUp({ children, delay = 0, className = '' }: Props) {
   const [zichtbaar, setZichtbaar] = useState(false)

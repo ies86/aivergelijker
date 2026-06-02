@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { ArrowRight, ChevronRight, Sparkles } from 'lucide-react'
 import { getAllTools } from '@/lib/tools'
 import { CATEGORIEEN } from '@/lib/categories'
@@ -39,7 +39,7 @@ export default async function HomePage() {
   // Topkeuzes: prominente tools (gebaseerd op uitgelicht flag = bewust gemaakte keuze in data.ts)
   const topkeuzes = alleTools.filter(t => t.uitgelicht).slice(0, 6)
 
-  // Recent bijgewerkte tools — voor 'reviews' sectie
+  // Recent bijgewerkte tools, voor 'reviews' sectie
   const recent = [...alleTools]
     .sort((a, b) => (b.bijgewerkt ?? '').localeCompare(a.bijgewerkt ?? ''))
     .slice(0, 4)
@@ -89,7 +89,7 @@ export default async function HomePage() {
             <br className="hidden sm:block" /> voor jouw doel
           </h1>
           <p className="text-base sm:text-lg text-white/60 mb-8 max-w-xl mx-auto">
-            Prijzen, plannen en functies van <span className="tabular-nums font-semibold text-white/80">{totaalTools}</span> AI-tools naast elkaar — in het Nederlands.
+            Prijzen, plannen en functies van <span className="tabular-nums font-semibold text-white/80">{totaalTools}</span> AI-tools naast elkaar, in het Nederlands.
           </p>
         </div>
         <div className="relative -mt-10 px-4 pb-8">
@@ -110,7 +110,7 @@ export default async function HomePage() {
           </div>
           <div>
             <p className="text-3xl font-extrabold text-surface-900 tabular-nums" style={{ letterSpacing: '-0.025em' }}>
-              {goedkoopsteBetaald != null ? <>€{goedkoopsteBetaald}<span className="text-base text-surface-500 font-medium">/mnd</span></> : '—'}
+              {goedkoopsteBetaald != null ? <>€{goedkoopsteBetaald}<span className="text-base text-surface-500 font-medium">/mnd</span></> : 'n.v.t.'}
             </p>
             <p className="text-xs text-surface-500 mt-1 uppercase tracking-wider font-semibold">Goedkoopste betaalde</p>
           </div>
@@ -121,7 +121,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Topkeuzes — prominente affiliate-rij bovenaan (RTINGS featured-products stijl) */}
+      {/* Topkeuzes, prominente affiliate-rij bovenaan (RTINGS featured-products stijl) */}
       {topkeuzes.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
           <div className="flex items-end justify-between mb-5 pb-3 border-b border-[var(--border-default)]">
@@ -149,7 +149,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Categorie-blokken — RTINGS asymmetric stijl, kleinere foto's, eenzelfde warme labelkleur */}
+      {/* Categorie-blokken, RTINGS asymmetric stijl, kleinere foto's, eenzelfde warme labelkleur */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
         {categorieData.filter(c => c.aantal > 0).map(cat => {
           const featured = cat.tools[0]
@@ -230,7 +230,7 @@ export default async function HomePage() {
       {/* Reviews + Nieuws sectie (RTINGS 'What's New' + 'R&D In The Lab' stijl) */}
       <section className="border-t border-[var(--border-default)]" style={{ background: 'var(--bg-elevated)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Reviews kolom (2/3 breedte) — met grotere teaser cards */}
+          {/* Reviews kolom (2/3 breedte), met grotere teaser cards */}
           <div className="lg:col-span-2">
             <div className="flex items-end justify-between mb-4 pb-2 border-b border-[var(--border-default)]">
               <div className="flex items-center gap-2.5">
@@ -266,12 +266,12 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* Nieuws kolom (1/3 breedte) — live AI-nieuws van Hacker News */}
+          {/* Nieuws kolom (1/3 breedte), live AI-nieuws van Hacker News */}
           <NewsSection limit={5} labelKleur={LABEL_KLEUR} dotKleur={DOT_KLEUR} />
         </div>
       </section>
 
-      {/* Vergelijkingen — 2-kolom (RTINGS-stijl) */}
+      {/* Vergelijkingen, 2-kolom (RTINGS-stijl) */}
       <section className="border-t border-[var(--border-default)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
@@ -329,7 +329,7 @@ export default async function HomePage() {
         <div className="bg-surface-900 rounded-2xl p-8 sm:p-12 text-center">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3" style={{ letterSpacing: '-0.025em' }}>Blijf op de hoogte</h2>
           <p className="text-surface-400 mb-6 max-w-md mx-auto text-sm">
-            Nieuwe AI-tools en vergelijkingen — in je inbox wanneer er iets nieuws is.
+            Nieuwe AI-tools en vergelijkingen, in je inbox wanneer er iets nieuws is.
           </p>
           <div className="max-w-md mx-auto">
             <NewsletterForm />

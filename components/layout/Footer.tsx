@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { CATEGORIEEN } from '@/lib/categories'
 
 export default function Footer() {
@@ -64,7 +64,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/10 mt-10 pt-6 text-xs text-surface-400 flex flex-col sm:flex-row justify-between gap-2">
-          <span>&copy; {new Date().getFullYear()} aivergelijker.nl — Alle rechten voorbehouden.</span>
+          <span>&copy; {new Date().getFullYear()} aivergelijker.nl, Alle rechten voorbehouden.</span>
           <span className="flex items-center gap-2">
             <span>* Affiliate-links hebben geen invloed op onze beoordelingen.</span>
           </span>

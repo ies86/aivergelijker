@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { useState } from 'react'
@@ -15,7 +15,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2 group">
-            {/* Minimaal data-bar icoon — drie oplopende balkjes = ranking */}
+            {/* Minimaal data-bar icoon, drie oplopende balkjes = ranking */}
             <svg width="26" height="26" viewBox="0 0 26 26" className="shrink-0">
               <rect x="2" y="14" width="5" height="10" rx="1" className="fill-violet-500" />
               <rect x="10" y="9" width="5" height="15" rx="1" className="fill-violet-600" />

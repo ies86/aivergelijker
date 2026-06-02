@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+﻿import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 
 export async function POST(req: NextRequest) {
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
   if (error) {
     if (error.code === '23505') {
-      // Al aangemeld — geen fout tonen aan gebruiker
+      // Al aangemeld, geen fout tonen aan gebruiker
       return NextResponse.json({ ok: true })
     }
     return NextResponse.json({ error: 'Er ging iets mis' }, { status: 500 })

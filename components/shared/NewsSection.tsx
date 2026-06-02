@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { ExternalLink, ArrowUpRight, Newspaper } from 'lucide-react'
 import { getAiNews, relatieveTijd } from '@/lib/news'
 
@@ -41,7 +41,7 @@ export default async function NewsSection({ limit = 5, labelKleur = 'text-orange
       {items.length === 0 ? (
         <div className="text-center py-8 text-sm text-surface-500">
           <p className="font-semibold text-surface-700">Geen nieuws beschikbaar</p>
-          <p className="text-xs mt-1">Kom later terug — de feed wordt elk uur ververst.</p>
+          <p className="text-xs mt-1">Kom later terug, de feed wordt elk uur ververst.</p>
         </div>
       ) : (
         <div className="space-y-3">

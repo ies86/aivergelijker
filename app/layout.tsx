@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
@@ -10,7 +10,7 @@ import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 import CompareBar from '@/components/tools/CompareBar'
 import { getAllTools } from '@/lib/tools'
 
-// Variable fonts van Vercel — optical sizing en alle weights beschikbaar
+// Variable fonts van Vercel, optical sizing en alle weights beschikbaar
 const geist = Geist({
   subsets: ['latin'],
   variable: '--font-sans',
@@ -26,10 +26,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aivergelijker.nl'),
   title: {
-    default: 'aivergelijker.nl — Vergelijk de beste AI-tools (2026)',
-    template: '%s — aivergelijker.nl',
+    default: 'aivergelijker.nl, Vergelijk de beste AI-tools (2026)',
+    template: '%s, aivergelijker.nl',
   },
-  description: 'Vergelijk de beste AI-tools voor consumenten. Onafhankelijke reviews, prijsvergelijkingen en eerlijke aanbevelingen — in het Nederlands.',
+  description: 'Vergelijk de beste AI-tools voor consumenten. Onafhankelijke reviews, prijsvergelijkingen en eerlijke aanbevelingen, in het Nederlands.',
   keywords: [
     'AI tools vergelijken',
     'beste AI tools',
@@ -46,13 +46,13 @@ export const metadata: Metadata = {
     siteName: 'aivergelijker.nl',
     locale: 'nl_NL',
     type: 'website',
-    title: 'aivergelijker.nl — Vergelijk de beste AI-tools',
-    description: 'Onafhankelijke vergelijkingen, eerlijke reviews en directe links naar de beste AI-tools — in het Nederlands.',
+    title: 'aivergelijker.nl, Vergelijk de beste AI-tools',
+    description: 'Onafhankelijke vergelijkingen, eerlijke reviews en directe links naar de beste AI-tools, in het Nederlands.',
     url: 'https://aivergelijker.nl',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'aivergelijker.nl — Vergelijk de beste AI-tools',
+    title: 'aivergelijker.nl, Vergelijk de beste AI-tools',
     description: 'Onafhankelijke AI-tool vergelijkingen in het Nederlands.',
   },
   alternates: {

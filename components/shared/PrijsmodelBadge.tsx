@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import type { Prijsmodel } from '@/lib/types'
@@ -10,7 +10,7 @@ interface Props {
 }
 
 /**
- * Prijsmodel-badge met hover tooltip — legt uit wat Freemium etc. betekent.
+ * Prijsmodel-badge met hover tooltip, legt uit wat Freemium etc. betekent.
  * Tooltip verschijnt boven de badge bij hover (desktop) of tap (mobile).
  */
 export default function PrijsmodelBadge({ model, className = '' }: Props) {
