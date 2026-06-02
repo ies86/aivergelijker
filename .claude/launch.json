@@ -5,7 +5,6 @@
       "name": "aivergelijker",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
-      "port": 3000,
       "autoPort": true,
       "env": {
         "NEXT_PUBLIC_SUPABASE_URL": "https://placeholder.supabase.co",

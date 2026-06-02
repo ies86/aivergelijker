@@ -57,12 +57,6 @@ export default function Header() {
                 {cat.label}
               </Link>
             ))}
-            <Link
-              href="/nieuws"
-              className="text-sm font-medium text-surface-600 hover:text-brand-500 px-3 py-2 rounded-lg hover:bg-surface-50 transition-colors"
-            >
-              Nieuws
-            </Link>
           </nav>
 
           <div className="flex items-center gap-1">
@@ -112,14 +106,6 @@ export default function Header() {
                 <ChevronDown className="h-4 w-4 -rotate-90 text-surface-400" />
               </Link>
             ))}
-            <Link
-              href="/nieuws"
-              onClick={() => setOpen(false)}
-              className="flex items-center justify-between px-3 py-3 text-sm font-medium text-surface-700 hover:text-brand-500"
-            >
-              Nieuws
-              <ChevronDown className="h-4 w-4 -rotate-90 text-surface-400" />
-            </Link>
           </div>
         </div>
       )}

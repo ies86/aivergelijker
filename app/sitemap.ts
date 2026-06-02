@@ -12,7 +12,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Statische pagina's
   const staticPages: MetadataRoute.Sitemap = [
     { url: BASE, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${BASE}/nieuws`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
   ]
 
   // Categorie-pagina's
@@ -56,24 +55,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }))
 
-  // Nieuws
-  const nieuwsDir = path.join(process.cwd(), 'content', 'nieuws')
-  const nieuwsFiles = await readdir(nieuwsDir).catch(() => [] as string[])
-  const nieuwsPaginas: MetadataRoute.Sitemap = nieuwsFiles
-    .filter(f => f.endsWith('.mdx'))
-    .map(f => ({
-      url: `${BASE}/nieuws/${f.replace('.mdx', '')}`,
-      lastModified: now,
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    }))
-
   return [
     ...staticPages,
     ...categoriePaginas,
     ...toolPaginas,
     ...vergelijkPaginas,
     ...guidePaginas,
-    ...nieuwsPaginas,
   ]
 }

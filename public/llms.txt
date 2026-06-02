@@ -55,25 +55,6 @@ aivergelijker.nl helpt Nederlandse consumenten bij het kiezen van de juiste AI-t
 - Beste AI voor SEO: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-seo
 - Beste AI voor meetings: https://aivergelijker.nl/beste-ai-voor/beste-ai-voor-meetings
 
-## Nieuws
-
-- OpenAI werkt aan GPT-5: https://aivergelijker.nl/nieuws/openai-gpt5-aankondiging
-- EU AI Act treedt in werking: https://aivergelijker.nl/nieuws/eu-ai-act-2026
-- Apple Intelligence 2.0 verwacht: https://aivergelijker.nl/nieuws/apple-ai-wwdc-2026
-- DeepSeek R1 in Europa: https://aivergelijker.nl/nieuws/deepseek-r1-europa
-- Cursor bereikt 100M downloads: https://aivergelijker.nl/nieuws/cursor-ai-100m-gebruikers
-- Claude Code lancering: https://aivergelijker.nl/nieuws/claude-code-lancering
-- Midjourney V7 release: https://aivergelijker.nl/nieuws/midjourney-v7-release
-- ChatGPT gratis GPT-4o: https://aivergelijker.nl/nieuws/chatgpt-gratis-gpt4o
-- Google Gemini update: https://aivergelijker.nl/nieuws/google-gemini-gratis-update
-- Runway Gen-3 Alpha update: https://aivergelijker.nl/nieuws/runway-gen3-alpha-update
-- Synthesia haalt $180M op: https://aivergelijker.nl/nieuws/synthesia-serie-d-funding
-- Fireflies.ai bereikt 300K teams: https://aivergelijker.nl/nieuws/fireflies-ai-groei-2026
-- Surfer SEO AI-update: https://aivergelijker.nl/nieuws/surfer-seo-ai-update
-- ElevenLabs Voice Marketplace: https://aivergelijker.nl/nieuws/elevenlabs-voice-marketplace
-- Copy.ai Workflows lancering: https://aivergelijker.nl/nieuws/copy-ai-workflows-lancering
-- Descript AI Underlord 2.0: https://aivergelijker.nl/nieuws/descript-ai-editing-update
-
 ## Taal
 
 Alle content is in het Nederlands geschreven.

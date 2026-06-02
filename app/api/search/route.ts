@@ -82,15 +82,5 @@ export async function GET() {
     })
   }
 
-  // Nieuws
-  const nieuws = await lijstSlugs('nieuws')
-  for (const slug of nieuws) {
-    items.push({
-      type: 'nieuws',
-      titel: titelVanSlug(slug),
-      href: `/nieuws/${slug}`,
-    })
-  }
-
   return NextResponse.json({ items })
 }

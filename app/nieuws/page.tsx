@@ -1,69 +1,30 @@
-import { readdir } from 'fs/promises'
-import path from 'path'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowLeft, Newspaper } from 'lucide-react'
 import type { Metadata } from 'next'
-import { compileMDX } from 'next-mdx-remote/rsc'
-import { readFile } from 'fs/promises'
 
 export const metadata: Metadata = {
-  title: 'AI Nieuws & Updates',
-  description: 'Het laatste nieuws over AI-tools, nieuwe releases en updates — in het Nederlands.',
+  title: 'Nieuws',
+  description: 'Op dit moment publiceren we geen nieuws. Bekijk onze tool-vergelijkingen voor actuele informatie.',
+  robots: { index: false, follow: true },
 }
 
-interface Frontmatter {
-  titel: string
-  beschrijving: string
-  datum: string
-}
-
-async function getAlleNieuws() {
-  const dir = path.join(process.cwd(), 'content', 'nieuws')
-  const files = await readdir(dir).catch(() => [] as string[])
-  const mdxFiles = files.filter(f => f.endsWith('.mdx'))
-
-  const artikelen = await Promise.all(
-    mdxFiles.map(async file => {
-      const slug = file.replace('.mdx', '')
-      const source = await readFile(path.join(dir, file), 'utf-8')
-      const { frontmatter } = await compileMDX<Frontmatter>({ source, options: { parseFrontmatter: true } })
-      return { slug, ...frontmatter }
-    })
-  )
-
-  return artikelen.sort((a, b) => new Date(b.datum).getTime() - new Date(a.datum).getTime())
-}
-
-export default async function NieuwsOverzicht() {
-  const artikelen = await getAlleNieuws()
-
+export default function NieuwsOverzicht() {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <h1 className="text-3xl font-bold text-surface-900 mb-2">AI Nieuws</h1>
-      <p className="text-surface-500 mb-10">Het laatste nieuws over AI-tools voor consumenten.</p>
-
-      {artikelen.length === 0 ? (
-        <p className="text-surface-400">Binnenkort verschijnen hier de eerste artikelen.</p>
-      ) : (
-        <div className="space-y-4">
-          {artikelen.map(artikel => (
-            <Link
-              key={artikel.slug}
-              href={`/nieuws/${artikel.slug}`}
-              className="block card p-6 group"
-            >
-              <p className="date-tag mb-2">{artikel.datum}</p>
-              <h2 className="text-lg font-bold text-surface-900 group-hover:text-brand-500 transition-colors mb-1">
-                {artikel.titel}
-              </h2>
-              <p className="text-surface-500 text-sm mb-3">{artikel.beschrijving}</p>
-              <span className="inline-flex items-center gap-1 text-brand-500 text-sm font-semibold">
-                Lees meer <ArrowRight className="h-3.5 w-3.5" />
-              </span>
-            </Link>
-          ))}
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="card p-10 text-center">
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-surface-100 mb-4">
+          <Newspaper className="h-6 w-6 text-surface-500" />
         </div>
-      )}
+        <h1 className="text-2xl font-bold text-surface-900 mb-2" style={{ letterSpacing: '-0.025em' }}>
+          Geen nieuws op dit moment
+        </h1>
+        <p className="text-surface-600 mb-8 max-w-md mx-auto">
+          We publiceren nieuws alleen wanneer er iets relevants te melden valt over de AI-tools die we vergelijken.
+        </p>
+        <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-brand-500 hover:text-brand-700 transition-colors">
+          <ArrowLeft className="h-4 w-4" /> Terug naar de homepage
+        </Link>
+      </div>
     </div>
   )
 }

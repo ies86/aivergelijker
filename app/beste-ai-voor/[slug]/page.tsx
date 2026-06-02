@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { getToolsBySlugs } from '@/lib/tools'
 import ToolGrid from '@/components/tools/ToolGrid'
 import JsonLd from '@/components/seo/JsonLd'
+import Disclaimer from '@/components/shared/Disclaimer'
 
 interface Frontmatter {
   titel: string
@@ -74,7 +75,9 @@ export default async function GuidePagina({ params }: { params: Promise<{ slug: 
 
       <JsonLd type="article" titel={frontmatter.titel} beschrijving={frontmatter.beschrijving} slug={`beste-ai-voor/${slug}`} />
       <h1 className="text-3xl font-bold text-surface-900 mb-2">{frontmatter.titel}</h1>
-      <p className="text-surface-500 mb-10">{frontmatter.beschrijving}</p>
+      <p className="text-surface-500 mb-6">{frontmatter.beschrijving}</p>
+
+      <Disclaimer />
 
       <article className="prose prose-p:text-surface-600 prose-headings:text-surface-900 prose-strong:text-surface-900 prose-a:text-brand-500 max-w-none mb-12">
         {content}

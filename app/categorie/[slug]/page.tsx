@@ -62,9 +62,7 @@ export default async function CategoriePagina({ params }: { params: Promise<{ sl
     ? Math.round(betaaldePrijzen.reduce((a, b) => a + b, 0) / betaaldePrijzen.length)
     : 0
 
-  const gemRating = tools.length
-    ? (tools.reduce((sum, t) => sum + (t.beoordeling ?? 0), 0) / tools.length).toFixed(1)
-    : '-'
+  const goedkoopstePrijs = betaaldePrijzen.length ? Math.min(...betaaldePrijzen) : 0
 
   const kleur = CAT_KLEUR[slug] ?? '#6d28d9'
 
@@ -117,10 +115,10 @@ export default async function CategoriePagina({ params }: { params: Promise<{ sl
               <p className="text-xs text-surface-500 mt-0.5">gemiddelde prijs</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-amber-500 tabular-nums" style={{ letterSpacing: '-0.02em' }}>
-                {gemRating}<span className="text-base text-surface-500 font-medium">/5</span>
+              <p className="text-2xl font-bold text-surface-900 tabular-nums" style={{ letterSpacing: '-0.02em' }}>
+                {goedkoopstePrijs > 0 ? <>€{goedkoopstePrijs}<span className="text-base text-surface-500 font-medium">/mnd</span></> : '—'}
               </p>
-              <p className="text-xs text-surface-500 mt-0.5">gemiddelde beoordeling</p>
+              <p className="text-xs text-surface-500 mt-0.5">goedkoopste betaalde plan</p>
             </div>
           </div>
         </div>

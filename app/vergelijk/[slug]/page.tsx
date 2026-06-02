@@ -9,6 +9,7 @@ import { getToolsBySlugs } from '@/lib/tools'
 import ComparisonTable from '@/components/tools/ComparisonTable'
 import AffiliateButton from '@/components/shared/AffiliateButton'
 import JsonLd from '@/components/seo/JsonLd'
+import Disclaimer from '@/components/shared/Disclaimer'
 
 interface Frontmatter {
   titel: string
@@ -74,7 +75,9 @@ export default async function VergelijkPagina({ params }: { params: Promise<{ sl
 
       <JsonLd type="article" titel={frontmatter.titel} beschrijving={frontmatter.beschrijving} slug={`vergelijk/${slug}`} />
       <h1 className="text-3xl font-bold text-surface-900 mb-2">{frontmatter.titel}</h1>
-      <p className="text-surface-500 mb-8">{frontmatter.beschrijving}</p>
+      <p className="text-surface-500 mb-6">{frontmatter.beschrijving}</p>
+
+      <Disclaimer />
 
       {tools.length > 0 && frontmatter.criteria && (
         <div className="mb-12">

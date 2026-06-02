@@ -60,7 +60,6 @@ export default function Footer() {
               <li><Link href="/vergelijk/copilot-vs-chatgpt" className="text-surface-400 hover:text-white transition-colors">Copilot vs ChatGPT</Link></li>
               <li><Link href="/vergelijk/synthesia-vs-descript" className="text-surface-400 hover:text-white transition-colors">Synthesia vs Descript</Link></li>
               <li><Link href="/vergelijk/murf-vs-elevenlabs" className="text-surface-400 hover:text-white transition-colors">Murf AI vs ElevenLabs</Link></li>
-              <li><Link href="/nieuws" className="text-surface-400 hover:text-white transition-colors">Nieuws</Link></li>
             </ul>
           </div>
 
