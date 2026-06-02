@@ -40,6 +40,18 @@ const DOMEIN_OVERRIDES: Record<string, string> = {
   'writesonic': 'writesonic.com',
   'fireflies-ai': 'fireflies.ai',
   'surfer-seo': 'surferseo.com',
+  // Nieuwe tools met publieke affiliate-programma's (jasper.ai is hierboven al gedefinieerd)
+  'frase': 'frase.io',
+  'rytr': 'rytr.me',
+  'tome': 'tome.app',
+  'lumen5': 'lumen5.com',
+  'invideo-ai': 'invideo.io',
+  'leonardo-ai': 'leonardo.ai',
+  'looka': 'looka.com',
+  'cleanvoice': 'cleanvoice.ai',
+  'resemble-ai': 'resemble.ai',
+  'pictory-ai': 'pictory.ai',
+  'beautiful-ai': 'beautiful.ai',
 }
 
 function domeinVoor(tool: Tool): string | null {
