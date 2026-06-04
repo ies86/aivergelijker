@@ -23,6 +23,15 @@ export const siteConfig = {
   niche: 'AI-tools',            // meervoud, voor lopende tekst
   nicheEnkelvoud: 'AI-tool',    // enkelvoud, voor de grote gekleurde hero-titel
 
+  // Prijstype: 'abonnement' = maandprijzen + plannen (SaaS, AI-tools).
+  //            'eenmalig'   = 1 vaste prijs per product (boeken, gadgets, sneakers).
+  prijsType: 'abonnement' as 'abonnement' | 'eenmalig',
+
+  // Toon alleen producten met een affiliate-link (waar je geld aan verdient)?
+  // true  = verberg producten zonder affiliate_url
+  // false = toon alles (bv. zolang je nog niet overal bij een programma zit)
+  alleenMetAffiliate: false,
+
   // Hero (grote titel = heroPrefix + [nicheEnkelvoud in kleur] + heroSuffix)
   heroOverline: 'Vergelijk · Kies · Probeer',
   heroPrefix: 'Vind de juiste',

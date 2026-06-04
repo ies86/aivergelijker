@@ -21,6 +21,8 @@ export interface Tool {
   categorie: Categorie
   prijsmodel: Prijsmodel
   plannen: Plan[]
+  /** Eenmalige prijs in euro (voor niches met 'eenmalig' prijsType, bv. boeken). 0 = gratis, null = onbekend. */
+  prijs?: number | null
   beoordeling: number | null
   uitgelicht: boolean
   badge: string | null

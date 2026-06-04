@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import { Filter, ArrowUpDown, X } from 'lucide-react'
 import type { Tool } from '@/lib/types'
 import ToolGrid from './ToolGrid'
+import { heeftGratis, goedkoopstePrijs, formatEuro, prijsSuffix } from '@/lib/prijs'
 
 type SortKey = 'rating' | 'prijs-laag' | 'prijs-hoog' | 'naam'
 
@@ -26,8 +27,8 @@ export default function CategoryToolList({ tools }: Props) {
   // Bereken min/max prijs in deze categorie voor de slider
   const { minPrijs, maxBeschikbarePrijs } = useMemo(() => {
     const prijzen = tools
-      .flatMap(t => t.plannen.map(p => p.prijs_mnd))
-      .filter(p => p > 0)
+      .map(t => goedkoopstePrijs(t))
+      .filter((p): p is number => p != null && p > 0)
     return {
       minPrijs: prijzen.length ? Math.min(...prijzen) : 0,
       maxBeschikbarePrijs: prijzen.length ? Math.max(...prijzen) : 100,
@@ -38,21 +39,21 @@ export default function CategoryToolList({ tools }: Props) {
     let resultaat = tools.slice()
 
     if (alleenGratis) {
-      resultaat = resultaat.filter(t => t.plannen.some(p => p.prijs_mnd === 0))
+      resultaat = resultaat.filter(t => heeftGratis(t))
     }
 
     if (maxPrijs != null) {
       resultaat = resultaat.filter(t => {
-        const goedkoopste = t.plannen.find(p => p.prijs_mnd > 0)?.prijs_mnd ?? 0
-        return goedkoopste === 0 || goedkoopste <= maxPrijs
+        const prijs = goedkoopstePrijs(t)
+        return prijs == null || prijs <= maxPrijs
       })
     }
 
     resultaat.sort((a, b) => {
       if (sort === 'rating') return (b.beoordeling ?? 0) - (a.beoordeling ?? 0)
       if (sort === 'naam') return a.naam.localeCompare(b.naam)
-      const prijsA = a.plannen.find(p => p.prijs_mnd > 0)?.prijs_mnd ?? Infinity
-      const prijsB = b.plannen.find(p => p.prijs_mnd > 0)?.prijs_mnd ?? Infinity
+      const prijsA = goedkoopstePrijs(a) ?? Infinity
+      const prijsB = goedkoopstePrijs(b) ?? Infinity
       return sort === 'prijs-laag' ? prijsA - prijsB : prijsB - prijsA
     })
 
@@ -94,7 +95,7 @@ export default function CategoryToolList({ tools }: Props) {
               className="w-28 accent-brand-500"
             />
             <span className="text-xs font-bold text-surface-900 tabular-nums min-w-[3rem]">
-              €{maxPrijs ?? maxBeschikbarePrijs}/mnd
+              {formatEuro(maxPrijs ?? maxBeschikbarePrijs)}{prijsSuffix}
             </span>
           </div>
         )}

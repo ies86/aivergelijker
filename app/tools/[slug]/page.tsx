@@ -6,6 +6,8 @@ import { getAllTools, getToolBySlug, getToolsByCategorie } from '@/lib/tools'
 import { getCategorieInfo } from '@/lib/categories'
 import type { Categorie } from '@/lib/types'
 import PricingTable from '@/components/tools/PricingTable'
+import { siteConfig } from '@/site.config'
+import { prijsLabel, heeftGratis as berekenGratis, goedkoopstePrijs, prijsStat, formatEuro } from '@/lib/prijs'
 import ToolLogo from '@/components/tools/ToolLogo'
 import StickyToolBar from '@/components/tools/StickyToolBar'
 import AffiliateButton from '@/components/shared/AffiliateButton'
@@ -67,9 +69,9 @@ export default async function ToolPagina({ params }: { params: Promise<{ slug: s
   if (!tool) notFound()
 
   const cat = getCategorieInfo(tool.categorie as Categorie)
-  const goedkoopstePlan = tool.plannen.find(p => p.prijs_mnd === 0) ?? tool.plannen[0]
-  const goedkoopsteBetaald = tool.plannen.filter(p => p.prijs_mnd > 0).sort((a, b) => a.prijs_mnd - b.prijs_mnd)[0]
-  const heeftGratis = tool.plannen.some(p => p.prijs_mnd === 0)
+  const isEenmalig = siteConfig.prijsType === 'eenmalig'
+  const gratis = berekenGratis(tool)
+  const laagstePrijs = goedkoopstePrijs(tool)
   const aantalPlannen = tool.plannen.length
 
   const categorieTools = await getToolsByCategorie(tool.categorie as Categorie).catch(() => [])
@@ -139,25 +141,21 @@ export default async function ToolPagina({ params }: { params: Promise<{ slug: s
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           <div className="card p-4">
-            <p className="text-xs text-surface-500 uppercase tracking-wider font-semibold mb-1">Vanaf</p>
+            <p className="text-xs text-surface-500 uppercase tracking-wider font-semibold mb-1">{isEenmalig ? 'Prijs' : 'Vanaf'}</p>
             <p className="text-xl font-extrabold text-surface-900 tabular-nums" style={{ letterSpacing: '-0.02em' }}>
-              {goedkoopstePlan?.prijs_mnd === 0
-                ? <span className="text-emerald-600">Gratis</span>
-                : goedkoopsteBetaald
-                  ? <>€{goedkoopsteBetaald.prijs_mnd}<span className="text-sm text-surface-500 font-medium">/mnd</span></>
-                  : '—'}
+              {gratis ? <span className="text-emerald-600">Gratis</span> : prijsStat(laagstePrijs)}
             </p>
           </div>
           <div className="card p-4">
-            <p className="text-xs text-surface-500 uppercase tracking-wider font-semibold mb-1">Gratis plan</p>
+            <p className="text-xs text-surface-500 uppercase tracking-wider font-semibold mb-1">{isEenmalig ? 'Gratis te lezen' : 'Gratis plan'}</p>
             <p className="text-xl font-extrabold tabular-nums" style={{ letterSpacing: '-0.02em' }}>
-              {heeftGratis ? <span className="text-emerald-600">Ja</span> : <span className="text-surface-400">Nee</span>}
+              {gratis ? <span className="text-emerald-600">Ja</span> : <span className="text-surface-400">Nee</span>}
             </p>
           </div>
           <div className="card p-4">
-            <p className="text-xs text-surface-500 uppercase tracking-wider font-semibold mb-1">Plannen</p>
+            <p className="text-xs text-surface-500 uppercase tracking-wider font-semibold mb-1">{isEenmalig ? 'Aankoop' : 'Plannen'}</p>
             <p className="text-xl font-extrabold text-surface-900 tabular-nums" style={{ letterSpacing: '-0.02em' }}>
-              {aantalPlannen}
+              {isEenmalig ? <span className="text-base">eenmalig</span> : aantalPlannen}
             </p>
           </div>
           <div className="card p-4">
@@ -173,8 +171,24 @@ export default async function ToolPagina({ params }: { params: Promise<{ slug: s
         <p className="text-surface-600 leading-relaxed max-w-3xl">{tool.beschrijving}</p>
       </section>
 
-      {/* Prijzen & plannen */}
-      {tool.plannen.length > 0 && (
+      {/* Prijs: eenmalig = prijsblok, abonnement = plannen-tabel */}
+      {isEenmalig ? (
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+          <div className="mb-5">
+            <p className="text-xs uppercase tracking-[0.2em] font-semibold text-surface-500 mb-1">Prijs</p>
+            <h2 className="text-2xl font-extrabold text-surface-900" style={{ letterSpacing: '-0.025em' }}>Wat kost het</h2>
+          </div>
+          <div className="card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <p className="text-3xl font-extrabold text-surface-900 tabular-nums" style={{ letterSpacing: '-0.025em' }}>
+                {gratis ? <span className="text-emerald-600">Gratis</span> : laagstePrijs != null ? formatEuro(laagstePrijs) : 'Prijs onbekend'}
+              </p>
+              <p className="text-sm text-surface-500 mt-1">Eenmalige aankoop via onze partner.</p>
+            </div>
+            <AffiliateButton toolSlug={tool.slug} label="Bekijk prijs en bestel" variant="primary" />
+          </div>
+        </section>
+      ) : tool.plannen.length > 0 && (
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
           <div className="mb-5">
             <p className="text-xs uppercase tracking-[0.2em] font-semibold text-surface-500 mb-1">Abonnementen</p>
@@ -195,7 +209,7 @@ export default async function ToolPagina({ params }: { params: Promise<{ slug: s
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {vergelijkbareTools.slice(0, 6).map(t => {
-              const tGoedkoopste = t.plannen.find(p => p.prijs_mnd === 0) ?? t.plannen[0]
+              const tLabel = prijsLabel(t)
               return (
                 <Link
                   key={t.slug}
@@ -208,7 +222,7 @@ export default async function ToolPagina({ params }: { params: Promise<{ slug: s
                       vs {t.naam}
                     </p>
                     <p className="text-xs text-surface-500 tabular-nums truncate">
-                      {tGoedkoopste?.prijs_mnd === 0 ? 'Gratis plan' : `Vanaf €${tGoedkoopste?.prijs_mnd}/mnd`}
+                      {tLabel ?? ''}
                     </p>
                   </div>
                   <ArrowRight className="h-4 w-4 text-surface-300 group-hover:text-brand-500 transition-colors shrink-0" />

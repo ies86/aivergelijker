@@ -1,6 +1,7 @@
 import { supabase } from './supabase'
 import { TOOLS } from './data'
 import type { Tool, Categorie } from './types'
+import { siteConfig } from '@/site.config'
 
 /**
  * Per-tool domein-overrides voor gevallen waar het tool-product
@@ -75,7 +76,11 @@ function logoVoor(tool: Tool): string | null {
 }
 
 function metLogos(tools: Tool[]): Tool[] {
-  return tools.map(t => ({ ...t, logo_url: logoVoor(t) }))
+  // Optioneel: toon alleen producten met affiliate-link (waar je geld aan verdient).
+  const zichtbaar = siteConfig.alleenMetAffiliate
+    ? tools.filter(t => t.affiliate_url != null && t.affiliate_url !== '')
+    : tools
+  return zichtbaar.map(t => ({ ...t, logo_url: logoVoor(t) }))
 }
 
 // Probeert Supabase, valt terug op lokale data

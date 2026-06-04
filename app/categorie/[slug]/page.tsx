@@ -7,6 +7,7 @@ import type { Categorie } from '@/lib/types'
 import CategoryToolList from '@/components/tools/CategoryToolList'
 import CategoryNav from '@/components/layout/CategoryNav'
 import CategoryBanner from '@/components/shared/CategoryBanner'
+import { heeftGratis, goedkoopstePrijs, prijsStat } from '@/lib/prijs'
 
 const CAT_KLEUR: Record<string, string> = {
   chatbot: '#1e293b',
@@ -58,14 +59,14 @@ export default async function CategoriePagina({ params }: { params: Promise<{ sl
   const tools = await getToolsByCategorie(slug as Categorie).catch(() => [])
 
   // Statistieken
-  const aantalGratis = tools.filter(t => t.plannen.some(p => p.prijs_mnd === 0)).length
+  const aantalGratis = tools.filter(t => heeftGratis(t)).length
   const betaaldePrijzen = tools
-    .map(t => t.plannen.filter(p => p.prijs_mnd > 0).sort((a, b) => a.prijs_mnd - b.prijs_mnd)[0]?.prijs_mnd)
+    .map(t => goedkoopstePrijs(t))
     .filter((p): p is number => p != null)
   const gemPrijs = betaaldePrijzen.length
     ? Math.round(betaaldePrijzen.reduce((a, b) => a + b, 0) / betaaldePrijzen.length)
     : 0
-  const goedkoopstePrijs = betaaldePrijzen.length ? Math.min(...betaaldePrijzen) : 0
+  const laagstePrijs = betaaldePrijzen.length ? Math.min(...betaaldePrijzen) : 0
 
   const kleur = CAT_KLEUR[slug] ?? '#6d28d9'
 
@@ -119,13 +120,13 @@ export default async function CategoriePagina({ params }: { params: Promise<{ sl
           <div className="card p-4">
             <p className="text-xs text-surface-500 uppercase tracking-wider font-semibold mb-1">Vanaf</p>
             <p className="text-xl font-extrabold text-surface-900 tabular-nums" style={{ letterSpacing: '-0.02em' }}>
-              {goedkoopstePrijs > 0 ? <>€{goedkoopstePrijs}<span className="text-sm text-surface-500 font-medium">/mnd</span></> : '—'}
+              {prijsStat(laagstePrijs)}
             </p>
           </div>
           <div className="card p-4">
             <p className="text-xs text-surface-500 uppercase tracking-wider font-semibold mb-1">Gemiddeld</p>
             <p className="text-xl font-extrabold text-surface-900 tabular-nums" style={{ letterSpacing: '-0.02em' }}>
-              {gemPrijs > 0 ? <>€{gemPrijs}<span className="text-sm text-surface-500 font-medium">/mnd</span></> : '—'}
+              {prijsStat(gemPrijs)}
             </p>
           </div>
         </div>

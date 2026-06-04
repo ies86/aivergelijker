@@ -4,13 +4,14 @@ import type { Tool } from '@/lib/types'
 import ToolLogo from './ToolLogo'
 import CompareToggleButton from './CompareToggleButton'
 import PrijsmodelBadge from '@/components/shared/PrijsmodelBadge'
+import { prijsLabel, heeftGratis } from '@/lib/prijs'
 
 interface Props {
   tool: Tool
 }
 
 export default function ToolCard({ tool }: Props) {
-  const goedkoopstePlan = tool.plannen.find(p => p.prijs_mnd === 0) ?? tool.plannen[0]
+  const label = prijsLabel(tool)
 
   return (
     <div className="card p-5 flex flex-col gap-3">
@@ -45,11 +46,11 @@ export default function ToolCard({ tool }: Props) {
 
       <div className="flex items-center justify-between mt-auto pt-3 border-t border-surface-100 gap-2">
         <div className="text-sm text-surface-500 tabular-nums">
-          {goedkoopstePlan
-            ? goedkoopstePlan.prijs_mnd === 0
-              ? <span className="text-emerald-600 font-semibold">Gratis</span>
-              : <span>Vanaf <strong className="text-surface-900">€{goedkoopstePlan.prijs_mnd}/mnd</strong></span>
-            : null}
+          {label && (
+            heeftGratis(tool)
+              ? <span className="text-emerald-600 font-semibold">{label}</span>
+              : <strong className="text-surface-900">{label}</strong>
+          )}
         </div>
         <div className="flex items-center gap-1.5">
           <CompareToggleButton slug={tool.slug} variant="icon" />

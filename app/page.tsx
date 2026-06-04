@@ -9,6 +9,7 @@ import CategoryBanner from '@/components/shared/CategoryBanner'
 import NewsSection from '@/components/shared/NewsSection'
 import JsonLd from '@/components/seo/JsonLd'
 import { siteConfig, vulIn } from '@/site.config'
+import { prijsLabel, heeftGratis, goedkoopstePrijs, prijsStat } from '@/lib/prijs'
 
 // Sneller cache-verversen zodat content-updates binnen 5 min zichtbaar zijn
 export const revalidate = 300
@@ -31,9 +32,9 @@ export default async function HomePage() {
 
   // Data-afgeleide stats (geen verzonnen claims)
   const totaalTools = alleTools.length
-  const aantalGratis = alleTools.filter(t => t.plannen.some(p => p.prijs_mnd === 0)).length
+  const aantalGratis = alleTools.filter(t => heeftGratis(t)).length
   const betaaldePrijzen = alleTools
-    .map(t => t.plannen.filter(p => p.prijs_mnd > 0).sort((a, b) => a.prijs_mnd - b.prijs_mnd)[0]?.prijs_mnd)
+    .map(t => goedkoopstePrijs(t))
     .filter((p): p is number => p != null)
   const goedkoopsteBetaald = betaaldePrijzen.length ? Math.min(...betaaldePrijzen) : null
 
@@ -106,9 +107,9 @@ export default async function HomePage() {
           </div>
           <div>
             <p className="text-3xl font-extrabold text-surface-900 tabular-nums" style={{ letterSpacing: '-0.025em' }}>
-              {goedkoopsteBetaald != null ? <>€{goedkoopsteBetaald}<span className="text-base text-surface-500 font-medium">/mnd</span></> : 'n.v.t.'}
+              {prijsStat(goedkoopsteBetaald)}
             </p>
-            <p className="text-xs text-surface-500 mt-1 uppercase tracking-wider font-semibold">Goedkoopste betaalde</p>
+            <p className="text-xs text-surface-500 mt-1 uppercase tracking-wider font-semibold">Goedkoopste</p>
           </div>
           <div>
             <p className="text-3xl font-extrabold text-surface-900 tabular-nums" style={{ letterSpacing: '-0.025em' }}>{CATEGORIEEN.length}</p>
@@ -130,13 +131,13 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {topkeuzes.map(tool => {
-              const goedkoopste = tool.plannen.find(p => p.prijs_mnd === 0) ?? tool.plannen[0]
+              const label = prijsLabel(tool, { vanaf: false })
               return (
                 <Link key={tool.slug} href={`/tools/${tool.slug}`} className="card p-4 group flex flex-col items-center text-center">
                   <ToolLogo src={tool.logo_url} naam={tool.naam} size={56} />
                   <p className="font-bold text-sm text-surface-900 group-hover:text-brand-500 transition-colors mt-3 line-clamp-1">{tool.naam}</p>
                   <p className="text-xs text-surface-500 tabular-nums mt-1">
-                    {goedkoopste?.prijs_mnd === 0 ? <span className="text-emerald-600 font-semibold">Gratis</span> : `€${goedkoopste?.prijs_mnd}/mnd`}
+                    {heeftGratis(tool) ? <span className="text-emerald-600 font-semibold">Gratis</span> : label}
                   </p>
                 </Link>
               )
@@ -151,7 +152,7 @@ export default async function HomePage() {
           const featured = cat.tools[0]
           const overige = cat.tools.slice(1, 4)
           const gradient = CAT_GRADIENT[cat.slug] ?? 'from-violet-500 to-cyan-500'
-          const featGoedkoopste = featured?.plannen.find(p => p.prijs_mnd === 0) ?? featured?.plannen[0]
+          const featLabel = featured ? prijsLabel(featured) : null
 
           return (
             <section key={cat.slug} aria-labelledby={`cat-${cat.slug}`}>
@@ -183,10 +184,10 @@ export default async function HomePage() {
                         </h3>
                         <p className="text-sm text-surface-600 mt-0.5 line-clamp-1">{featured.tagline}</p>
                         <p className="text-xs text-surface-500 mt-1 tabular-nums">
-                          {featGoedkoopste?.prijs_mnd === 0
-                            ? <span className="text-emerald-600 font-semibold">Gratis plan</span>
-                            : featGoedkoopste
-                              ? <>Vanaf <strong className="text-surface-900">€{featGoedkoopste.prijs_mnd}/mnd</strong></>
+                          {featured && heeftGratis(featured)
+                            ? <span className="text-emerald-600 font-semibold">{featLabel}</span>
+                            : featLabel
+                              ? <strong className="text-surface-900">{featLabel}</strong>
                               : null}
                         </p>
                       </div>
@@ -196,7 +197,7 @@ export default async function HomePage() {
 
                 <div className="lg:col-span-5 flex flex-col divide-y divide-[var(--border-default)]">
                   {overige.map(tool => {
-                    const goedkoopste = tool.plannen.find(p => p.prijs_mnd === 0) ?? tool.plannen[0]
+                    const label = prijsLabel(tool, { vanaf: false })
                     return (
                       <Link key={tool.slug} href={`/tools/${tool.slug}`} className="flex items-center gap-3 py-2.5 first:pt-0 last:pb-0 group">
                         <ToolLogo src={tool.logo_url} naam={tool.naam} size={48} />
@@ -204,7 +205,7 @@ export default async function HomePage() {
                           <p className="font-bold text-sm text-surface-900 group-hover:text-brand-500 transition-colors line-clamp-1">{tool.naam}</p>
                           <p className="text-xs text-surface-500 mt-0.5 line-clamp-1">{tool.tagline}</p>
                           <p className="text-xs text-surface-600 mt-0.5 tabular-nums">
-                            {goedkoopste?.prijs_mnd === 0 ? <span className="text-emerald-600 font-semibold">Gratis</span> : `€${goedkoopste?.prijs_mnd}/mnd`}
+                            {heeftGratis(tool) ? <span className="text-emerald-600 font-semibold">Gratis</span> : label}
                           </p>
                         </div>
                       </Link>
@@ -240,7 +241,7 @@ export default async function HomePage() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {recent.map(tool => {
-                const goedkoopste = tool.plannen.find(p => p.prijs_mnd === 0) ?? tool.plannen[0]
+                const label = prijsLabel(tool)
                 // Eerste zin van beschrijving als "waarvoor dient het"
                 const eersteZin = tool.beschrijving.split(/(?<=[.!?])\s+/)[0] ?? tool.tagline
                 return (
@@ -249,7 +250,7 @@ export default async function HomePage() {
                       <ToolLogo src={tool.logo_url} naam={tool.naam} size={48} />
                       <div className="flex-1 min-w-0">
                         <p className="font-extrabold text-base text-surface-900 group-hover:text-brand-500 transition-colors line-clamp-1" style={{ letterSpacing: '-0.02em' }}>{tool.naam}</p>
-                        <p className="text-xs text-surface-500 line-clamp-1 capitalize">{tool.categorie} · {goedkoopste?.prijs_mnd === 0 ? <span className="text-emerald-600 font-semibold">Gratis</span> : <>Vanaf €{goedkoopste?.prijs_mnd}/mnd</>}</p>
+                        <p className="text-xs text-surface-500 line-clamp-1 capitalize">{tool.categorie}{label ? <> · {heeftGratis(tool) ? <span className="text-emerald-600 font-semibold">Gratis</span> : label}</> : null}</p>
                       </div>
                     </div>
                     <p className="text-sm text-surface-600 leading-relaxed line-clamp-2 mb-3">{eersteZin}</p>
