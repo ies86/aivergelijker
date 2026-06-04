@@ -1,4 +1,7 @@
 import type { Tool } from '@/lib/types'
+import { siteConfig } from '@/site.config'
+
+const BASE = `https://${siteConfig.domein}`
 
 interface WebsiteJsonLdProps {
   type: 'website'
@@ -32,13 +35,13 @@ export default function JsonLd(props: JsonLdProps) {
       data = {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        name: 'aivergelijker.nl',
-        url: 'https://aivergelijker.nl',
-        description: 'Vergelijk de beste AI-tools voor consumenten. Onafhankelijke reviews, prijsvergelijkingen en eerlijke aanbevelingen.',
+        name: siteConfig.domein,
+        url: BASE,
+        description: siteConfig.siteOmschrijving,
         inLanguage: 'nl',
         potentialAction: {
           '@type': 'SearchAction',
-          target: 'https://aivergelijker.nl/?q={search_term_string}',
+          target: `${BASE}/?q={search_term_string}`,
           'query-input': 'required name=search_term_string',
         },
       }
@@ -52,8 +55,8 @@ export default function JsonLd(props: JsonLdProps) {
         '@type': 'SoftwareApplication',
         name: tool.naam,
         description: tool.beschrijving,
-        url: `https://aivergelijker.nl/tools/${tool.slug}`,
-        applicationCategory: 'AI Tool',
+        url: `${BASE}/tools/${tool.slug}`,
+        applicationCategory: siteConfig.niche,
         operatingSystem: 'Web',
         ...(tool.beoordeling && {
           aggregateRating: {
@@ -91,12 +94,12 @@ export default function JsonLd(props: JsonLdProps) {
         '@type': 'Article',
         headline: props.titel,
         description: props.beschrijving,
-        url: `https://aivergelijker.nl/${props.slug}`,
+        url: `${BASE}/${props.slug}`,
         inLanguage: 'nl',
         publisher: {
           '@type': 'Organization',
-          name: 'aivergelijker.nl',
-          url: 'https://aivergelijker.nl',
+          name: siteConfig.domein,
+          url: BASE,
         },
         ...(props.datum && {
           datePublished: props.datum,

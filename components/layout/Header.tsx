@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Menu, X, Search, ChevronDown } from 'lucide-react'
 import { CATEGORIEEN } from '@/lib/categories'
 import ThemeToggle from '@/components/shared/ThemeToggle'
+import { siteConfig } from '@/site.config'
 
 export default function Header() {
   const [open, setOpen] = useState(false)
@@ -22,7 +23,7 @@ export default function Header() {
               <rect x="18" y="3" width="5" height="21" rx="1" className="fill-cyan-500" />
             </svg>
             <span className="text-[20px] font-extrabold tracking-tight text-[var(--text-primary)]" style={{ letterSpacing: '-0.025em' }}>
-              aivergelijker<span className="text-surface-400 font-bold">.nl</span>
+              {siteConfig.naam}<span className="text-surface-400 font-bold">{siteConfig.domeinExtensie}</span>
             </span>
           </Link>
 

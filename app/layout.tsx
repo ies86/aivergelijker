@@ -9,6 +9,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 import CompareBar from '@/components/tools/CompareBar'
 import { getAllTools } from '@/lib/tools'
+import { siteConfig } from '@/site.config'
 
 // Variable fonts van Vercel, optical sizing en alle weights beschikbaar
 const geist = Geist({
@@ -24,39 +25,28 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aivergelijker.nl'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? `https://${siteConfig.domein}`),
   title: {
-    default: 'aivergelijker.nl, Vergelijk de beste AI-tools (2026)',
-    template: '%s, aivergelijker.nl',
+    default: siteConfig.paginaTitel,
+    template: `%s, ${siteConfig.naam}${siteConfig.domeinExtensie}`,
   },
-  description: 'Vergelijk de beste AI-tools voor consumenten. Onafhankelijke reviews, prijsvergelijkingen en eerlijke aanbevelingen, in het Nederlands.',
-  keywords: [
-    'AI tools vergelijken',
-    'beste AI tools',
-    'ChatGPT vergelijken',
-    'AI chatbot vergelijking',
-    'AI tools Nederland',
-    'Midjourney review',
-    'Claude review',
-    'AI voor beginners',
-    'beste gratis AI',
-    'AI vergelijker',
-  ],
+  description: siteConfig.siteOmschrijving,
+  keywords: [...siteConfig.keywords],
   openGraph: {
-    siteName: 'aivergelijker.nl',
+    siteName: siteConfig.domein,
     locale: 'nl_NL',
     type: 'website',
-    title: 'aivergelijker.nl, Vergelijk de beste AI-tools',
-    description: 'Onafhankelijke vergelijkingen, eerlijke reviews en directe links naar de beste AI-tools, in het Nederlands.',
-    url: 'https://aivergelijker.nl',
+    title: siteConfig.paginaTitel,
+    description: siteConfig.siteOmschrijving,
+    url: `https://${siteConfig.domein}`,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'aivergelijker.nl, Vergelijk de beste AI-tools',
-    description: 'Onafhankelijke AI-tool vergelijkingen in het Nederlands.',
+    title: siteConfig.paginaTitel,
+    description: siteConfig.siteOmschrijving,
   },
   alternates: {
-    canonical: 'https://aivergelijker.nl',
+    canonical: `https://${siteConfig.domein}`,
   },
   verification: {
     // Voeg je Google Search Console verificatiecode hier toe

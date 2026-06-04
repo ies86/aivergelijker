@@ -8,6 +8,7 @@ import HeroSearch from '@/components/shared/HeroSearch'
 import CategoryBanner from '@/components/shared/CategoryBanner'
 import NewsSection from '@/components/shared/NewsSection'
 import JsonLd from '@/components/seo/JsonLd'
+import { siteConfig, vulIn } from '@/site.config'
 
 // Sneller cache-verversen zodat content-updates binnen 5 min zichtbaar zijn
 export const revalidate = 300
@@ -52,14 +53,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <JsonLd
-        type="faq"
-        vragen={[
-          { vraag: 'Wat kost een AI-tool?', antwoord: 'De prijzen lopen sterk uiteen. Veel AI-tools bieden een gratis plan. Betaalde plannen starten doorgaans bij €5-22 per maand.' },
-          { vraag: 'Welke AI-tools zijn gratis te gebruiken?', antwoord: 'Een groot deel van onze tools heeft een gratis basisversie. Filter op de categoriepagina op "Alleen gratis" om alleen die tools te zien.' },
-          { vraag: 'Hoe wordt deze site gefinancierd?', antwoord: 'Wanneer je via onze links een betaald abonnement neemt, ontvangen wij soms een commissie. Dat heeft geen invloed op welke tools we tonen.' },
-        ]}
-      />
+      <JsonLd type="faq" vragen={[...siteConfig.faq]} />
 
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-[var(--border-default)]" style={{ background: '#06060a' }}>
@@ -79,17 +73,19 @@ export default async function HomePage() {
 
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-20 text-center">
           <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-violet-300/80 mb-4">
-            Vergelijk · Kies · Probeer
+            {siteConfig.heroOverline}
           </p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-4 uppercase" style={{ letterSpacing: '-0.03em' }}>
-            Vind de juiste{' '}
+            {siteConfig.heroPrefix}{' '}
             <span className="bg-gradient-to-r from-violet-300 via-violet-200 to-cyan-200 bg-clip-text text-transparent">
-              AI-tool
+              {siteConfig.nicheEnkelvoud}
             </span>
-            <br className="hidden sm:block" /> voor jouw doel
+            <br className="hidden sm:block" /> {siteConfig.heroSuffix}
           </h1>
           <p className="text-base sm:text-lg text-white/60 mb-8 max-w-xl mx-auto">
-            Prijzen, plannen en functies van <span className="tabular-nums font-semibold text-white/80">{totaalTools}</span> AI-tools naast elkaar, in het Nederlands.
+            {siteConfig.heroOndertitel.split('{n}')[0].replace(/\{niche\}/g, siteConfig.niche)}
+            <span className="tabular-nums font-semibold text-white/80">{totaalTools}</span>
+            {(siteConfig.heroOndertitel.split('{n}')[1] ?? '').replace(/\{niche\}/g, siteConfig.niche)}
           </p>
         </div>
         <div className="relative -mt-10 px-4 pb-8">
@@ -102,7 +98,7 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
           <div>
             <p className="text-3xl font-extrabold text-surface-900 tabular-nums" style={{ letterSpacing: '-0.025em' }}>{totaalTools}</p>
-            <p className="text-xs text-surface-500 mt-1 uppercase tracking-wider font-semibold">Tools in database</p>
+            <p className="text-xs text-surface-500 mt-1 uppercase tracking-wider font-semibold">{siteConfig.niche} in totaal</p>
           </div>
           <div>
             <p className="text-3xl font-extrabold text-emerald-600 tabular-nums" style={{ letterSpacing: '-0.025em' }}>{aantalGratis}</p>
@@ -237,7 +233,7 @@ export default async function HomePage() {
                 <span className="inline-block w-2 h-2 rounded-sm" style={{ background: DOT_KLEUR }} />
                 <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Recente reviews</h2>
               </div>
-              <Link href="/categorie/chatbot" className="text-xs font-semibold text-surface-600 hover:text-brand-500 inline-flex items-center gap-1 transition-colors">
+              <Link href={`/categorie/${CATEGORIEEN[0]?.slug ?? ''}`} className="text-xs font-semibold text-surface-600 hover:text-brand-500 inline-flex items-center gap-1 transition-colors">
                 Alle reviews
                 <ArrowRight className="h-3 w-3" />
               </Link>
@@ -267,11 +263,14 @@ export default async function HomePage() {
           </div>
 
           {/* Nieuws kolom (1/3 breedte), live AI-nieuws van Hacker News */}
-          <NewsSection limit={5} labelKleur={LABEL_KLEUR} dotKleur={DOT_KLEUR} />
+          {siteConfig.secties.nieuwsFeed && (
+            <NewsSection limit={5} labelKleur={LABEL_KLEUR} dotKleur={DOT_KLEUR} />
+          )}
         </div>
       </section>
 
       {/* Vergelijkingen, 2-kolom (RTINGS-stijl) */}
+      {siteConfig.secties.vergelijkingen && (
       <section className="border-t border-[var(--border-default)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
@@ -323,13 +322,14 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Newsletter */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-surface-900 rounded-2xl p-8 sm:p-12 text-center">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3" style={{ letterSpacing: '-0.025em' }}>Blijf op de hoogte</h2>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3" style={{ letterSpacing: '-0.025em' }}>{siteConfig.nieuwsbriefTitel}</h2>
           <p className="text-surface-400 mb-6 max-w-md mx-auto text-sm">
-            Nieuwe AI-tools en vergelijkingen, in je inbox wanneer er iets nieuws is.
+            {vulIn(siteConfig.nieuwsbriefSubtitel)}
           </p>
           <div className="max-w-md mx-auto">
             <NewsletterForm />
@@ -340,7 +340,7 @@ export default async function HomePage() {
 
       <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 text-center">
         <p className="text-xs text-surface-500">
-          Sommige links op deze site zijn affiliate-links. Wanneer je via deze links een abonnement afsluit, ontvangen wij soms een commissie. Dat heeft geen invloed op welke tools we tonen.
+          {vulIn(siteConfig.affiliateDisclosure)}
         </p>
       </section>
     </>
