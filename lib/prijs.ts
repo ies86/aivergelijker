@@ -54,9 +54,9 @@ export function prijsLabel(tool: Tool, opts: { vanaf?: boolean } = {}): string |
   return `${vanaf ? 'Vanaf ' : ''}${formatEuro(prijs)}${SUFFIX}`
 }
 
-/** Korte prijs voor stats: "€15" of "€15/mnd" (zonder 'Vanaf'); null -> '—'. */
+/** Korte prijs voor stats: "€15" of "€15/mnd" (zonder 'Vanaf'); null -> 'n.v.t.'. */
 export function prijsStat(bedrag: number | null): string {
-  if (bedrag == null || bedrag <= 0) return '—'
+  if (bedrag == null || bedrag <= 0) return 'n.v.t.'
   return `${formatEuro(bedrag)}${SUFFIX}`
 }
 

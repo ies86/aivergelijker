@@ -1,5 +1,5 @@
 ﻿import Link from 'next/link'
-import { ArrowRight, ChevronRight, Sparkles } from 'lucide-react'
+import { ArrowRight, ChevronRight, Sparkles, ShieldCheck, Languages, Wallet } from 'lucide-react'
 import { getAllTools } from '@/lib/tools'
 import { CATEGORIEEN } from '@/lib/categories'
 import ToolLogo from '@/components/tools/ToolLogo'
@@ -7,6 +7,7 @@ import NewsletterForm from '@/components/shared/NewsletterForm'
 import HeroSearch from '@/components/shared/HeroSearch'
 import CategoryBanner from '@/components/shared/CategoryBanner'
 import NewsSection from '@/components/shared/NewsSection'
+import Reveal from '@/components/shared/Reveal'
 import JsonLd from '@/components/seo/JsonLd'
 import { siteConfig, vulIn } from '@/site.config'
 import { prijsLabel, heeftGratis, goedkoopstePrijs, prijsStat } from '@/lib/prijs'
@@ -84,9 +85,7 @@ export default async function HomePage() {
             <br className="hidden sm:block" /> {siteConfig.heroSuffix}
           </h1>
           <p className="text-base sm:text-lg text-white/60 mb-8 max-w-xl mx-auto">
-            {siteConfig.heroOndertitel.split('{n}')[0].replace(/\{niche\}/g, siteConfig.niche)}
-            <span className="tabular-nums font-semibold text-white/80">{totaalTools}</span>
-            {(siteConfig.heroOndertitel.split('{n}')[1] ?? '').replace(/\{niche\}/g, siteConfig.niche)}
+            {vulIn(siteConfig.heroOndertitel)}
           </p>
         </div>
         <div className="relative -mt-10 px-4 pb-8">
@@ -103,7 +102,7 @@ export default async function HomePage() {
           </div>
           <div>
             <p className="text-3xl font-extrabold text-emerald-600 tabular-nums" style={{ letterSpacing: '-0.025em' }}>{aantalGratis}</p>
-            <p className="text-xs text-surface-500 mt-1 uppercase tracking-wider font-semibold">Met gratis plan</p>
+            <p className="text-xs text-surface-500 mt-1 uppercase tracking-wider font-semibold">Met gratis versie</p>
           </div>
           <div>
             <p className="text-3xl font-extrabold text-surface-900 tabular-nums" style={{ letterSpacing: '-0.025em' }}>
@@ -155,7 +154,8 @@ export default async function HomePage() {
           const featLabel = featured ? prijsLabel(featured) : null
 
           return (
-            <section key={cat.slug} aria-labelledby={`cat-${cat.slug}`}>
+            <Reveal key={cat.slug}>
+            <section aria-labelledby={`cat-${cat.slug}`}>
               <div className="flex items-end justify-between mb-4 pb-2 border-b border-[var(--border-default)]">
                 <div className="flex items-center gap-2.5">
                   <span className="inline-block w-2 h-2 rounded-sm" style={{ background: DOT_KLEUR }} />
@@ -220,11 +220,13 @@ export default async function HomePage() {
                 </div>
               </div>
             </section>
+            </Reveal>
           )
         })}
       </div>
 
-      {/* Reviews + Nieuws sectie (RTINGS 'What's New' + 'R&D In The Lab' stijl) */}
+      {/* Reviews + Nieuws sectie */}
+      <Reveal>
       <section className="border-t border-[var(--border-default)]" style={{ background: 'var(--bg-elevated)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* Reviews kolom (2/3 breedte), met grotere teaser cards */}
@@ -269,16 +271,18 @@ export default async function HomePage() {
           )}
         </div>
       </section>
+      </Reveal>
 
-      {/* Vergelijkingen, 2-kolom (RTINGS-stijl) */}
+      {/* Vergelijkingen, 2-kolom */}
       {siteConfig.secties.vergelijkingen && (
+      <Reveal>
       <section className="border-t border-[var(--border-default)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
             <div className="mb-4 pb-2 border-b border-[var(--border-default)]">
               <div className="flex items-center gap-2.5">
                 <span className="inline-block w-2 h-2 rounded-sm" style={{ background: DOT_KLEUR }} />
-                <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Side-by-side vergelijkingen</h2>
+                <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Vergelijkingen naast elkaar</h2>
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -304,14 +308,14 @@ export default async function HomePage() {
             <div className="mb-4 pb-2 border-b border-[var(--border-default)]">
               <div className="flex items-center gap-2.5">
                 <span className="inline-block w-2 h-2 rounded-sm" style={{ background: DOT_KLEUR }} />
-                <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Niche tools</h2>
+                <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Gespecialiseerde tools</h2>
               </div>
             </div>
             <div className="flex flex-col divide-y divide-[var(--border-default)]">
               {[
                 { href: '/vergelijk/synthesia-vs-descript', titel: 'Synthesia vs Descript', sub: 'AI-video tools' },
                 { href: '/vergelijk/copy-ai-vs-jasper', titel: 'Copy.ai vs Jasper', sub: 'AI-copywriting' },
-                { href: '/vergelijk/murf-vs-elevenlabs', titel: 'Murf AI vs ElevenLabs', sub: 'Voice generation' },
+                { href: '/vergelijk/murf-vs-elevenlabs', titel: 'Murf AI vs ElevenLabs', sub: 'AI-stemmen' },
                 { href: '/vergelijk/surfer-seo-vs-writesonic', titel: 'Surfer SEO vs Writesonic', sub: 'AI voor SEO' },
               ].map(item => (
                 <Link key={item.href} href={item.href} className="py-2.5 first:pt-0 group">
@@ -323,7 +327,40 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      </Reveal>
       )}
+
+      {/* Over aivergelijker, SEO-intro + waarom-blokken */}
+      <Reveal>
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-[var(--border-default)]">
+          <div className="max-w-3xl mb-8">
+            <h2 className="text-2xl font-extrabold text-surface-900 mb-3" style={{ letterSpacing: '-0.025em' }}>De beste AI-tools vergelijken in het Nederlands</h2>
+            <p className="text-surface-600 leading-relaxed">
+              Het aanbod aan AI-tools groeit razendsnel. Op aivergelijker zet je de populairste{' '}
+              <Link href="/categorie/chatbot" className="text-brand-500 font-semibold hover:text-brand-700">chatbots</Link>,{' '}
+              <Link href="/categorie/afbeelding" className="text-brand-500 font-semibold hover:text-brand-700">beeldgeneratoren</Link>,{' '}
+              <Link href="/categorie/video" className="text-brand-500 font-semibold hover:text-brand-700">videotools</Link>,{' '}
+              <Link href="/categorie/coding" className="text-brand-500 font-semibold hover:text-brand-700">code-assistenten</Link>,{' '}
+              <Link href="/categorie/audio" className="text-brand-500 font-semibold hover:text-brand-700">audiotools</Link>{' '}en{' '}
+              <Link href="/categorie/productiviteit" className="text-brand-500 font-semibold hover:text-brand-700">productiviteitstools</Link>{' '}
+              naast elkaar. Vergelijk prijzen, gratis versies en functies, zodat je snel de juiste AI-tool voor jouw doel kiest.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {[
+              { icon: ShieldCheck, titel: 'Onafhankelijk vergeleken', tekst: 'Wij rangschikken op functies, prijs en gebruikservaring, niet op wie de hoogste commissie betaalt.' },
+              { icon: Languages, titel: 'Alles in het Nederlands', tekst: "Heldere uitleg en prijzen in euro's, geen vertaalde marketingtaal uit Silicon Valley." },
+              { icon: Wallet, titel: 'Gratis versies inzichtelijk', tekst: 'Per tool zie je direct of er een gratis versie is en waar de betaalde abonnementen beginnen.' },
+            ].map(blok => (
+              <div key={blok.titel} className="card p-5">
+                <blok.icon className="h-6 w-6 text-brand-500 mb-3" />
+                <h3 className="font-bold text-surface-900 mb-1.5">{blok.titel}</h3>
+                <p className="text-sm text-surface-600 leading-relaxed">{blok.tekst}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </Reveal>
 
       {/* Newsletter */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

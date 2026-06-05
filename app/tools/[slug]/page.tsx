@@ -137,7 +137,7 @@ export default async function ToolPagina({ params }: { params: Promise<{ slug: s
         </div>
       </section>
 
-      {/* Stats-strip — RTINGS info-row */}
+      {/* Stats-strip, RTINGS info-row */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           <div className="card p-4">
@@ -235,7 +235,7 @@ export default async function ToolPagina({ params }: { params: Promise<{ slug: s
 
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <p className="text-xs text-surface-400 border-t border-surface-200 pt-5">
-          Prijzen en functies zijn gebaseerd op publiek beschikbare informatie van de aanbieder. Controleer altijd de website van de aanbieder voor de actuele situatie. Sommige links op deze pagina zijn affiliate-links — wanneer je via deze links een abonnement afsluit, ontvangen wij soms een commissie.
+          Prijzen en functies zijn gebaseerd op publiek beschikbare informatie van de aanbieder. Controleer altijd de website van de aanbieder voor de actuele situatie. Sommige links op deze pagina zijn affiliate-links, wanneer je via deze links een abonnement afsluit, ontvangen wij soms een commissie.
         </p>
 
         <div className="mt-6 mb-2">

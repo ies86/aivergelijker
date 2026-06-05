@@ -1,6 +1,6 @@
 import type { Tool } from './types'
 
-// Hardcoded tool data — werkt zonder database
+// Hardcoded tool data, werkt zonder database
 // Later te vervangen door Supabase queries
 
 export const TOOLS: Tool[] = [
@@ -453,7 +453,7 @@ export const TOOLS: Tool[] = [
     slug: 'suno',
     naam: 'Suno',
     tagline: 'Volledige nummers genereren met AI',
-    beschrijving: 'Suno genereert complete liedjes — inclusief zang, instrumenten en productie — van een simpele tekstomschrijving. Baanbrekend voor iedereen die muziek wil maken.',
+    beschrijving: 'Suno genereert complete liedjes, inclusief zang, instrumenten en productie, van een simpele tekstomschrijving. Baanbrekend voor iedereen die muziek wil maken.',
     logo_url: null,
     website_url: 'https://suno.com',
     affiliate_url: null,
@@ -558,7 +558,7 @@ export const TOOLS: Tool[] = [
     slug: 'descript',
     naam: 'Descript',
     tagline: 'Bewerk video en audio als een document',
-    beschrijving: 'Descript is een revolutionaire video- en audio-editor. Bewerk video door tekst te bewerken — verwijder woorden uit het transcript en ze verdwijnen uit de video. Inclusief AI-schermopname, ondertiteling en filler word verwijdering.',
+    beschrijving: 'Descript is een revolutionaire video- en audio-editor. Bewerk video door tekst te bewerken, verwijder woorden uit het transcript en ze verdwijnen uit de video. Inclusief AI-schermopname, ondertiteling en het verwijderen van vulwoorden.',
     logo_url: null,
     website_url: 'https://www.descript.com',
     affiliate_url: null,
@@ -621,7 +621,7 @@ export const TOOLS: Tool[] = [
     id: '30',
     slug: 'copy-ai',
     naam: 'Copy.ai',
-    tagline: 'AI-copywriting voor marketing teams',
+    tagline: 'AI-copywriting voor marketingteams',
     beschrijving: 'Copy.ai is gespecialiseerd in marketing content: advertentieteksten, productbeschrijvingen, e-mails, social media posts en meer. Met workflows kun je repetitieve content-taken automatiseren.',
     logo_url: null,
     website_url: 'https://www.copy.ai',
@@ -643,7 +643,7 @@ export const TOOLS: Tool[] = [
     slug: 'writesonic',
     naam: 'Writesonic',
     tagline: 'AI-schrijfassistent met SEO-focus',
-    beschrijving: 'Writesonic combineert AI-writing met SEO-tools. Genereer SEO-geoptimaliseerde blogs, landingspagina\'s en advertenties. Inclusief Chatsonic — een ChatGPT-alternatief met real-time informatie.',
+    beschrijving: 'Writesonic combineert AI-schrijven met SEO-tools. Genereer SEO-geoptimaliseerde blogs, landingspagina\'s en advertenties. Inclusief Chatsonic, een ChatGPT-alternatief met actuele informatie.',
     logo_url: null,
     website_url: 'https://writesonic.com',
     affiliate_url: null,
@@ -685,7 +685,7 @@ export const TOOLS: Tool[] = [
     slug: 'surfer-seo',
     naam: 'Surfer SEO',
     tagline: 'AI-content die rankt op Google',
-    beschrijving: 'Surfer SEO analyseert de top-resultaten op Google en genereert content die geoptimaliseerd is om te ranken. Combineert AI-writing met data-gedreven SEO-inzichten. Ideaal voor bloggers en marketeers.',
+    beschrijving: 'Surfer SEO analyseert de top-resultaten op Google en genereert content die geoptimaliseerd is om te ranken. Combineert AI-schrijven met data-gedreven SEO-inzichten. Ideaal voor bloggers en marketeers.',
     logo_url: null,
     website_url: 'https://surferseo.com',
     affiliate_url: null,
@@ -703,7 +703,7 @@ export const TOOLS: Tool[] = [
   },
 
   // === Toegevoegd: tools met publieke affiliate-programma's ===
-  // Affiliate URLs zijn null — registreer bij elke aanbieder en vul je
+  // Affiliate URLs zijn null, registreer bij elke aanbieder en vul je
   // eigen tracking URL in. Tot dan tonen we de gewone website-link.
 
   {
@@ -731,8 +731,8 @@ export const TOOLS: Tool[] = [
     id: '35',
     slug: 'frase',
     naam: 'Frase',
-    tagline: 'SEO-content briefs op basis van Google-resultaten',
-    beschrijving: 'Frase analyseert top-10 Google-resultaten voor jouw keyword en genereert een complete content brief — vragen, headers, woorden om te dekken. Ideaal voor SEO-bloggers.',
+    tagline: 'SEO-contentbriefings op basis van Google-resultaten',
+    beschrijving: 'Frase analyseert top-10 Google-resultaten voor jouw keyword en genereert een complete contentbriefing: vragen, kopjes en woorden om te behandelen. Ideaal voor SEO-bloggers.',
     logo_url: null,
     website_url: 'https://www.frase.io',
     affiliate_url: null,
@@ -753,15 +753,15 @@ export const TOOLS: Tool[] = [
     slug: 'rytr',
     naam: 'Rytr',
     tagline: 'Snelle AI-writer voor blogs en social media',
-    beschrijving: 'Rytr is een betaalbare AI-schrijfassistent met 40+ use cases (blog, e-mail, ads, post). Sterk gratis plan en goedkope upgrade — populair bij beginnende ondernemers.',
+    beschrijving: 'Rytr is een betaalbare AI-schrijfassistent met 40+ toepassingen (blog, e-mail, advertenties, post). Sterke gratis versie en goedkope upgrade, populair bij beginnende ondernemers.',
     logo_url: null,
     website_url: 'https://rytr.me',
     affiliate_url: null,
     categorie: 'productiviteit',
     prijsmodel: 'freemium',
     plannen: [
-      { naam: 'Gratis', prijs_mnd: 0, prijs_jaar: 0, functies: ['10k tekens/mnd', '40+ use cases', '30+ talen'], aanbevolen: false },
-      { naam: 'Unlimited', prijs_mnd: 9, prijs_jaar: 90, functies: ['Onbeperkte tekens', 'Premium use cases', 'Plagiarism checker'], aanbevolen: true },
+      { naam: 'Gratis', prijs_mnd: 0, prijs_jaar: 0, functies: ['10k tekens/mnd', '40+ toepassingen', '30+ talen'], aanbevolen: false },
+      { naam: 'Unlimited', prijs_mnd: 9, prijs_jaar: 90, functies: ['Onbeperkte tekens', 'Premium toepassingen', 'Plagiaatcontrole'], aanbevolen: true },
     ],
     beoordeling: null,
     uitgelicht: false,
@@ -837,7 +837,7 @@ export const TOOLS: Tool[] = [
     slug: 'leonardo-ai',
     naam: 'Leonardo.ai',
     tagline: 'AI-beelden voor game-art en design',
-    beschrijving: 'Leonardo.ai biedt fine-tuned modellen voor specifieke stijlen — fantasy, game-assets, fotorealisme. Royaal gratis plan en sterke community-modellen maken het populair bij designers.',
+    beschrijving: 'Leonardo.ai biedt verfijnde modellen voor specifieke stijlen: fantasy, game-assets en fotorealisme. Royale gratis versie en sterke community-modellen maken het populair bij ontwerpers.',
     logo_url: null,
     website_url: 'https://leonardo.ai',
     affiliate_url: null,
@@ -878,7 +878,7 @@ export const TOOLS: Tool[] = [
     id: '42',
     slug: 'cleanvoice',
     naam: 'Cleanvoice',
-    tagline: 'Verwijdert filler-woorden uit podcasts',
+    tagline: 'Verwijdert vulwoorden uit podcasts',
     beschrijving: 'Cleanvoice analyseert audio en verwijdert automatisch "uhm", "ah" en stiltes. Bespaart podcasters uren editing. Werkt met Mp3, WAV en de meeste DAWs.',
     logo_url: null,
     website_url: 'https://cleanvoice.ai',
@@ -900,7 +900,7 @@ export const TOOLS: Tool[] = [
     slug: 'resemble-ai',
     naam: 'Resemble.ai',
     tagline: 'Voice-cloning voor games en customer service',
-    beschrijving: 'Resemble.ai biedt enterprise-grade voice cloning met emotional control. Gebruikt door game-studios en voor real-time IVR/customer service. Inclusief real-time conversie.',
+    beschrijving: 'Resemble.ai biedt stemkloning op enterprise-niveau met controle over emotie. Gebruikt door game-studio\'s en voor realtime IVR en klantenservice. Inclusief realtime conversie.',
     logo_url: null,
     website_url: 'https://www.resemble.ai',
     affiliate_url: null,

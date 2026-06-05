@@ -36,7 +36,7 @@ export const siteConfig = {
   heroOverline: 'Vergelijk · Kies · Probeer',
   heroPrefix: 'Vind de juiste',
   heroSuffix: 'voor jouw doel',
-  heroOndertitel: 'Prijzen, plannen en functies van {n} {niche} naast elkaar, in het Nederlands.',
+  heroOndertitel: 'Prijzen, plannen en functies van de beste {niche} naast elkaar, in het Nederlands.',
 
   // SEO
   paginaTitel: 'aivergelijker.nl: vergelijk de beste AI-tools',
@@ -50,7 +50,7 @@ export const siteConfig = {
 
   // FAQ (homepage structured data + eventueel weergave)
   faq: [
-    { vraag: 'Wat kost een AI-tool?', antwoord: 'De prijzen lopen sterk uiteen. Veel AI-tools bieden een gratis plan. Betaalde plannen starten doorgaans bij €5-22 per maand.' },
+    { vraag: 'Wat kost een AI-tool?', antwoord: 'De prijzen lopen sterk uiteen. Veel AI-tools bieden een gratis versie. Betaalde abonnementen starten doorgaans bij €5 tot €22 per maand.' },
     { vraag: 'Welke AI-tools zijn gratis te gebruiken?', antwoord: 'Een groot deel van onze tools heeft een gratis basisversie. Filter op de categoriepagina op "Alleen gratis" om alleen die tools te zien.' },
     { vraag: 'Hoe wordt deze site gefinancierd?', antwoord: 'Wanneer je via onze links een betaald abonnement neemt, ontvangen wij soms een commissie. Dat heeft geen invloed op welke tools we tonen.' },
   ],
@@ -58,7 +58,7 @@ export const siteConfig = {
   // Welke homepage-secties tonen? (zet uit wat niet bij je niche past)
   secties: {
     nieuwsFeed: true,      // live AI-nieuws via Hacker News (alleen zinvol voor tech-niches)
-    vergelijkingen: true,  // de "side-by-side vergelijkingen" sectie met handmatige links
+    vergelijkingen: true,  // de "vergelijkingen naast elkaar" sectie met handmatige links
   },
 
   // Brand kleuren (3 violet-cyan accenten in logo-bars)

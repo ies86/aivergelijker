@@ -8,6 +8,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 import CompareBar from '@/components/tools/CompareBar'
+import MotionProvider from '@/components/shared/MotionProvider'
 import { getAllTools } from '@/lib/tools'
 import { siteConfig } from '@/site.config'
 
@@ -81,10 +82,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className="font-sans antialiased">
         <GoogleAnalytics />
         <JsonLd type="website" />
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
-        <CompareBar alleTools={minimaleTools} />
+        <MotionProvider>
+          <Header />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+          <CompareBar alleTools={minimaleTools} />
+        </MotionProvider>
         <Analytics />
         <SpeedInsights />
       </body>

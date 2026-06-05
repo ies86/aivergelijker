@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!cat) return {}
   return {
     title: `Beste ${cat.label} AI-tools`,
-    description: `Vergelijk ${cat.label.toLowerCase()} AI-tools op prijs, gratis plan en functies.`,
+    description: `Vergelijk ${cat.label.toLowerCase()} AI-tools op prijs, gratis versie en functies.`,
     openGraph: {
       title: `Beste ${cat.label} AI-tools`,
       description: `Vergelijk ${cat.label.toLowerCase()} AI-tools.`,

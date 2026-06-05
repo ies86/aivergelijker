@@ -13,7 +13,7 @@ export const CATEGORIEEN: CategorieInfo[] = [
     slug: 'chatbot',
     label: 'Chatbots',
     beschrijving: 'AI-assistenten voor gesprekken, schrijven en research',
-    langeBeschrijving: 'AI-chatbots zijn de snelst groeiende categorie. Van ChatGPT tot Claude en Grok — deze tools beantwoorden vragen, schrijven teksten, analyseren documenten en helpen bij dagelijkse taken. De meeste bieden een gratis versie aan.',
+    langeBeschrijving: 'AI-chatbots zijn de snelst groeiende categorie. Van ChatGPT tot Claude en Grok, deze tools beantwoorden vragen, schrijven teksten, analyseren documenten en helpen bij dagelijkse taken. De meeste bieden een gratis versie aan.',
     icon: 'MessageSquare',
   },
   {
@@ -27,14 +27,14 @@ export const CATEGORIEEN: CategorieInfo[] = [
     slug: 'video',
     label: 'Video',
     beschrijving: 'Maak en bewerk video\'s met kunstmatige intelligentie',
-    langeBeschrijving: 'AI-videogeneratoren transformeren tekst of afbeeldingen naar bewegend beeld. Van korte clips voor social media tot professionele producties — tools als Runway en Sora maken videoproductie toegankelijk voor iedereen.',
+    langeBeschrijving: 'AI-videogeneratoren transformeren tekst of afbeeldingen naar bewegend beeld. Van korte clips voor social media tot professionele producties, tools als Runway en Sora maken videoproductie toegankelijk voor iedereen.',
     icon: 'Play',
   },
   {
     slug: 'coding',
     label: 'Coding',
     beschrijving: 'AI-tools die je helpen sneller en beter te programmeren',
-    langeBeschrijving: 'AI-codetools versnellen je workflow drastisch. Ze genereren code, debuggen fouten, refactoren bestanden en begrijpen je hele codebase. Van Cursor tot GitHub Copilot — onmisbaar voor moderne developers.',
+    langeBeschrijving: 'AI-codetools versnellen je workflow drastisch. Ze genereren code, debuggen fouten, refactoren bestanden en begrijpen je hele codebase. Van Cursor tot GitHub Copilot, onmisbaar voor moderne developers.',
     icon: 'Code',
   },
   {
