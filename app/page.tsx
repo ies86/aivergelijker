@@ -117,30 +117,41 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Topkeuzes, prominente affiliate-rij bovenaan (RTINGS featured-products stijl) */}
+      {/* Topkeuzes + AI-nieuws, twee horizontale blokken bovenaan */}
       {topkeuzes.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
-          <div className="flex items-end justify-between mb-5 pb-3 border-b border-[var(--border-default)]">
-            <div className="flex items-center gap-2.5">
-              <Sparkles className={`h-4 w-4 ${LABEL_KLEUR}`} />
-              <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Topkeuzes</h2>
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-2">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+            {/* Links: topkeuzes */}
+            <div className="lg:col-span-7">
+              <div className="flex items-end justify-between mb-5 pb-3 border-b border-[var(--border-default)]">
+                <div className="flex items-center gap-2.5">
+                  <Sparkles className={`h-4 w-4 ${LABEL_KLEUR}`} />
+                  <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Topkeuzes</h2>
+                </div>
+                <p className="text-xs text-surface-500">Onze meest aanbevolen tools</p>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                {topkeuzes.map(tool => {
+                  const label = prijsLabel(tool, { vanaf: false })
+                  return (
+                    <Link key={tool.slug} href={`/tools/${tool.slug}`} className="card p-4 group flex flex-col items-center text-center">
+                      <ToolLogo src={tool.logo_url} naam={tool.naam} size={56} />
+                      <p className="font-bold text-sm text-surface-900 group-hover:text-brand-500 transition-colors mt-3 line-clamp-1">{tool.naam}</p>
+                      <p className="text-xs text-surface-500 tabular-nums mt-1">
+                        {heeftGratis(tool) ? <span className="text-emerald-600 font-semibold">Gratis</span> : label}
+                      </p>
+                    </Link>
+                  )
+                })}
+              </div>
             </div>
-            <p className="text-xs text-surface-500">Onze meest aanbevolen tools</p>
-          </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {topkeuzes.map(tool => {
-              const label = prijsLabel(tool, { vanaf: false })
-              return (
-                <Link key={tool.slug} href={`/tools/${tool.slug}`} className="card p-4 group flex flex-col items-center text-center">
-                  <ToolLogo src={tool.logo_url} naam={tool.naam} size={56} />
-                  <p className="font-bold text-sm text-surface-900 group-hover:text-brand-500 transition-colors mt-3 line-clamp-1">{tool.naam}</p>
-                  <p className="text-xs text-surface-500 tabular-nums mt-1">
-                    {heeftGratis(tool) ? <span className="text-emerald-600 font-semibold">Gratis</span> : label}
-                  </p>
-                </Link>
-              )
-            })}
+            {/* Rechts: live AI-nieuws */}
+            {siteConfig.secties.nieuwsFeed && (
+              <div className="lg:col-span-5">
+                <NewsSection limit={6} labelKleur={LABEL_KLEUR} dotKleur={DOT_KLEUR} />
+              </div>
+            )}
           </div>
         </section>
       )}
@@ -228,47 +239,39 @@ export default async function HomePage() {
       {/* Reviews + Nieuws sectie */}
       <Reveal>
       <section className="border-t border-[var(--border-default)]" style={{ background: 'var(--bg-elevated)' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Reviews kolom (2/3 breedte), met grotere teaser cards */}
-          <div className="lg:col-span-2">
-            <div className="flex items-end justify-between mb-4 pb-2 border-b border-[var(--border-default)]">
-              <div className="flex items-center gap-2.5">
-                <span className="inline-block w-2 h-2 rounded-sm" style={{ background: DOT_KLEUR }} />
-                <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Recente reviews</h2>
-              </div>
-              <Link href={`/categorie/${CATEGORIEEN[0]?.slug ?? ''}`} className="text-xs font-semibold text-surface-600 hover:text-brand-500 inline-flex items-center gap-1 transition-colors">
-                Alle reviews
-                <ArrowRight className="h-3 w-3" />
-              </Link>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex items-end justify-between mb-4 pb-2 border-b border-[var(--border-default)]">
+            <div className="flex items-center gap-2.5">
+              <span className="inline-block w-2 h-2 rounded-sm" style={{ background: DOT_KLEUR }} />
+              <h2 className={`text-sm font-extrabold uppercase tracking-[0.12em] ${LABEL_KLEUR}`}>Recente reviews</h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {recent.map(tool => {
-                const label = prijsLabel(tool)
-                // Eerste zin van beschrijving als "waarvoor dient het"
-                const eersteZin = tool.beschrijving.split(/(?<=[.!?])\s+/)[0] ?? tool.tagline
-                return (
-                  <Link key={tool.slug} href={`/tools/${tool.slug}`} className="card group flex flex-col p-4 hover:shadow-md transition-shadow">
-                    <div className="flex items-center gap-3 mb-3">
-                      <ToolLogo src={tool.logo_url} naam={tool.naam} size={48} />
-                      <div className="flex-1 min-w-0">
-                        <p className="font-extrabold text-base text-surface-900 group-hover:text-brand-500 transition-colors line-clamp-1" style={{ letterSpacing: '-0.02em' }}>{tool.naam}</p>
-                        <p className="text-xs text-surface-500 line-clamp-1 capitalize">{tool.categorie}{label ? <> · {heeftGratis(tool) ? <span className="text-emerald-600 font-semibold">Gratis</span> : label}</> : null}</p>
-                      </div>
-                    </div>
-                    <p className="text-sm text-surface-600 leading-relaxed line-clamp-2 mb-3">{eersteZin}</p>
-                    <span className="text-xs font-semibold text-brand-500 group-hover:text-brand-700 transition-colors inline-flex items-center gap-1 mt-auto">
-                      Lees verder <ArrowRight className="h-3 w-3" />
-                    </span>
-                  </Link>
-                )
-              })}
-            </div>
+            <Link href={`/categorie/${CATEGORIEEN[0]?.slug ?? ''}`} className="text-xs font-semibold text-surface-600 hover:text-brand-500 inline-flex items-center gap-1 transition-colors">
+              Alle reviews
+              <ArrowRight className="h-3 w-3" />
+            </Link>
           </div>
-
-          {/* Nieuws kolom (1/3 breedte), live AI-nieuws van Hacker News */}
-          {siteConfig.secties.nieuwsFeed && (
-            <NewsSection limit={5} labelKleur={LABEL_KLEUR} dotKleur={DOT_KLEUR} />
-          )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {recent.map(tool => {
+              const label = prijsLabel(tool)
+              // Eerste zin van beschrijving als "waarvoor dient het"
+              const eersteZin = tool.beschrijving.split(/(?<=[.!?])\s+/)[0] ?? tool.tagline
+              return (
+                <Link key={tool.slug} href={`/tools/${tool.slug}`} className="card group flex flex-col p-4 hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-3 mb-3">
+                    <ToolLogo src={tool.logo_url} naam={tool.naam} size={48} />
+                    <div className="flex-1 min-w-0">
+                      <p className="font-extrabold text-base text-surface-900 group-hover:text-brand-500 transition-colors line-clamp-1" style={{ letterSpacing: '-0.02em' }}>{tool.naam}</p>
+                      <p className="text-xs text-surface-500 line-clamp-1 capitalize">{tool.categorie}{label ? <> · {heeftGratis(tool) ? <span className="text-emerald-600 font-semibold">Gratis</span> : label}</> : null}</p>
+                    </div>
+                  </div>
+                  <p className="text-sm text-surface-600 leading-relaxed line-clamp-2 mb-3">{eersteZin}</p>
+                  <span className="text-xs font-semibold text-brand-500 group-hover:text-brand-700 transition-colors inline-flex items-center gap-1 mt-auto">
+                    Lees verder <ArrowRight className="h-3 w-3" />
+                  </span>
+                </Link>
+              )
+            })}
+          </div>
         </div>
       </section>
       </Reveal>
